@@ -1,0 +1,39 @@
+Resolucion: https://www.youtube.com/watch?v=iny2nT3Q8fc
+
+Enunciado:
+   Hemos detectado una oportunidad de negocio que tiene que ver con administrar el calendario de personas y de grupos de personas, ya que las soluciones que existen actualmente son muy limitadas.
+   El objetivo es poder crear calendarios para cada persona de una empresa y luego poder agruparlos de acuerdo a los grupos de trabajo de una empresa.
+   Por ejemplo, si en la empresa trabajan Ana Perez y Pepe Sanchez, cada uno tendrá su calendario, y como ambos forman parte del equipo de desarrollo también habrá un calendario del "Equipo de Desarrollo" que incluirá los calendarios de Ana Perez y Pepe Sanchez. Si más tarde se suma al grupo María Fernandez, se debe poder agregar su calendario al del equipo de desarrollo.
+   Como el equipo de desarrollo forma parte del grupo de IT de la empresa, dicho calendario formará parte del calendario del grupo de IT junto al del equipo de QA y PMs (y todos los otros grupos que existan de IT o que se creen posteriormente). Todos formarán parte del calendario grupal de la empresa (donde además está el calendario del CEO).
+   Por suerte las empresas clientes que tenemos poseen una organización jerárquica perfecta, por lo que no hay que preocuparse en esta versión que haya calendarios repetidos o una jerarquía mal formada.
+   Lo que se desea a nivel funcional de los calendarios es poder agregar eventos en ellos para luego buscar espacios libres fácilmente, ya sea en el calendario de una persona o de un grupo.
+
+   Todos los eventos tienen una hora de inicio y fin en cierto día, y algunos se pueden repetir a lo largo del tiempo.
+   Los eventos que vamos a soportar por ahora son:
+   1) Eventos puntuales que no se repiten. Ejemplo: De 10:00 a 11:00 el 1/1/2019
+   2) Eventos que se repiten cada cierta medida de tiempo. Ejemplos:
+       a) De 10:00 a 11:30 el 2/2/2019 que se repite cada 1 semana hasta el 3/3/2019
+       b) De 11:00 a 11:30 el 3/5/2019 que se repite cada 3 días haste el fin de los tiempos (o sea, no tiene fecha de finalización)
+       c) De 9:50 a 11:30 el 28/10/2019 que se repite cada 1 año hasta el 2/2/2030.
+       La medida de tiempo puede ser de cualquier unidad de tiempo mayor o igual a 1 día (dia, semana, mes, año, etc).
+
+   Los eventos se deben poder agregar en los calendarios personales o grupales. Cuando se agrega un evento en un calendario grupal, el mismo debe ser impactado en los calendarios que lo forman.
+
+   Los calendarios deben servir para saber si un lugar en ellos está disponible. Por ejemplo, si el calendario de Ana Perez tiene un evento de 9 a 10 hrs el día 4/7/2019 y se le pregunta si hay lugar disponible entre las 8:30 y 9:30 del 4/7/2019, debería decir que no. Mientras que si se le pregunta si hay lugar entre las 10:00 y 11:00 ese mismo día debería decir que sí.
+
+   Una funcionalidad muy importante que debemos ofrecer de los calendarios, tanto grupales como individuales, es la de poder buscar el primer lugar disponible para crear un evento. Estas búsquedas deben siempre indicar el rango de hora en que se desea buscar el espacio, de qué duración es el lugar a buscar y en qué rango de fechas. Por ejemplo:
+   a) Entre las 9 y las 12 hrs, de 1 hr. de duración, desde 1/1/2019 hasta el 7/1/2019
+   b) Entre las 15 y las 17 hrs, de 30 minutos de duración, entre el 10/3/2019 y el 20/3/2019
+   Siempre incrementa el tiempo de la búsqueda en intervalos de 1 hora. O sea, para el ejemplo b), si no hay lugar el 10/3/2019 a las 17 hrs deberá buscar como siguiente lugar posible el 10/3/2019 a las 16 hrs y así hasta las 17 hrs de ese día. Si no hay lugar ese día debe pasar al siguiente (11/3/2019) empezando a buscar a las 15 hrs.
+
+   Implementar el modelo que satisfaga estas necesidades usando TDD.
+
+Ayudas:
+1) January/10/2019 crea la fecha 10 de Enero de 2019
+2) 10:00 crea la hora 10:00
+3) January/10/2019 at: 10:00 crea el día/hora del 10 de Enero de 2019 a las 10:00
+4) (January/10/2019 at: 10:00) to: (January/10/2019 at: 11:00) crea un intervalo de tiempo que va desde el 10 de Enero de 2019 a las 10:00 a las 11:00 del mismo día. De la misma manera se puede crear intervalos solo de fechas como January/10/2019 to: January/11/2019 o de horas 10:00 to: 15:30.
+5) Los día se semana son Sunday (para domingo), Monday (para lunes), etc.
+6) Se pueden crear medidas de tiempo multiplicando una cantidad por su unidad, por ejemplo: 1*hour o 10*day o 5*week, etc.
+7)  January/10/2019 to: January/15/2019 by: 2*day crea un intervalo de fechas que va desde el 10 al 15 de Enero cada 2 dias, o sea que incluye el 10, 12 y 14 de Enero.
+8) January/10/2019 to: FixedGregorianDate theEndOfTime crea un intervalo de fecha que empieza el 10 de Enero de 2019 y no termina.
