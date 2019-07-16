@@ -1,0 +1,21 @@
+1) Preguntas Teóricas:
+Completar el siguiente formulario: https://goo.gl/forms/Q7bA91ouJtFJCrnn1
+
+2) Ejercicio Práctico:
+Sos parte del equipo que desarrolla los equipos de exploración remota de Marte en la NASA y tenés que desarrollar el sistema que controle el Mars Rover.
+Para eso, se asume que la superficie de Marte es un plano y que se usan puntos para posicionar al Mars Rover en dicho plano, más un punto cardinal que indica hacia donde apunta.
+Debido a que Marte está muy lejos, siempre se le envían al Mars Rover un conjunto de comandos empaquetados en un String, donde cada caracter es un comando.
+Tener en cuenta que la comunicación puede tener problemas y pueden llegar comandos erróneos en cuyo caso se espera que no se sigan procesando los comandos restantes.
+Tener en cuenta que:
+- El Mars Rover siempre empieza en un punto inicial (x,y) y apuntando a un punto cardinal (N,S,E,O)
+- El rover recibe una secuencia de caracteres que representan comandos sobre como moverse
+- Los comandos pueden ser:
+  f = mover hacia adelante un punto (forward)
+  b = mover hacia atrás un punto (backwards)
+  l = rotar 90 grados a la izquierda
+  r = rotar 90 grados a la derecha
+
+Resolverlo por medio de TDD.
+Los tests tiene que numerarse a medida que los van haciendo.
+Parte importante de la evaluación será ver cómo hicieron el desarrollo iterativo/incremental y que casos de prueba realizaron.
+También se evaluará la aplicación de las heurísticas de diseño que se vieron durante toda la materia
