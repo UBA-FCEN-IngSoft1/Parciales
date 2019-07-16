@@ -1,0 +1,17 @@
+Una empresa dueña de muchos estacionamientos quiere implementar una simulación para mejorar el servicio a miras de ser la primera en poner un estacionamiento en Marte.
+En estos primeros pasos del proyecto necesitan un modelo computable con las siguientes características:
+	•	El estacionamiento tendrá una cantidad configurable de lugares.
+	•	En caso de tener una cantidad impar de lugares se debe reservar un lugar. El mismo será usado por el dueño del estacionamiento (el costo en este caso es $0).
+	•	En los lugares pueden estacionar autos o bicicletas (ésta es una simplificación de la vida real pero que sirve en esta primer instancia)
+	•	La empresa quiere saber cuánto dinero hay “estacionado” en un instante dado teniendo en cuenta que los valores de las estadías son:
+	◦	Autos: $100
+	◦	Bicicletass: $50 
+
+Por suerte ya hay bastante implementado de sistemas anteriores que podemos reutilizar, al igual que los tests, sin embargo para este caso hay que implementar la clase Slot y sacar el código repetido de la clase ParkingLot porque la escribió una persona sin mucha experiencia en programación.
+
+Trabajo a Realizar:
+	1.	Implementar la clase Slot para que los tests de SlotTests pasen
+	2.	La implementación de Slot no debe tener ifs cuando los mismos pueden ser reemplazados por polimorfismo
+	3.	Una vez hecho 1 y 2, sacar el código repetido de la clase ParkingLot
+	4.	Usar las heurísticas de diseño vistas hasta ahora (buenos nombres, métodos cortos, etc)
+	5.	No se puede modificar los tests 

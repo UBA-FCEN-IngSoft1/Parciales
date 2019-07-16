@@ -1,0 +1,17 @@
+1) Preguntas Teóricas:
+Completar el siguiente formulario: https://goo.gl/forms/TaVWD7KWwrxDKBRb2
+
+2) Ejercicio Práctico:
+Desarrollar el sistema que cumpla con el requerimiento a continuacion, usando TDD y las buenas practicas de programacion y diseño que vimos en la materia.
+
+Reserva de Cochera
+Una empresa quiere mejorar la distribucion de uso de la unica cochera que tienen entre sus empleados. Para eso nos piden hacer un programa para que decida quien debe usar la cochera en base a los pedidos de uso que hubo de ella.
+El sistema debe permitir recibir pedidos de reserva a una fecha, una persona, y con algun motivo.
+Los motivos pueden ser: 1) Tengo reunion con cliente 2) Tengo que dar una clase 3) Uso personal.
+Una vez por dor dia se cierra la reserva del dia. Esto significa que no se recibiran mas pedidos para esa fecha y se decide quien debe usar la cochera.
+La asignacion de la cochera se hace de la siguiente forma:
+1) si hay un solo pedido, se le otorga a esa persona
+2) si hay mas de uno, se prioriza por motivo. Tiene prioridad la reunion con el cliente, luego dar clase y por ultimo el uso personal.
+3) si como resultado de 2) queda mas de un posible ganador, se le asigna al que menos veces uso la cochera en los ultimos 30 dias.
+Una vez que la cochera esta asignada, no se pueden aceptar mas pedidos a esa fecha.
+Si una persona hace mas de una reserva a una fecha, se descarta la que tenia y se toma la ultima

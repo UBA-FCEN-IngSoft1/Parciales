@@ -1,0 +1,33 @@
+Video de resolucion: https://www.youtube.com/watch?v=up_JqgZjDg8
+(El video fue hecho con un enunciado mas complejo pero que simplifique durante la realizacion del mismo)
+
+Debemos desarrollar el sistema de asignación de horarios de trabajo de los empleados de las tiendas de una empresa de comida rápida.
+El sistema debe permitir que los empleados asignen a su planilla de horarios de trabajo, la disponibilidad que tienen para trabajar por semana de la siguiente manera:
+1) De un día de semana a otro, en cierta franja horaria. Por ejemplo:
+    - Para la semana del 15/7/2019, de Lunes a Viernes, de 8 a 16 hrs.
+    - Para la semana del 22/7/2019, de Jueves a Domingo, de 13 a 22 hrs.
+2) Por días puntuales de la semana, en cierta franja horaria. Por ejemplo:
+    - Para la semana del 15/7/2019, Lunes de 8 a 16 hrs, Martes de 10 a 18 hrs, Miércoles de 13 a 22 hrs, etc.
+
+El objetivo principal de la planilla de horario de trabajo de un empleado es la de responder si dicho empleado trabaja o no en cierta fecha y hora. Para el ejemplo 1), se espera los siguientes resultado:
+- Trabaja el 15/7/2019 a las 7:59:59? -> No
+- Trabaja el 15/7/2019 a las 8:00? -> Si
+- Trabaja el 15/7/2019 a las 9:30? -> Si
+- Trabaja el 15/7/2019 a las 16:00? -> No
+Nótese que el horario de trabajo excluye la última hora.
+
+Cada tienda conoce las planilla de trabajo de los empleados que trabajan en ella y esto es usado para que el gerente de la tienda pueda conocer en una semana particular, qué horarios no están cubiertos por ninguno de los empleados. El horario de trabajo de las tiendas es de 7:00 a 23:00.
+
+Por ejemplo, dado que en la Tienda de Florida y Cordoba trabajan Ana Perez y Martin Gonzalez, y que la semana del 15/7/2019 tiene la siguiente asignación de horarios:
+- Ana Perez: Lunes de 8 a 23 hrs., Martes de 7 a 23 hrs., Miércoles de 7 a 23 hrs, Jueves de 7 a 23 hrs, Viernes de 7 a 23 hrs, Sábado de 7 a 23 hrs, Domingo de 7 a 22 hrs.
+- Martin Gonzalez: Lunes a Miércoles de 8 a 16 hrs.
+Si se consulta por los horarios no cubiertos en la semana del 15/7/2019 debería devolver la colección: { 15/7/2019 at: 7:00. 21/7/2019 at: 22 }
+(La revisión de horas debe hacerse cada 1 hora, o sea a las 7:00, 8:00, 9:00 y así hasta las 22:00)
+
+ Implementar el modelo que satisfaga estas necesidades usando TDD.
+
+Condiciones a tener en cuenta que no es necesario testear:
+1) La semana se determina por la fecha de inicio, que siempre será un lunes (por eso en los ejemplo se usa 15/7/2019 y 22/7/2019 que son lunes).
+2) Lo horarios de inicio y fin de trabajo siempre deben serán una hora en punto, por lo tanto una hora de inicio de 8:30 es inválida lo mismo que una hora de fin de 16:01.
+3) El horario de trabajo estará comprendida entre las 7:00 am y las 23:00 pm.
+4) No habra solapamiento de horarios de trabajo

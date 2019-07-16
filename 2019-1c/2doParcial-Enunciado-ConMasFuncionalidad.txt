@@ -1,0 +1,24 @@
+Este enunciado tiene más funcionalidad que lo que se tomo finalmente, pero sirve si desean practicar más.
+----
+Hemos detectado una oportunidad de negocio que tiene que ver con administrar el calendario de personas y de grupos de personas, ya que las soluciones que existen actualmente son muy limitadas.
+El objetivo es poder crear calendarios para cada persona de una empresa y luego poder agruparlos de acuerdo a los grupos de trabajo de una empresa.
+Por ejemplo, si en la empresa trabajan Juan Perez y Pepe Sanchez, cada uno tendrá su calendario, y como ambos forman parte del equipo de desarrollo también habrá un calendario del "Equipo de Desarrollo" que incluirá los calendarios de Juan Perez y Pepe Sanchez. Como el equipo de desarrollo forma parte del grupo de IT de la empresa, dicho calendario formará parte del calendario del grupo de IT junto al del equipo de QA y PMs (entre otros). Todos formarán parte del calendario grupal de la empresa (donde además está el calendario del CEO).
+Por suerte las empresas clientes que tenemos poseen una organización jerárquica perfecta por lo que no hay que preocuparse en esta versión sobre la organización de los calendarios.
+Lo que se dese a nivel funcional de los calendarios poder crear eventos para luego buscar espacios libres fácilmente ya sea en el calendario de una persona o de un grupo.
+Todos los eventos tienen una hora de inicio y fin en cierto día, y algunos se pueden repetir a lo largo del tiempo.
+Los eventos que vamos a soportar por ahora son:
+1) Eventos puntuales que no se repiten. Ejemplo: De 10:00 a 11:00 el 1/1/2019
+2) Eventos que se repiten cada cierta medida de tiempo. Ejemplos:
+    a) De 10:00 a 11:30 el 2/2/2019 que se repite cada 1 semana hasta el 3/3/2019
+    b) De 11:00 a 11:30 el 3/5/2019 que se repite cada 3 días haste el fin de los tiempos (o sea, no tiene fecha de finalización)
+    c) De 9:50 a 11:30 el 28/10/2019 que se repite cada 1 año hasta el 2/2/2030.
+    etc. La medida de tiempo puede ser de cualquier unidad de tiempo mayor o igual a 1 día (dia, semana, mes, año, etc).
+3) Eventos que se repiten ciertos días de la semana. Ejemplos:
+    a) De 9:00 a 12:00 el 1/1/2019 hasta el 1/3/2019 que se repite los Martes y Jueves.
+    b) De 17:00 a 22:00 el 18/3/2019 hasta el 6/6/2019 que se repite los Lunes y Jueves (horario de la materia Ingeniería de Software!)
+Los eventos se deben poder agregar en los calendarios personales o grupales. Cuando se agrega un evento en un calendario grupal, el mismo debe ser impactado en los calendarios que lo forman.
+Los calendarios deben servir para saber si un lugar en ellos está disponible. Por ejemplo, si el calendario de Juan Perez tiene un evento de 9 a 10 hrs el día 4/7/2019 y se le pregunta si hay lugar disponible entre las 8:30 y 9:30 del 4/7/2019, debería decir que no. Mientras que si se le pregunta si hay lugar entre las 10:00 y 11:00 ese mismo día debería decir que sí.
+Una funcionalidad muy importante que debemos ofrecer de los calendarios, tanto grupales como individuales, es la de poder buscar el primer lugar disponible para crear un evento. Estas búsquedas deben siempre indicar el rango de hora que se desea buscar, de que duración es el lugar a buscar, con que incremento de minutos de búsqueda y en qué rango de fecha evitando ciertos días de semana. Por ejemplo:
+a) Entre las 9 y las 12 hrs, de 1 hr. de duración, buscando cada 15 minutos, desde 1/1/2019 hasta el 7/1/2019, salvo Sábados y Domingos.
+b) Entre las 15 y las 17 hrs, de 30 minutos de duración, cada 30 minutos, entre el 10/3/2019 y el 20/3/2019, salvo Lunes y Miércoles.
+Implementar el modelo que satisfaga estas necesidades usando TDD.
