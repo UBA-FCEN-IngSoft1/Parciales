@@ -1,0 +1,50 @@
+Enunciado:
+
+Una cadena muy importante de café llamado "Ada's Coffee Shop" tiene un sistema para premiar a sus más leales clientes en base a los productos que compra y el tipo de cliente que es.
+El sistema fue hecho por otra persona y ahora vos tenés que mantenerlo. Por suerte tiene varios tests, sin embargo antes de irse, el programador que lo hizo dijo que hay un poco de código repetido y algunos if que estaría bueno sacar.
+
+Respecto del negocio de Ada's Coffee Shop, hay que tener en cuenta que:
+1) Hay dos tipos de productos:
+    a) Combo 1: Cuesta 150 pesos y el cafe es de 250 mililitros
+    b) Combo 2: Cuesta 120 pesos y el cafe es de 100 mililitros
+2) Hay tres tipos de clientes: Gold, Silver y Normal.
+3) Una vez por mes se decide premiar a los clientes en base a la cantidad de cafe comprado de acuerdo a las siguientes dos reglas:
+      a) Si consumió entre 300 y 500 mililitros inclusive, el premio (reward) es un Combo2 con un precio que depende del tipo de cliente.
+
+    b) Si consumió más de 500 mililitros, el premio (reward) es un Combo1 donde también el precio depende del tipo de cliente.
+    Se puede ver en la implementaciones del mensaje #createRewardFor: cómo se decide ese precio.
+
+Luego de analizar un poco el modelo, te das cuenta que:
+1) Hay código repetido en el test 2 y 3.
+2) También hay código repetido en los últimos 6 tests
+3) Hay varios ifs que se pueden reemplazar por polimorfismo.
+
+Tu misión es llevar adelante las mejoras nombradas en los 3 puntos anteriores.
+Suerte!
+
+----
+
+Por favor antes de empezar el parcial leer las siguientes consignas fundamentales para la entrega:
+
+
+1) El parcial se debe entregar por mail
+
+2) El mail debe ir dirigido a la lista de Docentes (ingsoft1-doc@dc.uba.ar)
+
+3) El subject del mail debe ser: "LU: nn/nn - Solucion Primer Parcial 2c2019" ¡POR FAVOR NO SE EQUIVOQUEN EN ESTO! ES FUNDAMENTAL PARA SABER QUE RECIBIMOS SU RESOLUCIÓN
+
+4) El mail debe contener adjunto:
+
+   a) El fileout de la solución que hicieron. Recuerden de probar que el fileout carga correctamente en una imagen sin la solución. Errores de carga pueden llevar a que no podamos corregir el parcial.
+
+   b) El archivo CuisUniversity-nnnn.user.changes
+
+5) El nombre del archivo del fileout debe ser el propuesto por Cuis, o sea, el nombre de la categoría de clases.
+
+6) No se pueden ir hasta que un docente les confirme que se recibió el mail con la solución
+
+7) El parcial es hasta las 21:30hs, los mails recibidos luego de esa hora no serán tenidos en cuenta y se asumirá que no se realizó la entrega.
+
+8) Recordar grabar la imagen cada cierto tiempo, hacer file out de la solución cada cierto tiempo, etc. No se aceptarán explicaciones de “la máquina se colgó" o "perdí todo" como motivos de no entrega.
+
+9) Asegurarse de tener espacio en disco suficiente para trabajar. Si la máquina se queda sin espacio, Cuis no guardará los cambios a partir de ese momento y por lo tanto se perderá el código que escriban.
