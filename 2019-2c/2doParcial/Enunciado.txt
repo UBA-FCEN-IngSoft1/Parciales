@@ -1,0 +1,64 @@
+La NASA a decidido hacer una nueva versión del MarsRover en base a las experiencias adquiridas en la versión anterior.
+El motivo por el cual nos eligieron a nosotros se debe a que saben que podemos hacer una solución robusta, bien testeada, donde vamos a encontrar casos de prueba no previstos en el requerimiento y con un buen diseño.
+Las mejoras que se deben implementar son:
+1) Para minimizar la cantidad de comandos enviados en el string de comandos, se debe poder agregar un dígito luego de un comando que indica cuantas veces, más dos, se debe repetir el último comando.
+Por ejemplo: 'f0' implica que hay que hacer forward 3 veces. Una vez por la primer f y dos veces por el 0.
+El motivo por el cual se suma 2 al dígito es para maximizar la cantidad de repeticiones, ya que enviar un 0 solo no tiene sentido, y el 1 seria equivalente a mandar dos comando iguales seguidos.
+La repetición debe poder ser aplicada solo para los comandos f,b,r y l y es de un solo dígito.
+2) Algo que se notó de la primer versión es que a veces el MarsRover se quedaba trabado en una roca y a veces, si el piso era de hielo, se resbalaba y no frenaba en la posición indicada. Por este motivo se agregó al MarsRover un sensor de suelo que permite determinar el tipo de suelo en el que terminará al ejecutar un comando. O sea, el sensor devuelve el tipo de suelo de una posición dada.
+Los tipos de suelo que detecta son 3: Tierra, Hielo y Roca.
+- Cuando el tipo de suelo es Tierra, el movimiento de MarsRover es el normal, como funciona hasta ahora.
+Cuando el tipo de suelo es Roca, el MarsRover no puede rotar ni moverse a esa posición y deber informar de la situación con una excepción. Ejemplos:
+   - Si el MarsRover está en la posición 1@2 apuntando al Norte y en la posición 1@3 hay una roca, si se le pide que procese 'f' debería levantar una excepción y quedarse en la posición 1@2 apuntando al Norte.
+   - Si el MarsRover está en la posición 1@2 apuntando al Norte y en esa posición hay una roca, si se le pide rotar a la izquierda se debe levantar una excepción y el MarsRover quedará en la misma posición apuntando al Norte, o sea, no puede rotar.
+- Cuando el tipo de suelo es Hielo, el MarsRover se desliza una cantidad inesperada (random) de puntos en la dirección que iba. Ejemplos:
+   - Si el MarsRover está en la posición 1@2 apuntando al Norte y en la posición 1@3 hay hielo, si se le pide que procese 'f' puede terminar en la posición 1@3, 1@4, 1@5... hasta 1@12 (por suerte el limite de desplazamiento en hielo es de 10 puntos)
+   - Por suerte el hielo no afecta la rotación, o sea que rota como si estuviera en tierra.
+3) Por último, para no perder la posición del MarsRover cuando hay problemas se debe implementar un estado de "movimiento seguro".
+El inicio de este estado se indica en la secuencia de comandos a procesar por medio del caracter "abrir paréntesis", o sea $(, y se finaliza por medio del caracter "cerrar parentesis", o sea $).
+Si hay algún problema con la ejecución de los comandos en estado seguro, o sea los comandos que se encuentran en parentesis, el MarsRover debe volver a su posición inicial apuntando hacia donde estaba antes de moverse de manera segura.
+Para volver a la posición inicial debe deshacer todos los movimientos que hizo, o sea, hacer el movimiento contrario a cada movimiento que hizo hasta que se produjo el error. En pocas palabras, hacer un undo de los movimientos.
+Por ejemplo.:
+- Si el MarsRover está en la posición 1@2 apuntando al Norte y en la posición 1@4 hay una roca, si se le pide que procese '(ff)', se debería levantar la excepción de que encontró una roca y volver a la posición 1@2 apuntando al Norte.
+- Si cuando se esta moviendo de manera segura llega a un tipo de piso de Hielo, también se debe levantar una excepción y volver a la posición inicial puesto el movimiento sobre hielo es impredesible
+- Debe suceder lo mismo si se encuentran comandos inválidos cuando se esta moviendo de manera segura.
+Aclaraciones:
+- En una misma secuencia de comandos se pueden tener varios movimientos en estado seguro. Por ejemplo: 'frf(fflb3)ff(rb)'
+- Cuando se esta en estado seguro, no se puede empezar otro estado seguro. Por ejemplo: 'ff(ff(rb)f)' debería levantar una excepción y volver a la posición inicial.
+- En toda secuencia de comandos, siempre debe terminarse la ejecución de estado seguro. Por ejemplo: 'f(ff' debería levantar una excepción ya que no terminó la secuencia de comandos en estado seguro, y debería volver a la posición que tenía al empezar el estado seguro.
+
+Desarrollar el ejercicio haciendo TDD y usando todas las heurísticas de diseño que vimos durante la cursada.
+
+Mensajes útiles:
+- #isDigit devuelve true si un caracter es un dígito.
+- #digitValue devuelve el numero entero que representa un caracter. Por ejemplo: $3 digitValue --> devuelve 3
+- #nextInteger: aLimit cuando se lo enviamos a una instancia de Random, devuelve un numero entero random entre 1 y aLimit.
+- #* aNumber: Se le puede enviar a un numero para multiplicarlo por aNumber
+- #pass: Cuando se lo envia a una excepcion, pasa la excepcion al siguiente handler
+------------
+Por favor antes de empezar el parcial leer las siguientes consignas fundamentales para la entrega:
+
+
+1) El parcial se debe entregar por mail
+
+2) El mail debe ir dirigido a la lista de Docentes (ingsoft1-doc@dc.uba.ar)
+
+3) El subject del mail debe ser: "LU: nn/nn - Solucion Segundo Parcial 2c2019"
+
+ ¡POR FAVOR NO SE EQUIVOQUEN EN ESTO! ES FUNDAMENTAL PARA SABER QUE RECIBIMOS SU RESOLUCIÓN
+
+4) El mail debe contener adjunto:
+
+   a) El fileout de la solución que hicieron. Recuerden de probar que el fileout carga correctamente en una imagen sin la solución. Errores de carga pueden llevar a que no podamos corregir el parcial.
+
+   b) El archivo CuisUniversity-nnnn.user.changes
+
+5) El nombre del archivo del fileout debe ser el propuesto por Cuis, o sea, el nombre de la categoría de clases.
+
+6) No se pueden ir hasta que un docente les confirme que se recibió el mail con la solución
+
+7) El parcial es hasta las 21:30hs, los mails recibidos luego de esa hora no serán tenidos en cuenta y se asumirá que no se realizó la entrega.
+
+8) Recordar grabar la imagen cada cierto tiempo, hacer file out de la solución cada cierto tiempo, etc. No se aceptarán explicaciones de “la máquina se colgó" o "perdí todo" como motivos de no entrega.
+
+9) Asegurarse de tener espacio en disco suficiente para trabajar. Si la máquina se queda sin espacio, Cuis no guardará los cambios a partir de ese momento y por lo tanto se perderá el código que escriban.
