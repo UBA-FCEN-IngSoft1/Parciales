@@ -1,0 +1,20 @@
+Los integrantes del equipo encargado de monitorear al MarsRover
+(que en este momento pasea por Marte esquivando piedras y
+resbalando con hielo) son unos expertos jugadores de ajedrez y
+pasan muchas horas jugando a dicho juego y también a variantes del mismo!
+
+El último que se les ha ocurrido lo llama "El juego de las Torres" tiene las siguientes reglas:
+- En el juego se enfrentan 2 jugadores: uno con piezas blancas y el otro con piezas negras.
+- Se juega sobre un tablero de 8x8 (64 escaques). Las posiciones se nombran usando puntos (no como el juego de ajedrez), que van del 1@1 al 8@8
+- Comienza el jugador con las piezas blancas y se van alternando los turnos.
+- En cada turno, un jugador solo puede mover una pieza.
+- Cada jugador dispone de 2 torres
+- Las torres blancas empiezan en las posiciones 1@1 y 7@1.
+- Las torres negras empiezan en las posiciones 2@8 y 8@8.
+- Las torres se mueven horizontal o verticalmente
+- Al moverse no pueden saltar otra pieza
+- Cuando una torre come una torre enemiga, o sea que ocupa la posicion de la pieza enemiga, a diferencia del juego original no se la quita del
+tablero sino que regresa a su lugar original, pero con la salvedad que su movimiento será como máximo de 3 casillas durante las próximas 4 veces que esa pieza se mueva (luego pasa a moverse normalmente).
+- Cuando una torre es comida y vuelve a su posicion original, si la misma esta ocupada, se intentará ubicar en el siguiente lugar libre moviendo la pieza en el eje x hacia el centro.
+- Ganan las blancas si logran ubicar sus torres en la posicion 4@4 y 5@5.
+- Ganan las negras si logran ubicar sus torres en la posicion 4@5 y 5@4.
