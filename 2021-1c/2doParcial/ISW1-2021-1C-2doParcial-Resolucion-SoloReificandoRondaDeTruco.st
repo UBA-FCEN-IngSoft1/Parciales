@@ -316,7 +316,7 @@ test09CartasJugadasPorManoNoContieneCartasNoJugadas
 	
 	self deny: (ronda cartasJugadasPorManoSon: { CartaDeTruco anchoDeBasto })! !
 
-!TrucoTest methodsFor: 'tests' stamp: 'HAW 7/8/2021 10:26:56'!
+!TrucoTest methodsFor: 'tests' stamp: 'HAW 7/10/2021 20:11:26'!
 test10ManoNoPuedeJugarCartaNoDisponible
 
 	| ronda |
@@ -332,7 +332,7 @@ test10ManoNoPuedeJugarCartaNoDisponible
 		should: [ ronda manoJuega: CartaDeTruco anchoDeEspada ]
 		raise: Error
 		withExceptionDo: [ :anError |
-			self assert: ronda cartaNoDisponibleErrorMessage equals: anError messageText.
+			self assert: ronda cartaNoDisponibleErrorDescription equals: anError messageText.
 			self assert: (ronda cartasJugadasPorManoSon: { CartaDeTruco anchoDeEspada }) ].! !
 
 !TrucoTest methodsFor: 'tests' stamp: 'HAW 7/8/2021 10:28:52'!
@@ -363,7 +363,7 @@ test12CartasJugadasPorPieNoContieneCartasNoJugadas
 	
 	self deny: (ronda cartasJugadasPorPieSon: { CartaDeTruco anchoDeBasto })! !
 
-!TrucoTest methodsFor: 'tests' stamp: 'HAW 7/8/2021 10:41:48'!
+!TrucoTest methodsFor: 'tests' stamp: 'HAW 7/10/2021 20:11:26'!
 test13PieNoPuedeJugarCartaNoDisponible
 
 	| ronda |
@@ -380,7 +380,7 @@ test13PieNoPuedeJugarCartaNoDisponible
 		should: [ ronda pieJuega: (CartaDeTruco oroCon: 4) ]
 		raise: Error
 		withExceptionDo: [ :anError |
-			self assert: ronda cartaNoDisponibleErrorMessage equals: anError messageText.
+			self assert: ronda cartaNoDisponibleErrorDescription equals: anError messageText.
 			self assert: (ronda cartasJugadasPorPieSon: { CartaDeTruco oroCon: 4 }) ].! !
 
 !TrucoTest methodsFor: 'tests' stamp: 'HAW 7/8/2021 10:43:08'!
@@ -604,6 +604,70 @@ test24PieNoPuedeJugarCuandoLaRondaSeTermino
 		withExceptionDo: [ :anError |
 			self assert: ronda noSePuedeJugarConRondaTerminadaErrorDescription equals: anError messageText.
 			self assert: (ronda cartasJugadasPorPieSon: { CartaDeTruco oroCon: 4. CartaDeTruco anchoDeBasto }) ]
+	! !
+
+!TrucoTest methodsFor: 'tests' stamp: 'HAW 7/10/2021 19:46:36'!
+test25ManoNoPuedeJugarCuandoGanaPie
+
+	| ronda |
+	
+	ronda := RondaDeTruco 
+		conCartasDeMano: { CartaDeTruco anchoDeEspada. CartaDeTruco espadaCon: 4. CartaDeTruco sieteDeEspada }
+		yCartasDePie:  { CartaDeTruco oroCon: 4. CartaDeTruco anchoDeBasto . CartaDeTruco bastoCon: 4}.
+		
+	ronda manoJuega: (CartaDeTruco espadaCon:4) .
+	ronda pieJuega: (CartaDeTruco oroCon: 4).
+	ronda manoJuega: CartaDeTruco sieteDeEspada.
+	ronda pieJuega: CartaDeTruco anchoDeBasto.
+	
+	self 
+		should: [ ronda manoJuega: CartaDeTruco anchoDeEspada ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: ronda noSePuedeJugarConRondaTerminadaErrorDescription equals: anError messageText.
+			self assert: (ronda cartasJugadasPorPieSon: { CartaDeTruco oroCon: 4. CartaDeTruco anchoDeBasto }) ]
+	! !
+
+!TrucoTest methodsFor: 'tests' stamp: 'HAW 7/10/2021 19:48:21'!
+test26PieNoPuedeJugarCuandoGanaMano
+
+	| ronda |
+	
+	ronda := RondaDeTruco 
+		conCartasDeMano: { CartaDeTruco anchoDeEspada. CartaDeTruco espadaCon: 4. CartaDeTruco sieteDeEspada }
+		yCartasDePie:  { CartaDeTruco oroCon: 4. CartaDeTruco anchoDeBasto . CartaDeTruco bastoCon: 4}.
+		
+	ronda manoJuega: (CartaDeTruco espadaCon:4) .
+	ronda pieJuega: (CartaDeTruco oroCon: 4).
+	ronda manoJuega: CartaDeTruco anchoDeEspada.
+	ronda pieJuega: CartaDeTruco anchoDeBasto.
+	
+	self 
+		should: [ ronda pieJuega: (CartaDeTruco bastoCon: 4)]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: ronda noSePuedeJugarConRondaTerminadaErrorDescription equals: anError messageText.
+			self assert: (ronda cartasJugadasPorPieSon: { CartaDeTruco oroCon: 4. CartaDeTruco anchoDeBasto }) ]
+	! !
+
+!TrucoTest methodsFor: 'tests' stamp: 'HAW 7/10/2021 19:53:47'!
+test27PieNoJuegaCuandoManoGanoEnfrentamientoAnterior
+
+	| ronda |
+	
+	ronda := RondaDeTruco 
+		conCartasDeMano: { CartaDeTruco anchoDeEspada. CartaDeTruco espadaCon: 4. CartaDeTruco sieteDeEspada }
+		yCartasDePie:  { CartaDeTruco oroCon: 4. CartaDeTruco anchoDeBasto . CartaDeTruco bastoCon: 4}.
+		
+	ronda manoJuega: CartaDeTruco anchoDeEspada.
+	ronda pieJuega: CartaDeTruco anchoDeBasto.
+	
+	self 
+		should: [ ronda pieJuega: (CartaDeTruco bastoCon: 4)]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: ronda noEsTurnoDelJugadorErrorDescription equals: anError messageText.
+			self assert: (ronda cartasJugadasPorPieSon: { CartaDeTruco anchoDeBasto }) ]
 	! !
 
 
@@ -915,773 +979,166 @@ assertPaloEsVálido: unPalo
 	^ (self palos includes: unPalo) ifFalse: [ self error: self paloInvalidoErrorDescription ]! !
 
 
-!classDefinition: #EnfrentamientoDeTruco category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-Object subclass: #EnfrentamientoDeTruco
-	instanceVariableNames: 'ronda'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-
-!EnfrentamientoDeTruco methodsFor: 'enfrentamientos ganados' stamp: 'HAW 7/9/2021 16:53:35'!
-cantidadDeEnfrentamientosGanadosPorMano
-
-	self subclassResponsibility ! !
-
-!EnfrentamientoDeTruco methodsFor: 'enfrentamientos ganados' stamp: 'HAW 7/9/2021 16:53:32'!
-cantidadDeEnfrentamientosGanadosPorPie 
-
-	self subclassResponsibility ! !
-
-
-!EnfrentamientoDeTruco methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:57:39'!
-manoJuega: unaCartaDeTruco 
-
-	self subclassResponsibility ! !
-
-!EnfrentamientoDeTruco methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:57:43'!
-pieJuega: unaCartaDeTruco 
-
-	self subclassResponsibility ! !
-
-
-!EnfrentamientoDeTruco methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 16:53:53'!
-cartasJugadasPorMano
-
-	self subclassResponsibility ! !
-
-!EnfrentamientoDeTruco methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 16:53:57'!
-cartasJugadasPorPie
-
-	self subclassResponsibility ! !
-
-
-!EnfrentamientoDeTruco methodsFor: 'proximo' stamp: 'HAW 7/9/2021 18:41:31'!
-proximo
-
-	self subclassResponsibility ! !
-
-
-!classDefinition: #EnfrentamientoDeTrucoConCartas category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-EnfrentamientoDeTruco subclass: #EnfrentamientoDeTrucoConCartas
-	instanceVariableNames: 'cartaDeMano cartaDePie estado'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'proximo' stamp: 'HAW 7/9/2021 16:52:07'!
-proximo
-	
-	^estado proximoEnfrentamiento! !
-
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 16:49:16'!
-cartasJugadasPorMano
-	
-	^estado cartasJugadasPorMano! !
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 16:49:24'!
-cartasJugadasPorPie
-	
-	^estado cartasJugadasPorPie! !
-
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:51:42'!
-manoJuega: unaCartaDeTruco 
-	
-	estado manoJuega: unaCartaDeTruco
-	! !
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:51:53'!
-pieJuega: unaCartaDeTruco 
-	
-	estado pieJuega: unaCartaDeTruco ! !
-
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'quien gano' stamp: 'HAW 7/9/2021 16:50:37'!
-fueParda
-	
-	^estado fueParda
-	! !
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'quien gano' stamp: 'HAW 7/9/2021 16:51:12'!
-ganoMano
-	
-	^estado ganoMano ! !
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'quien gano' stamp: 'HAW 7/9/2021 16:51:23'!
-ganoPie
-	
-	^estado ganoPie! !
-
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'quien gano - private' stamp: 'HAW 7/9/2021 16:50:48'!
-fuePardaCuandoTerminado
-	
-	^cartaDeMano empardaCon: cartaDePie ! !
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'quien gano - private' stamp: 'HAW 7/9/2021 16:51:17'!
-ganoManoCuandoTerminado
-	
-	^cartaDeMano mataA: cartaDePie ! !
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'quien gano - private' stamp: 'HAW 7/9/2021 16:51:29'!
-ganoPieCuandoTerminado
-	
-	^cartaDePie mataA: cartaDeMano ! !
-
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'jugar - privado' stamp: 'HAW 7/9/2021 16:51:49'!
-manoJuegaCuandoDebe: unaCartaDeTruco 
-	
-	cartaDeMano := unaCartaDeTruco.
-	estado := estado proximo.! !
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'jugar - privado' stamp: 'HAW 7/9/2021 16:59:51'!
-pieJuegaCuandoDebe: unaCartaDeTruco 
-	
-	cartaDePie := unaCartaDeTruco.
-	estado := estado proximo.! !
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'jugar - privado' stamp: 'HAW 7/9/2021 16:52:31'!
-signalNoEsTurnoDeJugador
-	
-	self error: ronda noEsTurnoDelJugadorErrorDescription ! !
-
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'proximo - private' stamp: 'HAW 7/9/2021 17:03:49'!
-proximoEnfrentamientoCuandoTerminado
-
-	self subclassResponsibility ! !
-
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'cartas jugadas - private' stamp: 'HAW 7/9/2021 17:06:22'!
-cartasJugadasPorManoCuandoManoJugo
-
-	self subclassResponsibility ! !
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'cartas jugadas - private' stamp: 'HAW 7/9/2021 17:06:27'!
-cartasJugadasPorManoCuandoManoNoJugo
-
-	self subclassResponsibility ! !
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'cartas jugadas - private' stamp: 'HAW 7/9/2021 17:06:40'!
-cartasJugadasPorPieCuandoPieJugo
-
-	self subclassResponsibility ! !
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'cartas jugadas - private' stamp: 'HAW 7/9/2021 17:06:36'!
-cartasJugadasPorPieCuandoPieNoJugo
-
-	self subclassResponsibility ! !
-
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'enfrentamientos ganados' stamp: 'HAW 7/9/2021 17:09:30'!
-sumadorSiGanoMano
-
-	^ self ganoMano ifTrue: [ 1 ] ifFalse: [ 0 ]! !
-
-!EnfrentamientoDeTrucoConCartas methodsFor: 'enfrentamientos ganados' stamp: 'HAW 7/9/2021 17:09:38'!
-sumadorSiGanoPie
-
-	^ self ganoPie ifTrue: [ 1 ] ifFalse: [ 0 ]! !
-
-
-!classDefinition: #EnfrentamientoDeTrucoPosteriorAlPrimero category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-EnfrentamientoDeTrucoConCartas subclass: #EnfrentamientoDeTrucoPosteriorAlPrimero
-	instanceVariableNames: 'anterior'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-
-!EnfrentamientoDeTrucoPosteriorAlPrimero methodsFor: 'initialization' stamp: 'HAW 7/9/2021 17:17:18'!
-initializeEn: unaRondaDeTruco anterior: unEnfrentamientoAnterior 
-	
-	ronda := unaRondaDeTruco.
-	anterior := unEnfrentamientoAnterior.
-	estado := (anterior ganoMano or: [ anterior fueParda ]) ifTrue: [ EmpiezaMano en: self ] ifFalse: [ EmpiezaPie en: self ] ! !
-
-
-!EnfrentamientoDeTrucoPosteriorAlPrimero methodsFor: 'enfrentamientos ganados' stamp: 'HAW 7/9/2021 17:11:05'!
-cantidadDeEnfrentamientosGanadosPorMano
-	
-	| puntosDeEnfrentamiento |
-	
-	puntosDeEnfrentamiento := self sumadorSiGanoMano.
-	 anterior fueParda ifTrue: [ puntosDeEnfrentamiento := puntosDeEnfrentamiento + 1 ].
-	
-	^anterior cantidadDeEnfrentamientosGanadosPorMano + puntosDeEnfrentamiento! !
-
-!EnfrentamientoDeTrucoPosteriorAlPrimero methodsFor: 'enfrentamientos ganados' stamp: 'HAW 7/9/2021 17:15:41'!
-cantidadDeEnfrentamientosGanadosPorPie
-	
-	| puntosDeEnfrentamiento |
-	
-	puntosDeEnfrentamiento := self sumadorSiGanoPie.
-	 anterior fueParda ifTrue: [ puntosDeEnfrentamiento := puntosDeEnfrentamiento + 1 ].
-	
-	^anterior cantidadDeEnfrentamientosGanadosPorPie + puntosDeEnfrentamiento! !
-
-
-!EnfrentamientoDeTrucoPosteriorAlPrimero methodsFor: 'proximo - private' stamp: 'HAW 7/9/2021 16:52:19'!
-proximoEnfrentamientoCuandoTerminado
-	
-	^ronda hayGanador 
-		ifTrue: [ RondaDeTrucoTerminada en: ronda anterior: self ]
-		ifFalse: [ EnfrentamientoDeTrucoPosteriorAlPrimero en: ronda anterior: self ]! !
-
-
-!EnfrentamientoDeTrucoPosteriorAlPrimero methodsFor: 'cartas jugadas - private' stamp: 'HAW 7/9/2021 12:59:53'!
-cartasJugadasPorManoCuandoManoJugo
-	
-	^anterior cartasJugadasPorMano add: cartaDeMano; yourself! !
-
-!EnfrentamientoDeTrucoPosteriorAlPrimero methodsFor: 'cartas jugadas - private' stamp: 'HAW 7/9/2021 12:49:23'!
-cartasJugadasPorManoCuandoManoNoJugo
-	
-	^anterior cartasJugadasPorMano ! !
-
-!EnfrentamientoDeTrucoPosteriorAlPrimero methodsFor: 'cartas jugadas - private' stamp: 'HAW 7/9/2021 15:41:26'!
-cartasJugadasPorPieCuandoPieJugo
-	
-	^anterior cartasJugadasPorPie add: cartaDePie; yourself! !
-
-!EnfrentamientoDeTrucoPosteriorAlPrimero methodsFor: 'cartas jugadas - private' stamp: 'HAW 7/9/2021 12:53:40'!
-cartasJugadasPorPieCuandoPieNoJugo
-	
-	^anterior cartasJugadasPorPie! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'EnfrentamientoDeTrucoPosteriorAlPrimero class' category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-EnfrentamientoDeTrucoPosteriorAlPrimero class
-	instanceVariableNames: ''!
-
-!EnfrentamientoDeTrucoPosteriorAlPrimero class methodsFor: 'instance creation' stamp: 'HAW 7/9/2021 16:44:41'!
-en: unaRondaDeTruco anterior: unEnfrentamientoAnterior 
-	
-	^self new initializeEn: unaRondaDeTruco anterior: unEnfrentamientoAnterior ! !
-
-
-!classDefinition: #PrimerEnfrentamientoDeTruco category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-EnfrentamientoDeTrucoConCartas subclass: #PrimerEnfrentamientoDeTruco
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-
-!PrimerEnfrentamientoDeTruco methodsFor: 'initialization' stamp: 'HAW 7/8/2021 11:00:24'!
-initializeEn: unaRondaDeTruco 
-	
-	ronda := unaRondaDeTruco.
-	estado := EmpiezaMano en: self! !
-
-
-!PrimerEnfrentamientoDeTruco methodsFor: 'enfrentamientos ganados' stamp: 'HAW 7/9/2021 17:09:13'!
-cantidadDeEnfrentamientosGanadosPorMano
-	
-	^self sumadorSiGanoMano! !
-
-!PrimerEnfrentamientoDeTruco methodsFor: 'enfrentamientos ganados' stamp: 'HAW 7/9/2021 17:09:22'!
-cantidadDeEnfrentamientosGanadosPorPie
-	
-	^self sumadorSiGanoPie ! !
-
-
-!PrimerEnfrentamientoDeTruco methodsFor: 'cartas jugadas - private' stamp: 'HAW 7/9/2021 12:48:16'!
-cartasJugadasPorManoCuandoManoJugo
-	
-	^OrderedCollection with: cartaDeMano ! !
-
-!PrimerEnfrentamientoDeTruco methodsFor: 'cartas jugadas - private' stamp: 'HAW 7/9/2021 16:49:52'!
-cartasJugadasPorManoCuandoManoNoJugo
-	
-	^OrderedCollection new! !
-
-!PrimerEnfrentamientoDeTruco methodsFor: 'cartas jugadas - private' stamp: 'HAW 7/9/2021 12:51:45'!
-cartasJugadasPorPieCuandoPieJugo
-	
-	^OrderedCollection with: cartaDePie ! !
-
-!PrimerEnfrentamientoDeTruco methodsFor: 'cartas jugadas - private' stamp: 'HAW 7/9/2021 12:53:40'!
-cartasJugadasPorPieCuandoPieNoJugo
-	
-	^OrderedCollection new! !
-
-
-!PrimerEnfrentamientoDeTruco methodsFor: 'proximo - private' stamp: 'HAW 7/9/2021 16:52:19'!
-proximoEnfrentamientoCuandoTerminado
-	
-	^EnfrentamientoDeTrucoPosteriorAlPrimero en: ronda anterior: self! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'PrimerEnfrentamientoDeTruco class' category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-PrimerEnfrentamientoDeTruco class
-	instanceVariableNames: ''!
-
-!PrimerEnfrentamientoDeTruco class methodsFor: 'as yet unclassified' stamp: 'HAW 7/8/2021 10:56:05'!
-en: unaRondaDeTruco 
-	
-	^self new initializeEn: unaRondaDeTruco ! !
-
-
-!classDefinition: #RondaDeTrucoTerminada category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-EnfrentamientoDeTruco subclass: #RondaDeTrucoTerminada
-	instanceVariableNames: 'anterior'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-
-!RondaDeTrucoTerminada methodsFor: 'initialization' stamp: 'HAW 7/9/2021 16:45:10'!
-initializeEn: unaRondaDeTruco anterior: unEnfrentamientoAnterior 
-	
-	ronda := unaRondaDeTruco.
-	anterior := unEnfrentamientoAnterior.! !
-
-
-!RondaDeTrucoTerminada methodsFor: 'enfrentamientos ganados' stamp: 'HAW 7/9/2021 16:46:16'!
-cantidadDeEnfrentamientosGanadosPorMano
-	
-	^anterior cantidadDeEnfrentamientosGanadosPorMano ! !
-
-!RondaDeTrucoTerminada methodsFor: 'enfrentamientos ganados' stamp: 'HAW 7/9/2021 16:46:27'!
-cantidadDeEnfrentamientosGanadosPorPie
-	
-	^anterior cantidadDeEnfrentamientosGanadosPorPie ! !
-
-
-!RondaDeTrucoTerminada methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 16:46:43'!
-cartasJugadasPorMano
-	
-	^anterior cartasJugadasPorMano ! !
-
-!RondaDeTrucoTerminada methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 15:40:03'!
-cartasJugadasPorPie
-	
-	^anterior cartasJugadasPorPie ! !
-
-
-!RondaDeTrucoTerminada methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:21:44'!
-manoJuega: unaCartaDeTruco 
-	
-	^ronda signalNoSePuedeJugarConRondaTerminada! !
-
-!RondaDeTrucoTerminada methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:27:04'!
-pieJuega: unaCartaDeTruco 
-	
-	ronda signalNoSePuedeJugarConRondaTerminada ! !
-
-
-!RondaDeTrucoTerminada methodsFor: 'proximo' stamp: 'HAW 7/9/2021 18:41:52'!
-proximo
-
-	self shouldNotHappen ! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'RondaDeTrucoTerminada class' category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-RondaDeTrucoTerminada class
-	instanceVariableNames: ''!
-
-!RondaDeTrucoTerminada class methodsFor: 'instance creation' stamp: 'HAW 7/9/2021 16:44:48'!
-en: unaRondaDeTruco anterior: unEnfrentamientoAnterior 
-	
-	^self new initializeEn: unaRondaDeTruco anterior: unEnfrentamientoAnterior ! !
-
-
-!classDefinition: #EstadoDeEnfrentamiento category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-Object subclass: #EstadoDeEnfrentamiento
-	instanceVariableNames: 'enfrentamiento'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-
-!EstadoDeEnfrentamiento methodsFor: 'initialization' stamp: 'HAW 7/8/2021 11:25:10'!
-initializeEn: unEnfrentamiento 
-	
-	enfrentamiento := unEnfrentamiento.! !
-
-
-!EstadoDeEnfrentamiento methodsFor: 'proximo' stamp: 'HAW 7/9/2021 16:36:38'!
-proximo
-
-	self subclassResponsibility ! !
-
-!EstadoDeEnfrentamiento methodsFor: 'proximo' stamp: 'HAW 7/9/2021 16:36:43'!
-proximoEnfrentamiento
-
-	self subclassResponsibility ! !
-
-
-!EstadoDeEnfrentamiento methodsFor: 'quien gano' stamp: 'HAW 7/9/2021 16:31:41'!
-fueParda
-	
-	^false! !
-
-!EstadoDeEnfrentamiento methodsFor: 'quien gano' stamp: 'HAW 7/9/2021 15:51:01'!
-ganoMano
-	
-	^false! !
-
-!EstadoDeEnfrentamiento methodsFor: 'quien gano' stamp: 'HAW 7/9/2021 16:11:50'!
-ganoPie
-	
-	^false! !
-
-
-!EstadoDeEnfrentamiento methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:36:18'!
-manoJuega: unaCarta
-
-	self subclassResponsibility ! !
-
-!EstadoDeEnfrentamiento methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:36:23'!
-pieJuega: unaCarta
-
-	self subclassResponsibility ! !
-
-
-!EstadoDeEnfrentamiento methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 16:31:28'!
-cartasJugadasPorMano
-
-	self subclassResponsibility ! !
-
-!EstadoDeEnfrentamiento methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 16:31:34'!
-cartasJugadasPorPie
-
-	self subclassResponsibility ! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'EstadoDeEnfrentamiento class' category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-EstadoDeEnfrentamiento class
-	instanceVariableNames: ''!
-
-!EstadoDeEnfrentamiento class methodsFor: 'instance creation' stamp: 'HAW 7/8/2021 11:25:03'!
-en: unEnfrentamiento 
-	
-	^self new initializeEn: unEnfrentamiento ! !
-
-
-!classDefinition: #EmpiezaMano category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-EstadoDeEnfrentamiento subclass: #EmpiezaMano
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-
-!EmpiezaMano methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 12:48:42'!
-cartasJugadasPorMano
-	
-	^enfrentamiento cartasJugadasPorManoCuandoManoNoJugo! !
-
-!EmpiezaMano methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 12:53:40'!
-cartasJugadasPorPie
-	
-	^enfrentamiento cartasJugadasPorPieCuandoPieNoJugo! !
-
-
-!EmpiezaMano methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:33:57'!
-manoJuega: unaCartaDeTruco 
-	
-	enfrentamiento manoJuegaCuandoDebe: unaCartaDeTruco! !
-
-!EmpiezaMano methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:35:45'!
-pieJuega: unaCartaDeTruco 
-	
-	enfrentamiento signalNoEsTurnoDeJugador! !
-
-
-!EmpiezaMano methodsFor: 'proximo' stamp: 'HAW 7/8/2021 11:07:48'!
-proximo
-	
-	^JuegaPie en: enfrentamiento ! !
-
-!EmpiezaMano methodsFor: 'proximo' stamp: 'HAW 7/9/2021 17:54:47'!
-proximoEnfrentamiento
-	
-	^self shouldNotHappen ! !
-
-
-!classDefinition: #EmpiezaPie category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-EstadoDeEnfrentamiento subclass: #EmpiezaPie
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-
-!EmpiezaPie methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 12:52:56'!
-cartasJugadasPorMano
-	
-	^enfrentamiento cartasJugadasPorManoCuandoManoNoJugo ! !
-
-!EmpiezaPie methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 16:30:14'!
-cartasJugadasPorPie
-	
-	^enfrentamiento cartasJugadasPorPieCuandoPieNoJugo! !
-
-
-!EmpiezaPie methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:35:45'!
-manoJuega: unaCartaDeTruco 
-	
-	enfrentamiento signalNoEsTurnoDeJugador ! !
-
-!EmpiezaPie methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:59:51'!
-pieJuega: unaCartaDeTruco 
-	
-	enfrentamiento pieJuegaCuandoDebe: unaCartaDeTruco ! !
-
-
-!EmpiezaPie methodsFor: 'proximo' stamp: 'HAW 7/8/2021 11:22:57'!
-proximo
-	
-	^JuegaMano en: enfrentamiento ! !
-
-!EmpiezaPie methodsFor: 'proximo' stamp: 'HAW 7/9/2021 17:54:56'!
-proximoEnfrentamiento
-	
-	^self shouldNotHappen ! !
-
-
-!classDefinition: #EnfrentamientoTerminado category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-EstadoDeEnfrentamiento subclass: #EnfrentamientoTerminado
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-
-!EnfrentamientoTerminado methodsFor: 'quien gano' stamp: 'HAW 7/9/2021 16:02:49'!
-fueParda
-	
-	^enfrentamiento fuePardaCuandoTerminado! !
-
-!EnfrentamientoTerminado methodsFor: 'quien gano' stamp: 'HAW 7/9/2021 16:38:04'!
-ganoMano
-	
-	^enfrentamiento ganoManoCuandoTerminado! !
-
-!EnfrentamientoTerminado methodsFor: 'quien gano' stamp: 'HAW 7/9/2021 16:11:21'!
-ganoPie
-	
-	^enfrentamiento ganoPieCuandoTerminado! !
-
-
-!EnfrentamientoTerminado methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 12:49:39'!
-cartasJugadasPorMano
-	
-	^enfrentamiento cartasJugadasPorManoCuandoManoJugo ! !
-
-!EnfrentamientoTerminado methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 12:51:26'!
-cartasJugadasPorPie
-	
-	^enfrentamiento cartasJugadasPorPieCuandoPieJugo! !
-
-
-!EnfrentamientoTerminado methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:38:54'!
-manoJuega: unaCarta
-
-	self shouldNotHappen! !
-
-!EnfrentamientoTerminado methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:39:00'!
-pieJuega: unaCarta
-
-	self shouldNotHappen! !
-
-
-!EnfrentamientoTerminado methodsFor: 'proximo' stamp: 'HAW 7/9/2021 17:55:17'!
-proximo
-
-	^self shouldNotHappen ! !
-
-!EnfrentamientoTerminado methodsFor: 'proximo' stamp: 'HAW 7/9/2021 12:41:20'!
-proximoEnfrentamiento
-	
-	^enfrentamiento proximoEnfrentamientoCuandoTerminado! !
-
-
-!classDefinition: #JuegaMano category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-EstadoDeEnfrentamiento subclass: #JuegaMano
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-
-!JuegaMano methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 16:30:48'!
-cartasJugadasPorMano
-	
-	^enfrentamiento cartasJugadasPorManoCuandoManoNoJugo! !
-
-!JuegaMano methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 16:31:08'!
-cartasJugadasPorPie
-	
-	^enfrentamiento cartasJugadasPorPieCuandoPieJugo! !
-
-
-!JuegaMano methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:33:57'!
-manoJuega: unaCartaDeTruco 
-	
-	enfrentamiento manoJuegaCuandoDebe: unaCartaDeTruco ! !
-
-!JuegaMano methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:39:33'!
-pieJuega: unaCarta
-
-	enfrentamiento signalNoEsTurnoDeJugador ! !
-
-
-!JuegaMano methodsFor: 'proximo' stamp: 'HAW 7/9/2021 12:56:50'!
-proximo
-	
-	^EnfrentamientoTerminado en: enfrentamiento ! !
-
-!JuegaMano methodsFor: 'proximo' stamp: 'HAW 7/9/2021 12:43:43'!
-proximoEnfrentamiento
-	
-	^enfrentamiento ! !
-
-
-!classDefinition: #JuegaPie category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-EstadoDeEnfrentamiento subclass: #JuegaPie
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ISW1-2021-1C-2doParcial-Resolucion'!
-
-!JuegaPie methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 12:48:01'!
-cartasJugadasPorMano
-	
-	^enfrentamiento cartasJugadasPorManoCuandoManoJugo! !
-
-!JuegaPie methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 12:53:40'!
-cartasJugadasPorPie
-	
-	^enfrentamiento cartasJugadasPorPieCuandoPieNoJugo ! !
-
-
-!JuegaPie methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:40:08'!
-manoJuega: unaCarta
-
-	enfrentamiento signalNoEsTurnoDeJugador ! !
-
-!JuegaPie methodsFor: 'jugar' stamp: 'HAW 7/9/2021 16:59:51'!
-pieJuega: unaCartaDeTruco 
-	
-	enfrentamiento pieJuegaCuandoDebe: unaCartaDeTruco ! !
-
-
-!JuegaPie methodsFor: 'proximo' stamp: 'HAW 7/8/2021 11:14:40'!
-proximo
-	
-	^EnfrentamientoTerminado en: enfrentamiento ! !
-
-!JuegaPie methodsFor: 'proximo' stamp: 'HAW 7/9/2021 12:40:33'!
-proximoEnfrentamiento
-	
-	^enfrentamiento ! !
-
-
 !classDefinition: #RondaDeTruco category: 'ISW1-2021-1C-2doParcial-Resolucion'!
 Object subclass: #RondaDeTruco
-	instanceVariableNames: 'cartasDeManoDisponibles cartasDePieDisponibles enfrentamientoActual'
+	instanceVariableNames: 'cartasDeManoDisponibles cartasDePieDisponibles cartasDeManoJugadas cartasDePieJugadas'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ISW1-2021-1C-2doParcial-Resolucion'!
 
-!RondaDeTruco methodsFor: 'initialization' stamp: 'HAW 7/9/2021 12:45:19'!
-initializeConCartasDeMano: unasCartasDeMano yCartasDePie: unasCartasDePie 
+!RondaDeTruco methodsFor: 'cartas jugadas' stamp: 'HAW 7/10/2021 20:01:20'!
+cantidadDeCartasJugadasPorMano
 	
-	cartasDeManoDisponibles := unasCartasDeMano.
-	cartasDePieDisponibles := unasCartasDePie.
-		
-	enfrentamientoActual := PrimerEnfrentamientoDeTruco en: self! !
+	^cartasDeManoJugadas size! !
+
+!RondaDeTruco methodsFor: 'cartas jugadas' stamp: 'HAW 7/10/2021 20:01:26'!
+cantidadDeCartasJugadasPorPie
+
+	^cartasDePieJugadas size! !
+
+!RondaDeTruco methodsFor: 'cartas jugadas' stamp: 'HAW 7/10/2021 20:16:48'!
+cartasJugadasPorManoSon: unasCartas
+
+	^self cartasJugadas: cartasDeManoJugadas son: unasCartas ! !
+
+!RondaDeTruco methodsFor: 'cartas jugadas' stamp: 'HAW 7/10/2021 20:17:24'!
+cartasJugadasPorPieSon: unasCartas
+
+	^self cartasJugadas: cartasDePieJugadas son: unasCartas ! !
 
 
-!RondaDeTruco methodsFor: 'errores' stamp: 'HAW 7/8/2021 10:23:48'!
-cartaNoDisponibleErrorMessage
+!RondaDeTruco methodsFor: 'cartas jugadas - private' stamp: 'HAW 7/10/2021 20:17:02'!
+cartasJugadas: cartasJugadas son: unasCartas 
+
+	^ cartasJugadas asArray = unasCartas asArray ! !
+
+
+!RondaDeTruco methodsFor: 'error descriptions' stamp: 'HAW 7/10/2021 20:11:26'!
+cartaNoDisponibleErrorDescription
 	
 	^'Carta no disponible para jugar'! !
 
-!RondaDeTruco methodsFor: 'errores' stamp: 'HAW 7/8/2021 10:39:43'!
+!RondaDeTruco methodsFor: 'error descriptions' stamp: 'HAW 7/10/2021 19:12:39'!
 noEsTurnoDelJugadorErrorDescription
 	
-	^'No es el turno del jugador'! !
+	^'No es el turno para jugar'! !
 
-!RondaDeTruco methodsFor: 'errores' stamp: 'HAW 7/9/2021 16:22:45'!
+!RondaDeTruco methodsFor: 'error descriptions' stamp: 'HAW 7/10/2021 19:36:40'!
 noSePuedeJugarConRondaTerminadaErrorDescription
 	
-	^'No se puede jugar con ronda terminada'! !
+	^'No se puede jugar cuando hay ganador'! !
 
-!RondaDeTruco methodsFor: 'errores' stamp: 'HAW 7/9/2021 17:21:40'!
-signalCartaNoDisponible
 
-	^ self error: self cartaNoDisponibleErrorMessage! !
+!RondaDeTruco methodsFor: 'initialization' stamp: 'HAW 7/7/2021 18:27:32'!
+initilizeConCartasDeMano: unasCartasDeMano yDePie: unasCartasDePie
 
-!RondaDeTruco methodsFor: 'errores' stamp: 'HAW 7/9/2021 16:23:46'!
-signalNoSePuedeJugarConRondaTerminada
+	cartasDeManoDisponibles := unasCartasDeMano.
+	cartasDePieDisponibles := unasCartasDePie.
 	
-	self error: self noSePuedeJugarConRondaTerminadaErrorDescription ! !
-
-
-!RondaDeTruco methodsFor: 'cartas jugadas' stamp: 'HAW 7/8/2021 10:32:33'!
-cartasJugadas: cartasJugadas son: unasCartas
-
-	^ cartasJugadas asArray = unasCartas asArray! !
-
-!RondaDeTruco methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 12:46:15'!
-cartasJugadasPorMano
+	cartasDeManoJugadas := OrderedCollection new.
+	cartasDePieJugadas := OrderedCollection new.
 	
-	^enfrentamientoActual cartasJugadasPorMano ! !
-
-!RondaDeTruco methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 12:45:36'!
-cartasJugadasPorManoSon: unasCartas
-
-	^self cartasJugadas: self cartasJugadasPorMano son: unasCartas ! !
-
-!RondaDeTruco methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 12:50:02'!
-cartasJugadasPorPie
-	
-	^enfrentamientoActual cartasJugadasPorPie! !
-
-!RondaDeTruco methodsFor: 'cartas jugadas' stamp: 'HAW 7/9/2021 12:45:45'!
-cartasJugadasPorPieSon: unasCartas
-
-	^self cartasJugadas: self cartasJugadasPorPie son: unasCartas ! !
-
-
-!RondaDeTruco methodsFor: 'guien gano' stamp: 'HAW 7/9/2021 15:48:19'!
-ganoMano
-	
-	^enfrentamientoActual cantidadDeEnfrentamientosGanadosPorMano = 2! !
-
-!RondaDeTruco methodsFor: 'guien gano' stamp: 'HAW 7/9/2021 16:09:02'!
-ganoPie
-	
-	^enfrentamientoActual cantidadDeEnfrentamientosGanadosPorPie = 2! !
-
-!RondaDeTruco methodsFor: 'guien gano' stamp: 'HAW 7/9/2021 16:19:18'!
-hayGanador
-	
-	^self ganoMano or: [ self ganoPie ]! !
-
-
-!RondaDeTruco methodsFor: 'jugar' stamp: 'HAW 7/9/2021 17:24:17'!
-jugar: unaCartaDeTruco desde: cartasDiponibles con: accionDeJuego
-
-	(cartasDiponibles includes: unaCartaDeTruco) ifFalse: [ self signalCartaNoDisponible ].
-	accionDeJuego value.
-	cartasDiponibles remove: unaCartaDeTruco.
-	enfrentamientoActual := enfrentamientoActual proximo.
 	
 	! !
 
-!RondaDeTruco methodsFor: 'jugar' stamp: 'HAW 7/9/2021 17:23:29'!
+
+!RondaDeTruco methodsFor: 'jugar' stamp: 'HAW 7/10/2021 20:13:46'!
 manoJuega: unaCartaDeTruco 
 	
-	self jugar: unaCartaDeTruco desde: cartasDeManoDisponibles con: [ enfrentamientoActual manoJuega: unaCartaDeTruco ]
-	! !
+	self juagar: unaCartaDeTruco de: cartasDeManoDisponibles en: cartasDeManoJugadas si: [ self juegaMano ].
+! !
 
-!RondaDeTruco methodsFor: 'jugar' stamp: 'HAW 7/9/2021 17:24:44'!
+!RondaDeTruco methodsFor: 'jugar' stamp: 'HAW 7/10/2021 20:14:45'!
 pieJuega: unaCartaDeTruco 
 	
-	self jugar: unaCartaDeTruco desde: cartasDePieDisponibles con: [ enfrentamientoActual pieJuega: unaCartaDeTruco ]! !
+	self juagar: unaCartaDeTruco de: cartasDePieDisponibles en: cartasDePieJugadas si: [ self juegaPie ].
+! !
+
+
+!RondaDeTruco methodsFor: 'jugar - private' stamp: 'HAW 7/10/2021 20:14:21'!
+juagar: unaCartaDeTruco de: cartasDisponibles en: cartasJugadas si: condicionDeTurno
+
+	self hayGanador ifTrue: [ self error: self noSePuedeJugarConRondaTerminadaErrorDescription ].
+	condicionDeTurno value ifFalse: [ self error: self noEsTurnoDelJugadorErrorDescription ].
+	
+	cartasDisponibles remove: unaCartaDeTruco ifAbsent: [self error: self cartaNoDisponibleErrorDescription ].
+	cartasJugadas add: unaCartaDeTruco. 
+! !
+
+
+!RondaDeTruco methodsFor: 'quien gano' stamp: 'HAW 7/10/2021 20:15:38'!
+ganoMano
+	
+	^self ganoCuando: [ :cartaDeMano :cartaDePie | cartaDeMano mataA: cartaDePie ]
+	! !
+
+!RondaDeTruco methodsFor: 'quien gano' stamp: 'HAW 7/10/2021 20:15:38'!
+ganoPie
+	
+	^self ganoCuando: [ :cartaDeMano :cartaDePie | cartaDePie mataA: cartaDeMano ]
+	! !
+
+!RondaDeTruco methodsFor: 'quien gano' stamp: 'HAW 7/10/2021 19:49:06'!
+hayGanador
+
+	^ self ganoMano or: [ self ganoPie ]! !
+
+
+!RondaDeTruco methodsFor: 'quien gano - private' stamp: 'HAW 7/10/2021 20:11:04'!
+conEnfrentamientosTerminadosHacer: accionDeCartas
+
+	| lastIndex |
+	
+	lastIndex := cartasDeManoJugadas size min: cartasDePieJugadas size.
+	
+	1 to: lastIndex do: [ :index |
+		accionDeCartas value: (cartasDeManoJugadas at: index) value: (cartasDePieJugadas at: index) value: index ].
+
+	! !
+
+!RondaDeTruco methodsFor: 'quien gano - private' stamp: 'HAW 7/10/2021 20:15:38'!
+ganoCuando: condicionDeMatado
+
+	| ganados |
+	
+	ganados := 0.
+	self conEnfrentamientosTerminadosHacer: [ :cartaDeMano :cartaDePie :index |
+		(condicionDeMatado value: cartaDeMano value: cartaDePie) ifTrue: [ 
+			ganados := ganados + 1.
+			(index = 2 and: [ self primerEnfrentamientoFueParda ]) ifTrue: [ ganados := ganados + 1 ]]].
+
+	^ganados = 2
+	! !
+
+!RondaDeTruco methodsFor: 'quien gano - private' stamp: 'HAW 7/10/2021 20:08:46'!
+primerEnfrentamientoFueParda
+
+	^ cartasDeManoJugadas first empardaCon: cartasDePieJugadas first! !
+
+!RondaDeTruco methodsFor: 'quien gano - private' stamp: 'HAW 7/10/2021 20:01:58'!
+ultimoEnfrentamientoGanoMano
+	
+	^(cartasDePieJugadas last mataA: cartasDeManoJugadas last) not! !
+
+
+!RondaDeTruco methodsFor: 'quien juega' stamp: 'HAW 7/10/2021 20:00:01'!
+juegaMano
+	
+	self noJugoNadie ifTrue: [ ^true ].
+	self cantidadDeCartasJugadasPorMano > self cantidadDeCartasJugadasPorPie ifTrue: [ ^false ].
+	self cantidadDeCartasJugadasPorMano < self cantidadDeCartasJugadasPorPie ifTrue: [ ^true ].
+	
+	^self ultimoEnfrentamientoGanoMano  ! !
+
+!RondaDeTruco methodsFor: 'quien juega' stamp: 'HAW 7/10/2021 19:59:49'!
+juegaPie
+	
+	^self juegaMano not! !
+
+!RondaDeTruco methodsFor: 'quien juega' stamp: 'HAW 7/10/2021 20:00:51'!
+noJugoNadie
+	
+	^cartasDeManoJugadas isEmpty! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -1689,34 +1146,37 @@ pieJuega: unaCartaDeTruco
 RondaDeTruco class
 	instanceVariableNames: ''!
 
-!RondaDeTruco class methodsFor: 'as yet unclassified' stamp: 'HAW 7/8/2021 10:02:06'!
-cartasInvalidasErrorMessage
-	
-	^'La mano y el pie deben empezar con 3 cartas cada uno y no pueden estar repetidas'! !
+!RondaDeTruco class methodsFor: 'instance creation' stamp: 'HAW 7/10/2021 19:06:34'!
+conCartasDeMano: unasCartasDeMano yCartasDePie: unasCartasDePie
 
-
-!RondaDeTruco class methodsFor: 'instance creation' stamp: 'HAW 7/8/2021 10:13:02'!
-assert: cartasDeManoAsSet noTieneRepetidasCon: cartasDePieAsSet
-
-	^ (cartasDeManoAsSet union: cartasDePieAsSet) size = 6 ifFalse: [ self error: self cartasInvalidasErrorMessage ]! !
-
-!RondaDeTruco class methodsFor: 'instance creation' stamp: 'HAW 7/8/2021 10:11:19'!
-assertSonCartasValidas: unasCartas
-
-	| cartasAsSet  |
-	
-	cartasAsSet := unasCartas asSet.
-	cartasAsSet size = 3 ifFalse: [ self error: self cartasInvalidasErrorMessage ].
-	
-	^cartasAsSet ! !
-
-!RondaDeTruco class methodsFor: 'instance creation' stamp: 'HAW 7/8/2021 10:24:41'!
-conCartasDeMano: unasCartasDeMano yCartasDePie: unasCartasDePie 
-	
 	| cartasDeManoAsSet cartasDePieAsSet |
 	
-	cartasDeManoAsSet := self assertSonCartasValidas: unasCartasDeMano.
-	cartasDePieAsSet := self assertSonCartasValidas: unasCartasDePie.
-	self assert: cartasDeManoAsSet noTieneRepetidasCon: cartasDePieAsSet.
+	cartasDeManoAsSet := Set withAll: unasCartasDeMano.
+	cartasDePieAsSet := Set withAll: unasCartasDePie.
 	
-	^self new initializeConCartasDeMano: cartasDeManoAsSet yCartasDePie: cartasDePieAsSet ! !
+	self 
+		assert: unasCartasDeMano 
+		sonTresCon: cartasDeManoAsSet 
+		yNoReptidasCon: unasCartasDePie 
+		queDebenSerTres: cartasDePieAsSet.
+		
+	^self new initilizeConCartasDeMano: cartasDeManoAsSet yDePie: cartasDePieAsSet ! !
+
+
+!RondaDeTruco class methodsFor: 'error descriptions' stamp: 'HAW 7/10/2021 19:07:55'!
+cartasInvalidasErrorMessage
+	
+	^'Las cartas de los jugadores deben ser 3 y no repetidas'! !
+
+
+!RondaDeTruco class methodsFor: 'assertions' stamp: 'HAW 7/10/2021 19:07:55'!
+assert: unasCartasDeMano sonTresCon: cartasDeManoAsSet yNoReptidasCon: unasCartasDePie queDebenSerTres: cartasDePieAsSet
+
+	unasCartasDeMano size = 3 ifFalse: [ self error: self cartasInvalidasErrorMessage ].
+	unasCartasDePie size = 3 ifFalse: [ self error: self cartasInvalidasErrorMessage ].
+	
+	cartasDeManoAsSet size = 3 ifFalse: [ self error: self cartasInvalidasErrorMessage ].
+	cartasDePieAsSet size = 3 ifFalse: [ self error: self cartasInvalidasErrorMessage ].
+	
+	(cartasDeManoAsSet union: cartasDePieAsSet) size = 6 ifFalse: [ self error: self cartasInvalidasErrorMessage ].
+! !
