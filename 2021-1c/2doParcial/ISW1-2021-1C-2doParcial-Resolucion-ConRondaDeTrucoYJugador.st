@@ -1083,7 +1083,7 @@ con: unasCartasDisponibles en: unaRondaDeTruco
 
 !classDefinition: #RondaDeTruco category: 'ISW1-2021-1C-2doParcial-Resolucion'!
 Object subclass: #RondaDeTruco
-	instanceVariableNames: 'cartasDeManoDisponibles cartasDePieDisponibles cartasDeManoJugadas cartasDePieJugadas mano pie'
+	instanceVariableNames: 'mano pie'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ISW1-2021-1C-2doParcial-Resolucion'!
@@ -1115,20 +1115,13 @@ noSePuedeJugarConRondaTerminadaErrorDescription
 	^'No se puede jugar cuando hay ganador'! !
 
 
-!RondaDeTruco methodsFor: 'initialization' stamp: 'HAW 7/12/2021 00:00:23'!
+!RondaDeTruco methodsFor: 'initialization' stamp: 'HAW 7/15/2021 14:53:15'!
 initilizeConCartasDeMano: unasCartasDeMano yDePie: unasCartasDePie
 
 	mano := JugadorDeTruco con: unasCartasDeMano en: self.
 	pie := JugadorDeTruco con: unasCartasDePie en: self.
 	mano contrincante: pie.
 	pie contrincante: mano.
-	
-	cartasDeManoDisponibles := unasCartasDeMano.
-	cartasDePieDisponibles := unasCartasDePie.
-	
-	cartasDeManoJugadas := OrderedCollection new.
-	cartasDePieJugadas := OrderedCollection new.
-	
 	
 	! !
 
