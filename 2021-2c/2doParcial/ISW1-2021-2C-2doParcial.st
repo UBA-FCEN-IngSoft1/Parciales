@@ -5,78 +5,78 @@ TestCase subclass: #TestISWSmartBuilding
 	poolDictionaries: ''
 	category: 'ISW1-2021-2C-2doParcial'!
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 11:30:50'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test01TiempoEnConstruirConCapacidadFijaEsAreaSobreCapacidad
 
 	| equipoDeTrabajo |
 	
-	equipoDeTrabajo := EquipoDeTrabajoConcreto
+	equipoDeTrabajo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 250000 * centimeter * centimeter / day)
 		a: (PrecioFijo de: 1000 * peso / day).
 		
 	self assert: 2 * day equals: (equipoDeTrabajo tiempoEnConstruir: 250000 * centimeter * centimeter * 2)! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 11:31:38'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test02TiempoEnConstruirEstaExpresadoEnDiasEnteros
 
 	| equipoDeTrabajo |
 	
-	equipoDeTrabajo := EquipoDeTrabajoConcreto
+	equipoDeTrabajo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 250000 * centimeter * centimeter / day)
 		a: (PrecioFijo de: 1000 * peso / day).
 		
 	self assert: 1 * day equals: (equipoDeTrabajo tiempoEnConstruir: 25000 * centimeter * centimeter)! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 11:32:38'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test03CostoParaConstruirConPrecioFijoEsTiempoPorPrecio
 
 	| equipoDeTrabajo |
 	
-	equipoDeTrabajo := EquipoDeTrabajoConcreto
+	equipoDeTrabajo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 250000 * centimeter * centimeter / day)
 		a: (PrecioFijo de: 1000 * peso / day).
 		
 	self assert: 2000 * peso equals: (equipoDeTrabajo costoParaConstruir: 250000 * centimeter * centimeter * 2)! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 11:34:26'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test04TiempoEnConstruirConCapacidadVariableEnTiempoInicialUsaAreaInicial
 
 	| equipoDeTrabajo |
 	
-	equipoDeTrabajo := EquipoDeTrabajoConcreto
+	equipoDeTrabajo := EquipoSimple
 		construyendoCon: (CapacidadVariable de: 25 * meter * meter / day losPrimeros: 10 * day yElResto: 20 * meter * meter / day)
 		a: (PrecioFijo de: 1000 * peso / day).
 		
 	self assert: 10 * day equals: (equipoDeTrabajo tiempoEnConstruir: 25 * meter * meter * 10)! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 11:35:39'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test05TiempoEnConstruirConCapacidadVariableEnTiempoRestanteSumaTiempoInicialMasTiempoPorCapacidadRestante
 
 	| equipoDeTrabajo |
 	
-	equipoDeTrabajo := EquipoDeTrabajoConcreto
+	equipoDeTrabajo := EquipoSimple
 		construyendoCon: (CapacidadVariable de: 25 * meter * meter / day losPrimeros: 10 * day yElResto: 20 * meter * meter / day)
 		a: (PrecioFijo de: 1000 * peso / day).
 		
 	self assert: 11 * day equals: (equipoDeTrabajo tiempoEnConstruir: 25 * meter * meter * 10 + (20 * meter * meter))! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 11:37:54'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test06TiempoEnConstruirConCapacidadVariableParaAreaInicialEstaExpresadoEnDiasEnteros
 
 	| equipoDeTrabajo |
 	
-	equipoDeTrabajo := EquipoDeTrabajoConcreto
+	equipoDeTrabajo := EquipoSimple
 		construyendoCon: (CapacidadVariable de: 25 * meter * meter / day losPrimeros: 10 * day yElResto: 20 * meter * meter / day)
 		a: (PrecioFijo de: 1000 * peso / day).
 		
 	self assert: 1 * day equals: (equipoDeTrabajo tiempoEnConstruir: 20 * meter * meter)! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 11:38:26'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test07TiempoEnConstruirConCapacidadVariableParaAreaRestanteEstaExpresadoEnDiasEnteros
 
 	| equipoDeTrabajo |
 	
-	equipoDeTrabajo := EquipoDeTrabajoConcreto
+	equipoDeTrabajo := EquipoSimple
 		construyendoCon: (CapacidadVariable de: 25 * meter * meter / day losPrimeros: 10 * day yElResto: 20 * meter * meter / day)
 		a: (PrecioFijo de: 1000 * peso / day).
 		
@@ -91,40 +91,40 @@ test08LaCapacidadParaDiasRestantesDebeSerMenosALaCapacidadInicial
 		withMessageText: CapacidadVariable capacidadRestanteDebeSerMenorACapacidadInicialErrorDescription
 	! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 12:01:05'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test09CostoParaConstruirConPrecioVariableUsaPrecioNoLluviosoParaDiasNoLluviosos
 
 	| equipoDeTrabajo |
 	
 	diasLluviosos := 0 * day.
 	
-	equipoDeTrabajo := EquipoDeTrabajoConcreto
+	equipoDeTrabajo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 25 * meter * meter / day)
 		a: (PrecioDependienteDeClima enDiasNoLluviososDe: 1000 * peso / day yEnDiasLluviososDe: 1500 * peso / day usando: self).
 		
 	self assert: 1000 * peso equals: (equipoDeTrabajo costoParaConstruir: 25 * meter * meter)! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 12:01:05'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test10CostoParaConstruirConPrecioVariableUsaPrecioLluviosoParaDiasLluviosos
 
 	| equipoDeTrabajo |
 	
 	diasLluviosos := 1 * day.
 	
-	equipoDeTrabajo := EquipoDeTrabajoConcreto
+	equipoDeTrabajo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 25 * meter * meter / day)
 		a: (PrecioDependienteDeClima enDiasNoLluviososDe: 1000 * peso / day yEnDiasLluviososDe: 1500 * peso / day usando: self).
 		
 	self assert: 1500 * peso equals: (equipoDeTrabajo costoParaConstruir: 25 * meter * meter)! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 12:01:05'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test11CostoParaConstruirConPrecioVariableUsaPrecioLluviosoYNoLluviosoComoCorresponde
 
 	| equipoDeTrabajo |
 	
 	diasLluviosos := 2 * day.
 	
-	equipoDeTrabajo := EquipoDeTrabajoConcreto
+	equipoDeTrabajo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 25 * meter * meter / day)
 		a: (PrecioDependienteDeClima enDiasNoLluviososDe: 1000 * peso / day yEnDiasLluviososDe: 1500 * peso / day usando: self).
 		
@@ -148,12 +148,12 @@ test13NoSePuedeCrearEquipoCombinadoSinEquipos
 		withMessageText: EquipoCombinado debeHaberPorloMenosUnEquipoErrorDescription 
 		! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 13:51:31'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test14NoSePuedeCrearEquipoCombinadoConEquiposDirectosCompartidos
 
 	| equipoDeTrabajo |
 	
-	equipoDeTrabajo := EquipoDeTrabajoConcreto
+	equipoDeTrabajo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 25 * meter * meter / hour)
 		a: (PrecioFijo de: 1000 * peso / day).
 
@@ -163,12 +163,12 @@ test14NoSePuedeCrearEquipoCombinadoConEquiposDirectosCompartidos
 		withMessageText: EquipoCombinado noPuedenHaberEquiposRepetidosErrorDescription 
 		! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 13:53:22'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test15NoSePuedeConstruirEquipoCombinadoConEquiposIndirectorRepetidos
 
 	| equipoDeTrabajo |
 	
-	equipoDeTrabajo := EquipoDeTrabajoConcreto
+	equipoDeTrabajo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 25 * meter * meter / day)
 		a: (PrecioFijo de: 1000 * peso / day ).
 
@@ -178,12 +178,12 @@ test15NoSePuedeConstruirEquipoCombinadoConEquiposIndirectorRepetidos
 		withMessageText: EquipoCombinado noPuedenHaberEquiposRepetidosErrorDescription 
 ! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 13:53:33'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test16CostoParaConstruirDeEquipoCombinadoParaUnEquipoEsElCostoDeEseEquipo
 
 	| equipoDeTrabajo equipoCombinado |
 	
-	equipoDeTrabajo := EquipoDeTrabajoConcreto
+	equipoDeTrabajo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 25 * meter * meter / day)
 		a: (PrecioFijo de: 1000 * peso / day ).
 
@@ -191,16 +191,16 @@ test16CostoParaConstruirDeEquipoCombinadoParaUnEquipoEsElCostoDeEseEquipo
 	
 	self assert: 1000 * peso equals: (equipoCombinado costoParaConstruir: 25 * meter * meter)! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 13:53:48'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test17CostoParaConstruirEsLaSumaDeLosCostosDeLosEquipos
 
 	| equipoAzul equipoCombinado equipoRojo |
 	
-	equipoAzul := EquipoDeTrabajoConcreto
+	equipoAzul := EquipoSimple
 		construyendoCon: (CapacidadFija de: 20 * meter * meter / day)
 		a: (PrecioFijo de: 1000 * peso / day ).
 
-	equipoRojo := EquipoDeTrabajoConcreto
+	equipoRojo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 10 * meter * meter / day)
 		a: (PrecioFijo de: 2000 * peso / day ).
 
@@ -208,16 +208,16 @@ test17CostoParaConstruirEsLaSumaDeLosCostosDeLosEquipos
 	
 	self assert: 5000 * peso equals: (equipoCombinado costoParaConstruir: 40 * meter * meter)! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 13:54:06'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test18TiempoDeConstruccionEsElMaximo
 
 	| equipoAzul equipoCombinado equipoRojo |
 	
-	equipoAzul := EquipoDeTrabajoConcreto
+	equipoAzul := EquipoSimple
 		construyendoCon: (CapacidadFija de: 20 * meter * meter / day)
 		a: (PrecioFijo de: 1000 * peso / day ).
 
-	equipoRojo := EquipoDeTrabajoConcreto
+	equipoRojo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 10 * meter * meter / day)
 		a: (PrecioFijo de: 2000 * peso / day ).
 
@@ -225,16 +225,16 @@ test18TiempoDeConstruccionEsElMaximo
 	
 	self assert: 2 * day equals: (equipoCombinado tiempoEnConstruir: 40 * meter * meter)! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 13:54:17'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test19SePuedeConsultarElTiempoPorEquipo
 
 	| equipoAzul equipoCombinado equipoRojo tiempoPorEquipo |
 	
-	equipoAzul := EquipoDeTrabajoConcreto
+	equipoAzul := EquipoSimple
 		construyendoCon: (CapacidadFija de: 20 * meter * meter / day)
 		a: (PrecioFijo de: 1000 * peso / day ).
 
-	equipoRojo := EquipoDeTrabajoConcreto
+	equipoRojo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 10 * meter * meter / day)
 		a: (PrecioFijo de: 2000 * peso / day ).
 
@@ -246,16 +246,16 @@ test19SePuedeConsultarElTiempoPorEquipo
 	self assert: 1 * day equals: (tiempoPorEquipo at: equipoAzul).
 	self assert: 2 * day equals: (tiempoPorEquipo at: equipoRojo )! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 13:54:29'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test20SePuedeConsultarElCostoPorEquipo
 
 	| equipoAzul equipoCombinado equipoRojo costoPorEquipo |
 	
-	equipoAzul := EquipoDeTrabajoConcreto
+	equipoAzul := EquipoSimple
 		construyendoCon: (CapacidadFija de: 20 * meter * meter / day)
 		a: (PrecioFijo de: 1000 * peso / day ).
 
-	equipoRojo := EquipoDeTrabajoConcreto
+	equipoRojo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 10 * meter * meter / day)
 		a: (PrecioFijo de: 2000 * peso / day ).
 
@@ -267,16 +267,16 @@ test20SePuedeConsultarElCostoPorEquipo
 	self assert: 1000 * peso equals: (costoPorEquipo at: equipoAzul).
 	self assert: 4000 * peso equals: (costoPorEquipo at: equipoRojo )! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 13:54:34'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test21EquipoMasRapidoEsElQueMenosTarda
 
 	| equipoAzul equipoCombinado equipoRojo |
 	
-	equipoAzul := EquipoDeTrabajoConcreto
+	equipoAzul := EquipoSimple
 		construyendoCon: (CapacidadFija de: 20 * meter * meter / day)
 		a: (PrecioFijo de: 1000 * peso / day ).
 
-	equipoRojo := EquipoDeTrabajoConcreto
+	equipoRojo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 10 * meter * meter / day)
 		a: (PrecioFijo de: 2000 * peso / day ).
 
@@ -284,16 +284,16 @@ test21EquipoMasRapidoEsElQueMenosTarda
 	
 	self assert: equipoAzul equals: (equipoCombinado masRapidoParaConstruir: 40 * meter * meter)! !
 
-!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/25/2021 13:54:42'!
+!TestISWSmartBuilding methodsFor: 'tests' stamp: 'HAW 11/27/2021 15:38:04'!
 test22EquipoMasBaratoEsElQueMenosCobra
 
 	| equipoAzul equipoCombinado equipoRojo |
 	
-	equipoAzul := EquipoDeTrabajoConcreto
+	equipoAzul := EquipoSimple
 		construyendoCon: (CapacidadFija de: 20 * meter * meter / day)
 		a: (PrecioFijo de: 1000 * peso / day ).
 
-	equipoRojo := EquipoDeTrabajoConcreto
+	equipoRojo := EquipoSimple
 		construyendoCon: (CapacidadFija de: 10 * meter * meter / day)
 		a: (PrecioFijo de: 2000 * peso / day ).
 
@@ -457,26 +457,21 @@ areaPorEquipoDe: unArea
 
 	^ unArea / equipos size! !
 
-!EquipoCombinado methodsFor: 'equipos' stamp: 'HAW 11/25/2021 11:07:19'!
+!EquipoCombinado methodsFor: 'equipos' stamp: 'HAW 11/27/2021 15:39:32'!
 masBaratoParaConstruir: unArea
-
-	^self primeroCon: [ :equipo :areaPorEquipo | equipo costoParaConstruir: areaPorEquipo ] paraConstruir: unArea ! !
-
-!EquipoCombinado methodsFor: 'equipos' stamp: 'HAW 11/25/2021 11:07:32'!
-masRapidoParaConstruir: unArea
-
-	^self primeroCon: [ :equipo :areaPorEquipo | equipo tiempoEnConstruir: areaPorEquipo ] paraConstruir: unArea 
-	! !
-
-!EquipoCombinado methodsFor: 'equipos' stamp: 'HAW 11/25/2021 11:07:48'!
-primeroCon: unaCondicion paraConstruir: unArea
 
 	| areaPorEquipo |
 	
-	areaPorEquipo := self areaPorEquipoDe: unArea.
+	areaPorEquipo _ self areaPorEquipoDe: unArea.
+	^equipos detectMin: [ :equipo | equipo costoParaConstruir: areaPorEquipo] ! !
+
+!EquipoCombinado methodsFor: 'equipos' stamp: 'HAW 11/27/2021 15:39:47'!
+masRapidoParaConstruir: unArea
+
+	| areaPorEquipo |
 	
-	^(equipos asSortedCollection: [ :leftEquipo :rightEquipo |
-		(unaCondicion value: leftEquipo value: areaPorEquipo) <= (unaCondicion value: rightEquipo value: areaPorEquipo) ]) first! !
+	areaPorEquipo _ self areaPorEquipoDe: unArea.
+	^equipos detectMin: [ :equipo | equipo tiempoEnConstruir: areaPorEquipo] ! !
 
 
 !EquipoCombinado methodsFor: 'construccion' stamp: 'HAW 11/25/2021 11:05:05'!
@@ -567,21 +562,21 @@ noPuedenHaberEquiposRepetidosErrorDescription
 	^'No pueden haber equipos repetidos'! !
 
 
-!classDefinition: #EquipoDeTrabajoConcreto category: 'ISW1-2021-2C-2doParcial'!
-EquipoDeTrabajo subclass: #EquipoDeTrabajoConcreto
+!classDefinition: #EquipoSimple category: 'ISW1-2021-2C-2doParcial'!
+EquipoDeTrabajo subclass: #EquipoSimple
 	instanceVariableNames: 'precio capacidadDeConstruccion'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ISW1-2021-2C-2doParcial'!
 
-!EquipoDeTrabajoConcreto methodsFor: 'initialization' stamp: 'HAW 11/25/2021 11:10:47'!
+!EquipoSimple methodsFor: 'initialization' stamp: 'HAW 11/25/2021 11:10:47'!
 initializeConstruyendoCon: unCapacidadDeConstruccion a: unPrecio 
 	
 	capacidadDeConstruccion := unCapacidadDeConstruccion.
 	precio := unPrecio.! !
 
 
-!EquipoDeTrabajoConcreto methodsFor: 'equipos' stamp: 'HAW 11/23/2021 16:55:25'!
+!EquipoSimple methodsFor: 'equipos' stamp: 'HAW 11/23/2021 16:55:25'!
 addEquiposTo: aCollector
 
 	aCollector add: self
@@ -589,23 +584,23 @@ addEquiposTo: aCollector
 	! !
 
 
-!EquipoDeTrabajoConcreto methodsFor: 'construccion' stamp: 'HAW 11/25/2021 11:10:47'!
+!EquipoSimple methodsFor: 'construccion' stamp: 'HAW 11/25/2021 11:10:47'!
 costoParaConstruir: unArea
 
 	^precio precioPara: (self tiempoEnConstruir: unArea) ! !
 
-!EquipoDeTrabajoConcreto methodsFor: 'construccion' stamp: 'HAW 11/25/2021 11:10:05'!
+!EquipoSimple methodsFor: 'construccion' stamp: 'HAW 11/25/2021 11:10:05'!
 tiempoEnConstruir: unArea
 
 	^ (capacidadDeConstruccion tiempoEnConstruir: unArea) ceiling! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'EquipoDeTrabajoConcreto class' category: 'ISW1-2021-2C-2doParcial'!
-EquipoDeTrabajoConcreto class
+!classDefinition: 'EquipoSimple class' category: 'ISW1-2021-2C-2doParcial'!
+EquipoSimple class
 	instanceVariableNames: ''!
 
-!EquipoDeTrabajoConcreto class methodsFor: 'instance creation' stamp: 'HAW 11/25/2021 11:11:36'!
+!EquipoSimple class methodsFor: 'instance creation' stamp: 'HAW 11/25/2021 11:11:36'!
 construyendoCon: unaCapacidadDeConstruccion a: unPrecio 
 	
 	^self new initializeConstruyendoCon: unaCapacidadDeConstruccion a: unPrecio ! !
