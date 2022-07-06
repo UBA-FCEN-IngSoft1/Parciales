@@ -1,17 +1,17 @@
-'From Cuis 6.0 [latest update: #5324] on 5 July 2022 at 8:25:46 pm'!
-'Description Resolución de youtube'!
-!provides: 'ISW1-2022-1C-2doParcial' 1 3!
+'From Cuis 6.0 [latest update: #5324] on 6 July 2022 at 6:59:23 pm'!
+'Description renames'!
+!provides: 'ISW1-2022-1C-2doParcial' 1 4!
 SystemOrganization addCategory: 'ISW1-2022-1C-2doParcial'!
 
 
-!classDefinition: #LadderAndSlicesGameTest category: 'ISW1-2022-1C-2doParcial'!
-TestCase subclass: #LadderAndSlicesGameTest
+!classDefinition: #LadderAndSlidesGameTest category: 'ISW1-2022-1C-2doParcial'!
+TestCase subclass: #LadderAndSlidesGameTest
 	instanceVariableNames: 'diceRolls'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ISW1-2022-1C-2doParcial'!
-!classDefinition: 'LadderAndSlicesGameTest class' category: 'ISW1-2022-1C-2doParcial'!
-LadderAndSlicesGameTest class
+!classDefinition: 'LadderAndSlidesGameTest class' category: 'ISW1-2022-1C-2doParcial'!
+LadderAndSlidesGameTest class
 	instanceVariableNames: ''!
 
 !classDefinition: #Dice category: 'ISW1-2022-1C-2doParcial'!
@@ -34,14 +34,14 @@ Dice subclass: #RamdomDice
 RamdomDice class
 	instanceVariableNames: ''!
 
-!classDefinition: #LadderAndSlicesGame category: 'ISW1-2022-1C-2doParcial'!
-Object subclass: #LadderAndSlicesGame
+!classDefinition: #LadderAndSlidesGame category: 'ISW1-2022-1C-2doParcial'!
+Object subclass: #LadderAndSlidesGame
 	instanceVariableNames: 'players floorExtentions startingPosition endingPosition dice playersPosition playersStream shortcuts'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ISW1-2022-1C-2doParcial'!
-!classDefinition: 'LadderAndSlicesGame class' category: 'ISW1-2022-1C-2doParcial'!
-LadderAndSlicesGame class
+!classDefinition: 'LadderAndSlidesGame class' category: 'ISW1-2022-1C-2doParcial'!
+LadderAndSlidesGame class
 	instanceVariableNames: ''!
 
 !classDefinition: #PositionInFloor category: 'ISW1-2022-1C-2doParcial'!
@@ -65,7 +65,7 @@ Shortcut class
 	instanceVariableNames: ''!
 
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
 test01PlayersStartOnStaringPosition
 
 	| game |
@@ -75,7 +75,7 @@ test01PlayersStartOnStaringPosition
 	self assert: (game positionOf: self player1 is: self startingPosition).
 	self assert: (game positionOf: self player2 is: self startingPosition).! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
 test02PositionInFloorIsNotTheSameWithDifferentPosition
 
 	| game |
@@ -85,7 +85,7 @@ test02PositionInFloorIsNotTheSameWithDifferentPosition
 	self deny: (game positionOf: self player1 is: (2@1 inFloor: 1)).
 ! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
 test03PositionInFloorIsNotTheSameOnDifferentFloor
 
 	| game |
@@ -95,7 +95,7 @@ test03PositionInFloorIsNotTheSameOnDifferentFloor
 	self deny: (game positionOf: self player1 is: (1@1 inFloor: 2)).
 ! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
 test04FirstPlayerMovesCorrectly
 
 	| game |
@@ -108,17 +108,17 @@ test04FirstPlayerMovesCorrectly
 	self assert: (game positionOf: self player1 is: (2@2 inFloor: 1)).
 ! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:13:25'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:13:25'!
 test05FloorInPositionIsNotEqualToObjectsOfDiffentType
 
 	self deny: self endingPosition = 1! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:13:36'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:13:36'!
 test06FloorPositionsHaveSameHashWhenEqual
 
 	self assert: self endingPosition hash equals: self endingPosition hash! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
 test07AllPlayersMove
 
 	| game |
@@ -132,7 +132,7 @@ test07AllPlayersMove
 	self assert: (game positionOf: self player2 is: (2@1 inFloor: 1)).
 ! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
 test08PlayersCannotMoveOutsideFloorExtent
 
 	| game |
@@ -145,7 +145,7 @@ test08PlayersCannotMoveOutsideFloorExtent
 	self assert: (game positionOf: self player1 is: (2@2 inFloor: 1)).
 	! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:24:11'!
 test09PlayerCannotMoveOnPositionBelow1_1
 
 	| game |
@@ -158,7 +158,7 @@ test09PlayerCannotMoveOnPositionBelow1_1
 	self assert: (game positionOf: self player1 is: self startingPosition).
 	! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:23:46'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:23:46'!
 test10PlayerCanMoveThrougthShorcut
 
 	| game |
@@ -171,7 +171,7 @@ test10PlayerCanMoveThrougthShorcut
 	self assert: (game positionOf: self player1 is: self endingPosition).
 	! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 19:00:51'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 19:00:51'!
 test11LadderCanNotHaveSameStartingAndEndingFloor
 
 	self 
@@ -179,7 +179,7 @@ test11LadderCanNotHaveSameStartingAndEndingFloor
 		raise: Error - MessageNotUnderstood 
 		withMessageText: Shortcut ladderMustGoUpErrorDescription! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 19:00:16'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 19:00:16'!
 test12LadderMustGoUp
 
 	self 
@@ -187,62 +187,62 @@ test12LadderMustGoUp
 		raise: Error - MessageNotUnderstood 
 		withMessageText: Shortcut ladderMustGoUpErrorDescription! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 19:00:47'!
-test13SliceCannotHaveSameStargingAndEndingFloor
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/6/2022 18:46:49'!
+test13SlideCannotHaveSameStargingAndEndingFloor
 
 	self 
-		should: [ Shortcut sliceFrom: (2@2 inFloor: 2) to: ( 3@3 inFloor: 2). ]
+		should: [ Shortcut slideFrom: (2@2 inFloor: 2) to: ( 3@3 inFloor: 2). ]
 		raise: Error - MessageNotUnderstood 
-		withMessageText: Shortcut sliceMustDownUpErrorDescription! !
+		withMessageText: Shortcut slideMustDownUpErrorDescription! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 19:01:16'!
-test14SliceMustGoDown
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/6/2022 18:46:49'!
+test14SlideMustGoDown
 
 	self 
-		should: [ Shortcut sliceFrom: (2@2 inFloor: 1) to: ( 3@3 inFloor: 2). ]
+		should: [ Shortcut slideFrom: (2@2 inFloor: 1) to: ( 3@3 inFloor: 2). ]
 		raise: Error - MessageNotUnderstood 
-		withMessageText: Shortcut sliceMustDownUpErrorDescription! !
+		withMessageText: Shortcut slideMustDownUpErrorDescription! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:15:17'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/6/2022 18:47:30'!
 test15ShortcutsFromCannotBeOutsideFloorExtent
 
 	self 
 		assertShortcutIsInvalid: (Shortcut ladderFrom: (3@3 inFloor: 1) to: self endingPosition) 
-		because: LadderAndSlicesGame shortcutsMustBeInsideFloorsErrorDescription! !
+		because: LadderAndSlidesGame shortcutsMustBeInsideFloorsErrorDescription! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:15:26'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/6/2022 18:47:30'!
 test16ShortcutFromMustBeEqualOrBiggerTo1_1
 
 	self 
 		assertShortcutIsInvalid: (Shortcut ladderFrom: (0@0 inFloor: 1) to: self endingPosition)
-		because: LadderAndSlicesGame shortcutsMustBeInsideFloorsErrorDescription! !
+		because: LadderAndSlidesGame shortcutsMustBeInsideFloorsErrorDescription! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:15:32'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/6/2022 18:47:30'!
 test17ShortcutFromMustBeOnValidFloor
 
 	self 
 		assertShortcutIsInvalid: (Shortcut ladderFrom: (1@1 inFloor: 0) to: self endingPosition)
-		because: LadderAndSlicesGame shortcutsMustBeOnValidFloorsErrorDescription! !
+		because: LadderAndSlidesGame shortcutsMustBeOnValidFloorsErrorDescription! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:15:41'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/6/2022 18:47:30'!
 test18ShortcutToMustBeInsideFloorExtents
 
 	self 
 		assertShortcutIsInvalid: (Shortcut ladderFrom: self startingPosition to: (4@4 inFloor: 2))
-		because: LadderAndSlicesGame shortcutsMustBeInsideFloorsErrorDescription ! !
+		because: LadderAndSlidesGame shortcutsMustBeInsideFloorsErrorDescription ! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:15:48'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/6/2022 18:47:30'!
 test19ShortcutCannotStartOnStartingPosition
 
 	self 
 		assertShortcutIsInvalid: (Shortcut ladderFrom: self startingPosition to: (1@1 inFloor: 2))
-		because: LadderAndSlicesGame shortcutsCannotStartOnStartingPositionErrorDescription! !
+		because: LadderAndSlidesGame shortcutsCannotStartOnStartingPositionErrorDescription! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:16:02'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/6/2022 18:47:30'!
 test20ShortcutsCannotStartOnEndingPosition
 
 	self
-		should: [ LadderAndSlicesGame 
+		should: [ LadderAndSlidesGame 
 			players: self twoPlayers 
 			floorExtentions: self twoFloorExtentions 
 			startingOn: self startingPosition
@@ -250,23 +250,23 @@ test20ShortcutsCannotStartOnEndingPosition
 			shortcuts: { Shortcut ladderFrom: (2@2 inFloor: 1) to: (1@1 inFloor: 2) }
 			dice: self ]
 		raise: Error - MessageNotUnderstood 
-		withMessageText: LadderAndSlicesGame shortcutsCannotStartOnEndingPositionErrorDescription! !
+		withMessageText: LadderAndSlidesGame shortcutsCannotStartOnEndingPositionErrorDescription! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 19:11:09'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/6/2022 18:47:30'!
 test21ShortcutsCannotStartOnSamePosition
 
 	self 
 		assertShortcutsAreInvalid: { Shortcut ladderFrom: (2@2 inFloor: 1) to: (1@1 inFloor: 2). Shortcut ladderFrom: (2@2 inFloor: 1) to: (2@2 inFloor: 2) }
-		because: LadderAndSlicesGame shortcutsCannotStartOnSamePositionErrorDescription! !
+		because: LadderAndSlidesGame shortcutsCannotStartOnSamePositionErrorDescription! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 19:12:35'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/6/2022 18:47:30'!
 test22ShortcutsCannotEndOnAnotherShortcutStart
 
 	self 
-		assertShortcutsAreInvalid: { Shortcut ladderFrom: (2@2 inFloor: 1) to: (1@1 inFloor: 2). Shortcut sliceFrom: (1@1 inFloor: 2) to: (1@2 inFloor: 1) }
-		because: LadderAndSlicesGame shortcutsCannotEndOnAnotherShortcutStartErrorDescription! !
+		assertShortcutsAreInvalid: { Shortcut ladderFrom: (2@2 inFloor: 1) to: (1@1 inFloor: 2). Shortcut slideFrom: (1@1 inFloor: 2) to: (1@2 inFloor: 1) }
+		because: LadderAndSlidesGame shortcutsCannotEndOnAnotherShortcutStartErrorDescription! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:22:42'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:22:42'!
 test23GameIsOverWhenAPlayerGetsIntoEndingPosition
 
 	| game |
@@ -279,7 +279,7 @@ test23GameIsOverWhenAPlayerGetsIntoEndingPosition
 	self assert: game isOver.
 	self assert: self player1 equals: (game winnerIfNone: [ self fail ]).! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:22:42'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:22:42'!
 test24GameIsNotOverWhenNoPlayerIsOnEndingPosition
 
 	| game |
@@ -291,7 +291,7 @@ test24GameIsNotOverWhenNoPlayerIsOnEndingPosition
 	self deny: game isOver.
 	self assert: 'no winner' equals: (game winnerIfNone: [ 'no winner' ]).! !
 
-!LadderAndSlicesGameTest methodsFor: 'tests' stamp: 'HAW 7/5/2022 20:22:42'!
+!LadderAndSlidesGameTest methodsFor: 'tests' stamp: 'HAW 7/6/2022 18:47:30'!
 test25CannotPlayWhenGameIsOver
 
 	| game |
@@ -304,27 +304,27 @@ test25CannotPlayWhenGameIsOver
 	self
 		should: [ game play ]
 		raise: Error
-		withMessageText: LadderAndSlicesGame cannotPlayWhenGameIsOverErrorDescription! !
+		withMessageText: LadderAndSlidesGame cannotPlayWhenGameIsOverErrorDescription! !
 
-!LadderAndSlicesGameTest methodsFor: 'dice simulation' stamp: 'HAW 7/5/2022 11:45:53'!
+!LadderAndSlidesGameTest methodsFor: 'dice simulation' stamp: 'HAW 7/5/2022 11:45:53'!
 diceRolls: aCollectionOfRolls
 
 	diceRolls := ReadStream on: aCollectionOfRolls ! !
 
-!LadderAndSlicesGameTest methodsFor: 'dice simulation' stamp: 'HAW 7/5/2022 11:46:07'!
+!LadderAndSlidesGameTest methodsFor: 'dice simulation' stamp: 'HAW 7/5/2022 11:46:07'!
 roll
 	
 	^diceRolls next! !
 
-!LadderAndSlicesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 20:24:11'!
+!LadderAndSlidesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 20:24:11'!
 defaultGame
 
 	^ self defaultGameWith: {}! !
 
-!LadderAndSlicesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 20:21:52'!
+!LadderAndSlidesGameTest methodsFor: 'test data' stamp: 'HAW 7/6/2022 18:47:30'!
 defaultGameWith: shortcuts
 
-	^ LadderAndSlicesGame 
+	^ LadderAndSlidesGame 
 		players: self twoPlayers 
 		floorExtentions: self twoFloorExtentions 
 		startingOn: self startingPosition
@@ -332,48 +332,48 @@ defaultGameWith: shortcuts
 		shortcuts: shortcuts
 		dice: self! !
 
-!LadderAndSlicesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 18:50:33'!
+!LadderAndSlidesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 18:50:33'!
 endingPosition
 
 	^ 3@3 inFloor: 2! !
 
-!LadderAndSlicesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 20:23:04'!
+!LadderAndSlidesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 20:23:04'!
 gameOverGame
 
 	^ self defaultGameWith: { Shortcut ladderFrom: (2@2 inFloor: 1) to: self endingPosition }
 	! !
 
-!LadderAndSlicesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 11:24:08'!
+!LadderAndSlidesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 11:24:08'!
 player1
 
 	^ 'Player1'! !
 
-!LadderAndSlicesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 11:24:14'!
+!LadderAndSlidesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 11:24:14'!
 player2
 
 	^ 'Player2'! !
 
-!LadderAndSlicesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 18:50:12'!
+!LadderAndSlidesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 18:50:12'!
 startingPosition
 
 	^ 1@1 inFloor: 1! !
 
-!LadderAndSlicesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 19:05:44'!
+!LadderAndSlidesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 19:05:44'!
 twoFloorExtentions
 
 	^ { 2@2. 3@3 }! !
 
-!LadderAndSlicesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 19:05:59'!
+!LadderAndSlidesGameTest methodsFor: 'test data' stamp: 'HAW 7/5/2022 19:05:59'!
 twoPlayers
 
 	^ { self player1. self player2 }! !
 
-!LadderAndSlicesGameTest methodsFor: 'assertions' stamp: 'HAW 7/5/2022 19:12:13'!
+!LadderAndSlidesGameTest methodsFor: 'assertions' stamp: 'HAW 7/5/2022 19:12:13'!
 assertShortcutIsInvalid: shortcut because: errorMessage 
 
 	^ self assertShortcutsAreInvalid: { shortcut. } because: errorMessage! !
 
-!LadderAndSlicesGameTest methodsFor: 'assertions' stamp: 'HAW 7/5/2022 20:21:39'!
+!LadderAndSlidesGameTest methodsFor: 'assertions' stamp: 'HAW 7/5/2022 20:21:39'!
 assertShortcutsAreInvalid: shortcuts because: errorMessage 
 
 	^ self
@@ -391,7 +391,7 @@ roll
 
 	^Random new nextInteger: 12! !
 
-!LadderAndSlicesGame methodsFor: 'initialization' stamp: 'HAW 7/5/2022 18:29:43'!
+!LadderAndSlidesGame methodsFor: 'initialization' stamp: 'HAW 7/5/2022 18:29:43'!
 initializePlayers: aCollectionOfPlayers floorExtentions: aFloorExtentions startingOn: aStartingPosition endingOn: anEndingPosition shortcuts: aCollectionOfShortcuts dice: aDice 
 	
 	players := aCollectionOfPlayers.
@@ -405,13 +405,13 @@ initializePlayers: aCollectionOfPlayers floorExtentions: aFloorExtentions starti
 	self initiliazePlayersPosition.
 	! !
 
-!LadderAndSlicesGame methodsFor: 'initialization' stamp: 'HAW 7/5/2022 18:29:28'!
+!LadderAndSlidesGame methodsFor: 'initialization' stamp: 'HAW 7/5/2022 18:29:28'!
 initiliazePlayersPosition
 
 	playersPosition := Dictionary new.
 	players do: [ :aPlayer | playersPosition at: aPlayer put: startingPosition ]! !
 
-!LadderAndSlicesGame methodsFor: 'play' stamp: 'HAW 7/5/2022 18:38:52'!
+!LadderAndSlidesGame methodsFor: 'play' stamp: 'HAW 7/5/2022 18:38:52'!
 play
 	
 	self
@@ -420,17 +420,17 @@ play
 		calculateNextPlayer
 	! !
 
-!LadderAndSlicesGame methodsFor: 'play - private' stamp: 'HAW 7/5/2022 18:35:31'!
+!LadderAndSlidesGame methodsFor: 'play - private' stamp: 'HAW 7/5/2022 18:35:31'!
 assertGameIsNotOver
 
 	^ self isOver ifTrue: [ self error: self class cannotPlayWhenGameIsOverErrorDescription ]! !
 
-!LadderAndSlicesGame methodsFor: 'play - private' stamp: 'HAW 7/5/2022 18:38:40'!
+!LadderAndSlidesGame methodsFor: 'play - private' stamp: 'HAW 7/6/2022 18:42:28'!
 calculateNextPlayer
 
 	^ playersStream next! !
 
-!LadderAndSlicesGame methodsFor: 'play - private' stamp: 'HAW 7/5/2022 18:41:43'!
+!LadderAndSlidesGame methodsFor: 'play - private' stamp: 'HAW 7/5/2022 18:41:43'!
 currentPlayerNewPosition
 	
 	| delta currentPlayerPosition |
@@ -443,14 +443,14 @@ currentPlayerNewPosition
 		boundingTo: (floorExtentions at: currentPlayerPosition floorNumber).
 	! !
 
-!LadderAndSlicesGame methodsFor: 'play - private' stamp: 'HAW 7/5/2022 18:38:25'!
+!LadderAndSlidesGame methodsFor: 'play - private' stamp: 'HAW 7/5/2022 18:38:25'!
 moveCurrentPlayer
 
 	^ playersPosition 
 		at: self currentPlayer 
 		put: (self moveThroughtShortcuts: self currentPlayerNewPosition)! !
 
-!LadderAndSlicesGame methodsFor: 'play - private' stamp: 'HAW 7/5/2022 18:37:16'!
+!LadderAndSlidesGame methodsFor: 'play - private' stamp: 'HAW 7/5/2022 18:37:16'!
 moveThroughtShortcuts: newPosition
 
 	^ shortcuts 
@@ -458,33 +458,33 @@ moveThroughtShortcuts: newPosition
 		ifFound: [ :aLadder | aLadder to ]
 		ifNone: [ newPosition ]! !
 
-!LadderAndSlicesGame methodsFor: 'play - private' stamp: 'HAW 7/5/2022 11:24:47'!
+!LadderAndSlidesGame methodsFor: 'play - private' stamp: 'HAW 7/5/2022 11:24:47'!
 rollDice
 
 	^ dice roll - 6! !
 
-!LadderAndSlicesGame methodsFor: 'testing' stamp: 'HAW 7/5/2022 18:32:25'!
+!LadderAndSlidesGame methodsFor: 'testing' stamp: 'HAW 7/5/2022 18:32:25'!
 isOver
 	
 	self winnerIfNone: [ ^false ].
 	^true! !
 
-!LadderAndSlicesGame methodsFor: 'testing' stamp: 'HAW 7/5/2022 11:33:44'!
+!LadderAndSlidesGame methodsFor: 'testing' stamp: 'HAW 7/5/2022 11:33:44'!
 positionOf: aPlayer is: aPositionInFloor 
 	
 	^(playersPosition at: aPlayer) = aPositionInFloor ! !
 
-!LadderAndSlicesGame methodsFor: 'players' stamp: 'HAW 7/5/2022 11:48:14'!
+!LadderAndSlidesGame methodsFor: 'players' stamp: 'HAW 7/5/2022 11:48:14'!
 currentPlayer
 
 	^ playersStream current! !
 
-!LadderAndSlicesGame methodsFor: 'players' stamp: 'HAW 7/5/2022 18:33:11'!
+!LadderAndSlidesGame methodsFor: 'players' stamp: 'HAW 7/5/2022 18:33:11'!
 winnerIfNone: aNoneBlock
 
 	^players detect: [ :player | self positionOf: player is: endingPosition ] ifNone: aNoneBlock ! !
 
-!LadderAndSlicesGame class methodsFor: 'instance creation' stamp: 'HAW 7/5/2022 18:26:31'!
+!LadderAndSlidesGame class methodsFor: 'instance creation' stamp: 'HAW 7/5/2022 18:26:31'!
 players: aCollectionOfPlayers 
 	floorExtentions: aFloorExtentions 
 	startingOn: aStartingPosition 
@@ -503,51 +503,51 @@ players: aCollectionOfPlayers
 		shortcuts: aCollectionOfShortcuts 
 		dice: aDice ! !
 
-!LadderAndSlicesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:25:21'!
+!LadderAndSlidesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:25:21'!
 assert: aCollectionOfShortcuts areValidOn: aFloorExtentions startingOn: aStartingPosition endingOn: anEndingPosition
 
 	aCollectionOfShortcuts do: [ :aShortcut | 
 		aShortcut assertIsValidOn: aFloorExtentions startingOn: aStartingPosition endingOn: anEndingPosition ].
 	! !
 
-!LadderAndSlicesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:45:25'!
+!LadderAndSlidesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:45:25'!
 assertShortcutsDonotShareStaringPositionOrAreContiguous: aCollectionOfShortcuts
 
 	^ aCollectionOfShortcuts combinations: 2 atATimeDo: [ :shortcuts | 
 		shortcuts first assertDoesNotShareStartingPositionOrIsContigousTo: shortcuts second ].
 	! !
 
-!LadderAndSlicesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:21:46'!
+!LadderAndSlidesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:21:46'!
 shortcutsCannotEndOnAnotherShortcutStartErrorDescription
 	
 	^'Shortcuts cannot end on another shortcut''s start'! !
 
-!LadderAndSlicesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:16:13'!
+!LadderAndSlidesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:16:13'!
 shortcutsCannotStartOnEndingPositionErrorDescription
 	
 	^'Shortcuts cannot start on ending position'! !
 
-!LadderAndSlicesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:17:43'!
+!LadderAndSlidesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:17:43'!
 shortcutsCannotStartOnSamePositionErrorDescription
 	
 	^'Shortcut cannot start on same position'! !
 
-!LadderAndSlicesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:15:59'!
+!LadderAndSlidesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:15:59'!
 shortcutsCannotStartOnStartingPositionErrorDescription
 	
 	^'Shortcut cannot start on starting point'! !
 
-!LadderAndSlicesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 17:52:44'!
+!LadderAndSlidesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 17:52:44'!
 shortcutsMustBeInsideFloorsErrorDescription
 	
 	^'Shortcuts must be inside floor'! !
 
-!LadderAndSlicesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:05:37'!
+!LadderAndSlidesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:05:37'!
 shortcutsMustBeOnValidFloorsErrorDescription
 	
 	^'Shortcut must start on valid floor'! !
 
-!LadderAndSlicesGame class methodsFor: 'as yet unclassified' stamp: 'HAW 7/5/2022 18:34:23'!
+!LadderAndSlidesGame class methodsFor: 'as yet unclassified' stamp: 'HAW 7/5/2022 18:34:23'!
 cannotPlayWhenGameIsOverErrorDescription
 	
 	^'Cannot play when game is over'! !
@@ -608,13 +608,13 @@ printOn: aStream
 		nextPutAll: ' inFloor: ';
 		print: floorNumber ! !
 
-!PositionInFloor methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:05:37'!
+!PositionInFloor methodsFor: 'assertions' stamp: 'HAW 7/6/2022 18:47:30'!
 assertIsValidOn: floorExtentions
 
 	| floorExtention |
 	
-	floorExtention := floorExtentions at: floorNumber ifAbsent: [ self error: LadderAndSlicesGame shortcutsMustBeOnValidFloorsErrorDescription ].
-	(position between: 1@1 and: floorExtention) ifFalse: [ self error: LadderAndSlicesGame shortcutsMustBeInsideFloorsErrorDescription ]! !
+	floorExtention := floorExtentions at: floorNumber ifAbsent: [ self error: LadderAndSlidesGame shortcutsMustBeOnValidFloorsErrorDescription ].
+	(position between: 1@1 and: floorExtention) ifFalse: [ self error: LadderAndSlidesGame shortcutsMustBeInsideFloorsErrorDescription ]! !
 
 !PositionInFloor class methodsFor: 'instance creation' stamp: 'HAW 7/5/2022 11:30:47'!
 at: aPosition in: aFloorNumber 
@@ -637,10 +637,10 @@ to
 	
 	^to! !
 
-!Shortcut methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:44:29'!
+!Shortcut methodsFor: 'assertions' stamp: 'HAW 7/6/2022 18:47:30'!
 assertDoNotStartOnSamePosition: aShortcut
 
-	^ (self startsOnSamePositionAs: aShortcut) ifTrue: [ self error: LadderAndSlicesGame shortcutsCannotStartOnSamePositionErrorDescription ]! !
+	^ (self startsOnSamePositionAs: aShortcut) ifTrue: [ self error: LadderAndSlidesGame shortcutsCannotStartOnSamePositionErrorDescription ]! !
 
 !Shortcut methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:46:08'!
 assertDoesNotShareStartingPositionOrIsContigousTo: aShortcut 
@@ -654,19 +654,19 @@ assertDoesNotStartOn: aStartingPosition onError: errorDescription
 
 	^ from = aStartingPosition ifTrue: [ self error: errorDescription ]! !
 
-!Shortcut methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:46:03'!
+!Shortcut methodsFor: 'assertions' stamp: 'HAW 7/6/2022 18:47:30'!
 assertIsNotContigousTo: aShortcut 
 	
-	(self endsOnSameStartAs: aShortcut ) ifTrue: [ self error: LadderAndSlicesGame shortcutsCannotEndOnAnotherShortcutStartErrorDescription ].! !
+	(self endsOnSameStartAs: aShortcut ) ifTrue: [ self error: LadderAndSlidesGame shortcutsCannotEndOnAnotherShortcutStartErrorDescription ].! !
 
-!Shortcut methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:47:34'!
+!Shortcut methodsFor: 'assertions' stamp: 'HAW 7/6/2022 18:47:30'!
 assertIsValidOn: floorExtentions startingOn: aStartingPosition endingOn: anEndingPosition  
 
 	from assertIsValidOn: floorExtentions.
 	to assertIsValidOn: floorExtentions.
 	
-	self assertDoesNotStartOn: aStartingPosition onError: LadderAndSlicesGame shortcutsCannotStartOnStartingPositionErrorDescription.
-	self assertDoesNotStartOn: anEndingPosition onError: LadderAndSlicesGame shortcutsCannotStartOnEndingPositionErrorDescription ! !
+	self assertDoesNotStartOn: aStartingPosition onError: LadderAndSlidesGame shortcutsCannotStartOnStartingPositionErrorDescription.
+	self assertDoesNotStartOn: anEndingPosition onError: LadderAndSlidesGame shortcutsCannotStartOnEndingPositionErrorDescription ! !
 
 !Shortcut methodsFor: 'testing' stamp: 'HAW 7/5/2022 18:22:46'!
 endsOnSameStartAs: aShortcut 
@@ -690,8 +690,8 @@ ladderFrom: aFrom to: aTo
 	
 	^self from: aFrom to: aTo! !
 
-!Shortcut class methodsFor: 'instance creation' stamp: 'HAW 7/5/2022 17:50:25'!
-sliceFrom: aFrom to: aTo 
+!Shortcut class methodsFor: 'instance creation' stamp: 'HAW 7/6/2022 18:46:25'!
+slideFrom: aFrom to: aTo 
 	
 	self assert: aFrom isOnTopOf: aTo.
 	
@@ -702,20 +702,20 @@ assert: aFrom isBelow: aTo
 
 	^ (aFrom isBelow: aTo) ifFalse: [ self error: self ladderMustGoUpErrorDescription ]! !
 
-!Shortcut class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 17:49:39'!
+!Shortcut class methodsFor: 'assertions' stamp: 'HAW 7/6/2022 18:46:49'!
 assert: aFrom isOnTopOf: aTo
 
-	^ (aFrom isOnTopOf: aTo) ifFalse: [ self error: self sliceMustDownUpErrorDescription ]! !
+	^ (aFrom isOnTopOf: aTo) ifFalse: [ self error: self slideMustDownUpErrorDescription ]! !
 
 !Shortcut class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 17:41:32'!
 ladderMustGoUpErrorDescription
 	
 	^'Ladders must go up'! !
 
-!Shortcut class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 17:45:50'!
-sliceMustDownUpErrorDescription
+!Shortcut class methodsFor: 'assertions' stamp: 'HAW 7/6/2022 18:46:52'!
+slideMustDownUpErrorDescription
 	
-	^'Slices must go down'! !
+	^'Slides must go down'! !
 
 !Shortcut class methodsFor: 'intance creation - private' stamp: 'HAW 7/5/2022 17:50:32'!
 from: aFrom to: aTo
