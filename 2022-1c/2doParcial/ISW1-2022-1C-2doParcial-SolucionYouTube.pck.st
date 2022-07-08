@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5324] on 6 July 2022 at 6:59:23 pm'!
+'From Cuis 6.0 [latest update: #5324] on 8 July 2022 at 3:17:23 pm'!
 'Description renames'!
-!provides: 'ISW1-2022-1C-2doParcial' 1 4!
+!provides: 'ISW1-2022-1C-2doParcial' 1 5!
 SystemOrganization addCategory: 'ISW1-2022-1C-2doParcial'!
 
 
@@ -450,12 +450,12 @@ moveCurrentPlayer
 		at: self currentPlayer 
 		put: (self moveThroughtShortcuts: self currentPlayerNewPosition)! !
 
-!LadderAndSlidesGame methodsFor: 'play - private' stamp: 'HAW 7/5/2022 18:37:16'!
+!LadderAndSlidesGame methodsFor: 'play - private' stamp: 'HAW 7/7/2022 17:33:42'!
 moveThroughtShortcuts: newPosition
 
 	^ shortcuts 
-		detect: [ :aLadder | aLadder startsOn: newPosition ]
-		ifFound: [ :aLadder | aLadder to ]
+		detect: [ :aShortcut | aShortcut startsOn: newPosition ]
+		ifFound: [ :aShortcut | aShortcut to ]
 		ifNone: [ newPosition ]! !
 
 !LadderAndSlidesGame methodsFor: 'play - private' stamp: 'HAW 7/5/2022 11:24:47'!
@@ -484,7 +484,7 @@ winnerIfNone: aNoneBlock
 
 	^players detect: [ :player | self positionOf: player is: endingPosition ] ifNone: aNoneBlock ! !
 
-!LadderAndSlidesGame class methodsFor: 'instance creation' stamp: 'HAW 7/5/2022 18:26:31'!
+!LadderAndSlidesGame class methodsFor: 'instance creation' stamp: 'HAW 7/7/2022 17:28:27'!
 players: aCollectionOfPlayers 
 	floorExtentions: aFloorExtentions 
 	startingOn: aStartingPosition 
@@ -493,7 +493,7 @@ players: aCollectionOfPlayers
 	dice: aDice  
 	
 	self assert: aCollectionOfShortcuts areValidOn: aFloorExtentions startingOn: aStartingPosition endingOn: anEndingPosition.
-	self assertShortcutsDonotShareStaringPositionOrAreContiguous: aCollectionOfShortcuts.
+	self assertShortcutsDonotShareStartingPositionOrAreContiguous: aCollectionOfShortcuts.
 	
 	^self new 
 		initializePlayers: aCollectionOfPlayers 
@@ -510,8 +510,8 @@ assert: aCollectionOfShortcuts areValidOn: aFloorExtentions startingOn: aStartin
 		aShortcut assertIsValidOn: aFloorExtentions startingOn: aStartingPosition endingOn: anEndingPosition ].
 	! !
 
-!LadderAndSlidesGame class methodsFor: 'assertions' stamp: 'HAW 7/5/2022 18:45:25'!
-assertShortcutsDonotShareStaringPositionOrAreContiguous: aCollectionOfShortcuts
+!LadderAndSlidesGame class methodsFor: 'assertions' stamp: 'HAW 7/7/2022 17:28:27'!
+assertShortcutsDonotShareStartingPositionOrAreContiguous: aCollectionOfShortcuts
 
 	^ aCollectionOfShortcuts combinations: 2 atATimeDo: [ :shortcuts | 
 		shortcuts first assertDoesNotShareStartingPositionOrIsContigousTo: shortcuts second ].
