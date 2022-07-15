@@ -5,7 +5,7 @@ TestCase subclass: #ImportTest
 	poolDictionaries: ''
 	category: 'CustomerImporter-Recu-2doParcial'!
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:28:34'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:02:19'!
 test10ImportsSaleWithExistingCustomer
 
 	| importedSale productStream |
@@ -15,13 +15,13 @@ test10ImportsSaleWithExistingCustomer
 	SaleImporter valueFrom: self saleWithExistingCustomer into: system.
 	
 	self deny: system salesIsEmpty.
-	self assert: 1 equals: system numberOfSales.
-	importedSale := system saleForInvoiceNumber: '0001-00000022' ifNone: [ self fail ].
-	self assert: '2022/08/10' equals: importedSale date.
-	self assert: '0001-00000022' equals: importedSale invoiceNumber.
-	self assert: 1000 equals: importedSale total.
-	
-	self assert: (system customerWithIdentificationType: 'D' number: '22333444') equals: importedSale buyer.
+	self assertOneSaleWasImported.
+	importedSale := self 
+		assertSaleForInvoiceNumber: '0001-00000022' 
+		wasDoneOn: '2022/08/10' 
+		forATotalOf: 1000 
+		byBuyerWithIdentificationType: 'D' 
+		number: '22333444'.
 	
 	productStream := importedSale productStream.
 	self assertProduct: productStream next isDescribedAt: '1 kilo de huevos' total: 700.
@@ -29,83 +29,83 @@ test10ImportsSaleWithExistingCustomer
 	self assert: productStream atEnd.
 	! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:28:42'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:02:12'!
 test11ImportsSaleWithNewCustomer
 
 	| importedSale productStream |
 	
 	SaleImporter valueFrom: self saleWithNewCustomer into: system.
 	
-	self assert: 1 equals: system numberOfSales.
-	importedSale := system saleForInvoiceNumber: '0001-00000022' ifNone: [ self fail ].
-	self assert: '2022/08/10' equals: importedSale date.
-	self assert: '0001-00000022' equals: importedSale invoiceNumber.
-	self assert: 700 equals: importedSale total.
-	
-	self assert: (system customerWithIdentificationType: 'D' number: '22333444') equals: importedSale buyer.
+	self assertOneSaleWasImported.
+	importedSale := self 
+		assertSaleForInvoiceNumber: '0001-00000022' 
+		wasDoneOn: '2022/08/10' 
+		forATotalOf: 700 
+		byBuyerWithIdentificationType: 'D' 
+		number: '22333444'.
 	
 	productStream := importedSale productStream.
 	self assertProduct: productStream next isDescribedAt: '1 kilo de huevos' total: 700.
 	self assert: productStream atEnd.
 	! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:28:57'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test12CannotImportExistingCustomerWithoutSale
 
 	self 
 		shouldFailImportingSaleFrom: self existingCustomerWithoutSale
 		messageText: SaleImporter saleRecordShouldCameFirstErrorDescription
-		asserting: [ system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:29:10'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test13CannotImportNewCustomerWithoutSale
 
 	self 
 		shouldFailImportingSaleFrom: self newCustomerWithoutSale
 		messageText: SaleImporter saleRecordShouldCameFirstErrorDescription
-		asserting: [ system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:29:20'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test14CannotImportProductWithoutSale
 
 	self 
 		shouldFailImportingSaleFrom: self productWithoutSale
 		messageText: SaleImporter saleRecordShouldCameFirstErrorDescription
-		asserting: [ system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:29:29'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test15CannotImportEndOfSaleWithoutSale
 
 	self 
 		shouldFailImportingSaleFrom: self endOfSaleWithoutSale
 		messageText: SaleImporter saleRecordShouldCameFirstErrorDescription
-		asserting: [ system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:30:34'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:02:12'!
 test16FailsWhenInvalidRecordSequenceAfterImportingSale
 
 	self 
 		shouldFailImportingSaleFrom: self saleWithNewCustomerAndInvalidRecordSequence
 		messageText: SaleImporter saleRecordShouldCameFirstErrorDescription
-		asserting: [ self assert: 1 equals: system numberOfSales ]! !
+		asserting: [ self assertOneSaleWasImported ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:30:14'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:02:12'!
 test17CannotImportSaleWihtoutBuyerAfertImportingValidSale
 
 	self 
 		shouldFailImportingSaleFrom: self saleWithBuyerAndNewSaleWithoutBuyer 
 		messageText: SaleImporter saleMustHaveBuyerErrorDescripton
-		asserting: [ self assert: 1 equals: system numberOfSales ]! !
+		asserting: [ self assertOneSaleWasImported ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:30:27'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test18CannotImportSaleWithoutProducts
 
 	self 
 		shouldFailImportingSaleFrom: self saleWithoutProducts 
 		messageText: Sale mustHaveProductsErrorDecription
-		asserting: [ self assert: system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:30:51'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test19CannotImportSaleWithMorethanOneExistingBuyer
 
 	CustomerImporter valueFrom: self validImportData into: system.
@@ -113,9 +113,9 @@ test19CannotImportSaleWithMorethanOneExistingBuyer
 	self 
 		shouldFailImportingSaleFrom: self saleWithMoreThanOneExistingBuyer
 		messageText: SaleImporter saleMustHaveOneBuyerErrorDescription
-		asserting: [ self assert: system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:31:04'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test20CannotImportSaleWithMoreThanOneNewBuyer
 
 	CustomerImporter valueFrom: self validImportData into: system.
@@ -123,79 +123,95 @@ test20CannotImportSaleWithMoreThanOneNewBuyer
 	self 
 		shouldFailImportingSaleFrom: self saleWithMoreThanOneNewBuyer
 		messageText: SaleImporter saleMustHaveOneBuyerErrorDescription
-		asserting: [ self assert: system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:31:26'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test21CannotImportSaleWithLessThanFourFields
 
 	self 
 		shouldFailImportingSaleFrom: self saleWithLessThanFourFields
 		messageText: SaleImporter invalidSaleRecordErrorDescription
-		asserting: [ self assert: system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:31:36'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test22CannotImportSaleWithMoreThanFourdFields
 
 	self 
 		shouldFailImportingSaleFrom: self saleWithMoreThanFourFields
 		messageText: SaleImporter invalidSaleRecordErrorDescription
-		asserting: [ self assert: system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:32:10'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test23CannotImportSaleExistingBuyerWithLessThanThreeFields
 
 	self 
 		shouldFailImportingSaleFrom: self existingBuyerWithLessThanThreeFields
 		messageText: SaleImporter invalidExistingCustomerRecordErrorDescription
-		asserting: [ self assert: system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:32:06'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test24CannotImportSaleExistingBuyerWithMoreThanThreeFields
 
 	self 
 		shouldFailImportingSaleFrom: self existingBuyerWithMoreThanThreeFields
 		messageText: SaleImporter invalidExistingCustomerRecordErrorDescription
-		asserting: [ self assert: system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:32:43'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test25CannotImportSaleImportSoldProductWithLessThanThreeFields
 
 	self 
 		shouldFailImportingSaleFrom: self soldProductWithLessThanThreeFields
 		messageText: SaleImporter invalidSoldProductRecordErrorDescription
-		asserting: [ self assert: system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:33:17'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test26CannotImportSaleWithSoldProductWithMoreThanThreeFields
 
 	self 
 		shouldFailImportingSaleFrom: self soldProductWithMoreThanThreeFields
 		messageText: SaleImporter invalidSoldProductRecordErrorDescription
-		asserting: [ self assert: system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:33:37'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test27CannotImportSaleWithEndOfSaleWithMoreThanOneField
 
 	self 
 		shouldFailImportingSaleFrom: self endOfSaleWithMoreThanOneField
 		messageText: SaleImporter invalidEndOfSaleRecordErrorDescription
-		asserting: [ self assert: system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:33:49'!
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
 test28CannotImportSaleWithInvalidExistingCustomer
 
 	self 
 		shouldFailImportingSaleFrom: self invalidExisitingCustomer
 		messageText: ERPSystem customerNotFoundErrorDescription
-		asserting: [ self assert: system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
 
-!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 18:34:02'!
-test29RecongnizesInvalidRecordType
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:03:59'!
+test29RecognizesInvalidRecordType
 
 	self 
 		shouldFailImportingSaleFrom: self invalidRecordType
 		messageText: SaleImporter invalidRecordTypeErrorDescription 
-		asserting: [ self assert: system salesIsEmpty ]! !
+		asserting: [ self assertSalesIsEmpty ]! !
+
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:10:24'!
+test30HasNotInvoiceNumberForDifferentNumber
+
+	| soldProducts sale |
+	
+	soldProducts := OrderedCollection with: (SoldProduct describedAs: 'something' total: 1).
+	sale := Sale doneOn: '2022/07/14' numbered: '11-22' total: 1 buyer: Customer new products: soldProducts.
+	self deny: (sale hasInvoiceNumber: '1')! !
+
+!ImportTest methodsFor: 'tests - sale importer' stamp: 'HAW 7/15/2022 20:10:17'!
+test31DoesNotFoundInvoiceWithNotUsedNumber
+
+	SaleImporter valueFrom: self saleWithNewCustomer into: system.
+	
+	self assert: 'Not found' equals: (system saleForInvoiceNumber: '1' ifNone: [ 'Not found'])! !
 
 
 !ImportTest methodsFor: 'tests - customer importer' stamp: 'HAW 5/22/2022 21:15:52'!
@@ -347,6 +363,11 @@ assertNoCustomerWasImported
 
 	^ self assert: 0 equals: system numberOfCustomers! !
 
+!ImportTest methodsFor: 'assertions' stamp: 'HAW 7/15/2022 20:02:12'!
+assertOneSaleWasImported
+
+	^ self assert: 1 equals: system numberOfSales! !
+
 !ImportTest methodsFor: 'assertions' stamp: 'HAW 5/22/2022 18:28:05'!
 assertPepeSanchezWasImportedCorrecty
 
@@ -364,6 +385,25 @@ assertProduct: aProduct isDescribedAt: aDescription total: aTotal
 	
 	self assert: aDescription equals: aProduct description.
 	self assert: aTotal equals: aProduct total! !
+
+!ImportTest methodsFor: 'assertions' stamp: 'HAW 7/15/2022 20:01:22'!
+assertSaleForInvoiceNumber: anInvoiceNumber wasDoneOn: anIssueDate forATotalOf: aTotal byBuyerWithIdentificationType: idType number: idNumber 
+	
+	| importedSale |
+	
+	importedSale := system saleForInvoiceNumber: anInvoiceNumber  ifNone: [ self fail ].
+	self assert: anIssueDate equals: importedSale date.
+	self assert: anInvoiceNumber equals: importedSale invoiceNumber.
+	self assert: aTotal equals: importedSale total.
+	
+	self assert: (system customerWithIdentificationType: idType number: idNumber ) equals: importedSale buyer.
+	
+	^importedSale ! !
+
+!ImportTest methodsFor: 'assertions' stamp: 'HAW 7/15/2022 20:03:59'!
+assertSalesIsEmpty
+
+	^ self assert: system salesIsEmpty! !
 
 !ImportTest methodsFor: 'assertions' stamp: 'HAW 7/15/2022 17:33:32'!
 shouldFailImporting: aReadStream 
@@ -1071,11 +1111,6 @@ addressAt: aStreetName ifNone: aNoneBlock
 
 	^addresses detect: [ :address | address isAt: aStreetName ] ifNone: aNoneBlock ! !
 
-!Customer methodsFor: 'addresses' stamp: 'HAW 5/22/2022 00:19:29'!
-addresses
-
-	^ addresses! !
-
 !Customer methodsFor: 'addresses' stamp: 'HAW 5/22/2022 19:38:32'!
 isAddressesEmpty
 
@@ -1588,10 +1623,10 @@ total
 	^total! !
 
 
-!Sale methodsFor: 'testing' stamp: 'HAW 7/15/2022 17:16:35'!
+!Sale methodsFor: 'testing' stamp: 'HAW 7/15/2022 20:08:13'!
 hasInvoiceNumber: anInvoiceNumber
 
-	^true! !
+	^invoiceNumber = anInvoiceNumber ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
