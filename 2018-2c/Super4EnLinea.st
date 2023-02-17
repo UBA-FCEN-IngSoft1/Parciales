@@ -408,21 +408,26 @@ initializeWinnigStrategy: aWinningStrategy
 	winner := nil! !
 
 
-!Super4EnLinea methodsFor: 'playing' stamp: 'HAW 2/16/2023 17:49:34'!
+!Super4EnLinea methodsFor: 'playing' stamp: 'HAW 2/17/2023 09:29:49'!
 addChipToColumn: aColumnNumber 
 
-	| column currentColor |
+	| column |
 	
-	self assertIsNotOver.
 	column := self columnAt: aColumnNumber.
+	
+	self 
+		assertCanAddChipToColumn: column;
+		safeAddChipToColumn: column;
+		checkWinnerWhenAddedTo: column
+	
+	! !
+
+!Super4EnLinea methodsFor: 'playing' stamp: 'HAW 2/17/2023 09:30:09'!
+assertCanAddChipToColumn: column
+
+	self assertIsNotOver.
 	self assertIsNotFull: column.
 	
-	currentColor := colors current.
-	column add: currentColor.
-	
-	(self hasWon: currentColor addingTo: column )
-		ifTrue: [ winner := currentColor ]
-		ifFalse: [ colors next ]
 	! !
 
 !Super4EnLinea methodsFor: 'playing' stamp: 'HAW 2/16/2023 17:49:34'!
@@ -435,13 +440,32 @@ assertIsNotOver
 
 	^ self isOver ifTrue: [ self error: self class cannotPlayErrorDescription ]! !
 
+!Super4EnLinea methodsFor: 'playing' stamp: 'HAW 2/17/2023 09:31:15'!
+checkWinnerWhenAddedTo: column
 
-!Super4EnLinea methodsFor: 'colors' stamp: 'HAW 2/15/2023 19:29:02'!
+	| currentColor |
+	
+	currentColor := colors current.
+	(self hasWon: currentColor addingTo: column )
+		ifTrue: [ winner := currentColor ]
+		ifFalse: [ colors next ]
+		
+	! !
+
+!Super4EnLinea methodsFor: 'playing' stamp: 'HAW 2/17/2023 09:30:37'!
+safeAddChipToColumn: column
+
+	column add: colors current.
+	
+	! !
+
+
+!Super4EnLinea methodsFor: 'colors' stamp: 'HAW 2/17/2023 09:23:27'!
 colorAt: aPosition ifEmpty: whenEmptyBlock
  
 	^(self columnAt: aPosition x)
 		at: aPosition y 
-		ifAbsent: [ ^whenEmptyBlock value ]! !
+		ifAbsent: whenEmptyBlock! !
 
 !Super4EnLinea methodsFor: 'colors' stamp: 'HAW 2/16/2023 17:51:43'!
 isRedAt: aPosition
@@ -481,10 +505,15 @@ isOver
 	^winner notNil ! !
 
 
-!Super4EnLinea methodsFor: 'columns' stamp: 'HAW 2/15/2023 19:28:27'!
+!Super4EnLinea methodsFor: 'columns' stamp: 'HAW 2/17/2023 09:23:50'!
+assertIsValidColumnNumber: aColumnNumber
+
+	^ (aColumnNumber isInteger and: (aColumnNumber between: 1 and: 7)) ifFalse: [ self error: self class invalidColumnNumberErrorDescription ]! !
+
+!Super4EnLinea methodsFor: 'columns' stamp: 'HAW 2/17/2023 09:23:50'!
 columnAt: aColumnNumber 
 
-	(aColumnNumber isInteger and: (aColumnNumber between: 1 and: 7)) ifFalse: [ self error: self class invalidColumnNumberErrorDescription ].
+	self assertIsValidColumnNumber: aColumnNumber.
 	
 	^columns at: aColumnNumber.
 	! !
