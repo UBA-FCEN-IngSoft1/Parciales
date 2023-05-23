@@ -1,0 +1,7 @@
+Video: https://www.youtube.com/watch?v=ljLpbLJ42LY
+
+Comentarios:
+- En vez de tener MechaRota hubiese sido mejor representar que la mecha está rota o no con un state de la mecha
+- La solución ISW1-2023-1C-Parcial-1-SinScanNiEsnnn.st saca los mensajes:
+  - scan Estaban solo por temas de ejercicio, pero en realidad no son necesarios para la resolución de lo que se hace 
+  - esArenoso, esConcreto, esTierra Estos mensajes no son necesarios al usar la clase como tipo de suelo 
