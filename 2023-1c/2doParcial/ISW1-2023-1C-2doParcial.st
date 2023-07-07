@@ -484,6 +484,11 @@ isThrottleConnected
 	^drivingSystem isThrottleConnected! !
 
 
+!DrivingAssistant methodsFor: 'speed' stamp: 'HAW 7/7/2023 11:18:44'!
+keepSpeedAt: aTargetSpeed 
+	
+	drivingSystem keepSpeedAt: aTargetSpeed ! !
+
 !DrivingAssistant methodsFor: 'speed' stamp: 'HAW 7/5/2023 17:47:15'!
 speed
 	
@@ -574,12 +579,6 @@ objectInWarningZoneWhenInAutomatic
 objectInWarningZoneWhenInManual
 	
 	drivingSystem warningProximityBeep ! !
-
-
-!DrivingAssistant methodsFor: 'as yet unclassified' stamp: 'HAW 7/7/2023 11:18:44'!
-keepSpeedAt: aTargetSpeed 
-	
-	drivingSystem keepSpeedAt: aTargetSpeed ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
