@@ -5,10 +5,21 @@ TestCase subclass: #DrivingAssistantTest
 	poolDictionaries: ''
 	category: 'ISW1-2023-1C-2doParcial'!
 
-!DrivingAssistantTest methodsFor: 'tests' stamp: 'HAW 7/7/2023 11:15:34'!
-assertTargetSpeedIsTheOriginalOn: assistant
+!DrivingAssistantTest methodsFor: 'tests' stamp: 'HAW 7/13/2023 11:19:55'!
+assertTargetSpeedIsTheOriginalWhenCreatedIn: aMode
 
-	^ self assert: self targetSpeed equals: (assistant targetSpeedIfNone: [ self fail ])! !
+	| assistant sensorSystem drivingSystem frontDistanceSensor speedSensor |
+	
+	speedSensor := ReadStream on: {}.
+	frontDistanceSensor := ReadStream on: {}.
+	sensorSystem := SensorSystem readingSpeedFrom: speedSensor distanceFrom: frontDistanceSensor .
+	drivingSystem := DrivingSystem new.
+	assistant := DrivingAssistant readingSensorsFrom: sensorSystem sendingActionsTo: drivingSystem in: aMode.
+	
+	self assert: 0*kilometer / hour equals: assistant speed.
+	self assertProximityBeepIsOffOn: assistant.
+	self assertIsAceleratingOn: assistant.
+	self assertTargetSpeedIsTheOriginalOn: assistant.! !
 
 !DrivingAssistantTest methodsFor: 'tests' stamp: 'HAW 7/6/2023 16:02:40'!
 test01IsAtRightStateWhenTurnOn
@@ -252,37 +263,17 @@ test19CombinesModesWhenNoObjectInFrontAndManualWithAssistance
 			self assertIsAceleratingOn: assistant.
 			self assertTargetSpeedIsTheOriginalOn: assistant ]! !
 
-!DrivingAssistantTest methodsFor: 'tests' stamp: 'HAW 7/7/2023 11:15:35'!
+!DrivingAssistantTest methodsFor: 'tests' stamp: 'HAW 7/13/2023 11:20:12'!
 test20TakesTargetSpeedFromAutomaticModeWhenTurnOn
 
-	| assistant sensorSystem drivingSystem frontDistanceSensor speedSensor |
-	
-	speedSensor := ReadStream on: {}.
-	frontDistanceSensor := ReadStream on: {}.
-	sensorSystem := SensorSystem readingSpeedFrom: speedSensor distanceFrom: frontDistanceSensor .
-	drivingSystem := DrivingSystem new.
-	assistant := DrivingAssistant readingSensorsFrom: sensorSystem sendingActionsTo: drivingSystem in: self automaticMode.
-	
-	self assert: 0*kilometer / hour equals: assistant speed.
-	self assertProximityBeepIsOffOn: assistant.
-	self assertIsAceleratingOn: assistant.
-	self assertTargetSpeedIsTheOriginalOn: assistant.! !
+	self assertTargetSpeedIsTheOriginalWhenCreatedIn: self automaticMode.
+	! !
 
-!DrivingAssistantTest methodsFor: 'tests' stamp: 'HAW 7/7/2023 11:22:23'!
+!DrivingAssistantTest methodsFor: 'tests' stamp: 'HAW 7/13/2023 11:20:25'!
 test21TakesTargetSpeedFromAssistedManualModeWhenTurnOn
 
-	| assistant sensorSystem drivingSystem frontDistanceSensor speedSensor |
-	
-	speedSensor := ReadStream on: {}.
-	frontDistanceSensor := ReadStream on: {}.
-	sensorSystem := SensorSystem readingSpeedFrom: speedSensor distanceFrom: frontDistanceSensor .
-	drivingSystem := DrivingSystem new.
-	assistant := DrivingAssistant readingSensorsFrom: sensorSystem sendingActionsTo: drivingSystem in: self assistedManualMode.
-	
-	self assert: 0*kilometer / hour equals: assistant speed.
-	self assertProximityBeepIsOffOn: assistant.
-	self assertIsAceleratingOn: assistant.
-	self assertTargetSpeedIsTheOriginalOn: assistant.! !
+	self assertTargetSpeedIsTheOriginalWhenCreatedIn: self assistedManualMode.
+	! !
 
 
 !DrivingAssistantTest methodsFor: 'driving mode' stamp: 'HAW 7/7/2023 11:20:47'!
@@ -395,6 +386,11 @@ assertReducesTargetSpeedForDangerZoneOn: assistant
 assertReducesTargetSpeedForWarningZoneOn: assistant
 
 	^self assertTargetSpeedReducesBy: AutomaticMode warningZoneSpeedReduction lessThanCurrentOn: assistant ! !
+
+!DrivingAssistantTest methodsFor: 'assertions' stamp: 'HAW 7/7/2023 11:15:34'!
+assertTargetSpeedIsTheOriginalOn: assistant
+
+	^ self assert: self targetSpeed equals: (assistant targetSpeedIfNone: [ self fail ])! !
 
 !DrivingAssistantTest methodsFor: 'assertions' stamp: 'HAW 7/6/2023 20:04:04'!
 assertTargetSpeedReducesBy: aSpeed lessThanCurrentOn: assistant
@@ -526,9 +522,15 @@ isInDangerZone: distanceToFrontObject
 
 	^ distanceToFrontObject <= minimunBrakingDistance! !
 
-!DrivingAssistant methodsFor: 'front object' stamp: 'HAW 7/6/2023 11:37:40'!
+!DrivingAssistant methodsFor: 'front object' stamp: 'HAW 7/13/2023 11:25:32'!
 isInWarningZone: distanceToFrontObject
 
+	"No estoy probando que minimunBrakingDistance < distanceToFrontObject por como está construido
+	actOnFrontObject: 
+	Esto genera un acoplamiento no explicito, pero si pongo esa condición no se cubre todo con los tests y habría que hacer
+	uno solo para cubrir la condición. 
+	Lo dejo así porque es un mensaje interno, se envía en un solo lugar de manera controlada y si cambiase como se lo envía 
+	debería fallar algún test, pero es riesgoso y no siempre conviene hacerlo así - Hernan"  
 	^ distanceToFrontObject <= (minimunBrakingDistance*2)! !
 
 !DrivingAssistant methodsFor: 'front object' stamp: 'HAW 7/6/2023 10:15:49'!
