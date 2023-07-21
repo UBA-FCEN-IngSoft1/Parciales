@@ -1,0 +1,2 @@
+La solución de alumno es de Tomás Mengoni que hizo el recuerdo del primer parcial, o sea que no incluye lo del modo de consumo y es una linda solución, por eso la estamos compartiendo.
+Gracias Tomás por permitirnos subirla
