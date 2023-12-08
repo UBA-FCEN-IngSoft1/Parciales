@@ -369,10 +369,10 @@ test29WhenPlayerSteppsIntoSecondTunnelHoleAppearsInOther
 	self assert: (mineField isPlayerAt: 2@1)
 	! !
 
-!MineFieldTest methodsFor: 'tests' stamp: 'HAW 12/4/2023 12:16:50'!
+!MineFieldTest methodsFor: 'tests' stamp: 'HAW 12/7/2023 22:58:26'!
 test30FieldElementsCanNotSharePosition
 
-	self assertCannotSharePositionsFor: { LowPowerMine at: 2@2. HighPowerMine at: 2@2 } ! !
+	self assertCannotSharePositionsFor: { LowPowerMine at: 2@2. HighPowerMine at: 2@3. HighPowerMine at: 2@3.} ! !
 
 !MineFieldTest methodsFor: 'tests' stamp: 'HAW 12/4/2023 12:17:22'!
 test31TunnelDoesNotSharePositionForFirstHole
@@ -1030,11 +1030,11 @@ assert: aStartingPosition isNotUsedBy: aCollectionOfFieldElements
 	^ (aCollectionOfFieldElements anySatisfy: [ :aFieldElement | aFieldElement isAt: aStartingPosition ]) 
 		ifTrue: [self error: self invalidStartingPositionErrorDescription ]! !
 
-!MineField class methodsFor: 'assertions' stamp: 'HAW 12/4/2023 11:30:13'!
+!MineField class methodsFor: 'assertions' stamp: 'HAW 12/7/2023 23:20:51'!
 assertElementsDoNotSharePosition: aCollectionOfFieldElements
 
-	aCollectionOfFieldElements pairsDo: [ :aFieldElement  :anotherFieldElement |
-		(aFieldElement isSharingPositionWith: anotherFieldElement) ifTrue: [
+	aCollectionOfFieldElements combinations: 2 atATimeDo: [ :elements |
+		(elements first isSharingPositionWith: elements second) ifTrue: [
 			self error: self fieldElementsShouldNotSharePositionsErrorDescription ]]! !
 
 !MineField class methodsFor: 'assertions' stamp: 'HAW 12/4/2023 11:12:42'!
