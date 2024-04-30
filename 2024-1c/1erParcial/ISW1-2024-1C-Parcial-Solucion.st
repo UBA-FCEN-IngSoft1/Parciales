@@ -41,7 +41,7 @@ test04WhenAFloorIsCreatedAllTheRoomsAreAvailable
 	self assert: 0 equals: floor totalRoomsReserved.
 ! !
 
-!FloorTest methodsFor: 'testing' stamp: 'FRT 4/21/2024 17:00:43'!
+!FloorTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:42:13'!
 test05WhenAFloorReceivesAGuestInARoomReducesTheAvailableRoomsByOneAndIncreaseOccupiedByOne
 
 	| floor roomsNumber |
@@ -49,15 +49,14 @@ test05WhenAFloorReceivesAGuestInARoomReducesTheAvailableRoomsByOneAndIncreaseOcc
 	roomsNumber := 10.
 	floor := self createFloorWith: roomsNumber and: self defaultPriceList.
 	
-	"Tech Debt"
-	((floor rooms) at: 1) receive: self guestTypeVacation.
+	(floor roomAt: 1) receive: self guestTypeVacation.
 	
 	self assert: roomsNumber - 1 equals: floor totalRoomsAvailable. 
 	self assert: 1 equals: floor totalRoomsOccupied.
 	self assert: 0 equals: floor totalRoomsReserved.
 ! !
 
-!FloorTest methodsFor: 'testing' stamp: 'FRT 4/22/2024 11:58:54'!
+!FloorTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:42:21'!
 test06WhenAFloorReceivesOnReservationAGuestInARoomKeepsTheAvailableRoomsAndOccupiedAndReducesTheReservedByOne
 
 	| floor roomsNumber roomsAvailable roomsOccupied roomsReserved |
@@ -65,22 +64,20 @@ test06WhenAFloorReceivesOnReservationAGuestInARoomKeepsTheAvailableRoomsAndOccup
 	roomsNumber := 10.
 	floor := self createFloorWith: roomsNumber and: self defaultPriceList.
 	
-	"Tech Debt"
-	((floor rooms) at: 1) reserve.
+	(floor roomAt: 1) reserve.
 
 	roomsAvailable := floor totalRoomsAvailable.
 	roomsOccupied := floor totalRoomsOccupied.
 	roomsReserved := floor totalRoomsReserved.
 
-	"Tech Debt"
-	((floor rooms) at: 1) receiveWithReservation: self guestTypeVacation.
+	(floor roomAt: 1) receiveWithReservation: self guestTypeVacation.
 	
 	self assert: roomsAvailable equals: floor totalRoomsAvailable. 
 	self assert: roomsOccupied equals: floor totalRoomsOccupied.
 	self assert: roomsReserved - 1 equals: floor totalRoomsReserved.
 ! !
 
-!FloorTest methodsFor: 'testing' stamp: 'FRT 4/21/2024 20:01:42'!
+!FloorTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:42:27'!
 test07WhenARoomIsReservedTheFloorAvailableRoomsReducesByOneAndIncreaseReservedAndOccupiedByOne
 
 	| floor roomsNumber |
@@ -88,15 +85,14 @@ test07WhenARoomIsReservedTheFloorAvailableRoomsReducesByOneAndIncreaseReservedAn
 	roomsNumber := 10.
 	floor := self createFloorWith: roomsNumber and: self defaultPriceList.
 	
-	"Tech Debt"
-	((floor rooms) at: 1) reserve.
+	(floor roomAt: 1) reserve.
 	
 	self assert: roomsNumber - 1 equals: floor totalRoomsAvailable. 
 	self assert: 1 equals: floor totalRoomsOccupied.
 	self assert: 1 equals: floor totalRoomsReserved.
 ! !
 
-!FloorTest methodsFor: 'testing' stamp: 'FRT 4/21/2024 20:01:30'!
+!FloorTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:42:32'!
 test08TotalProfitShouldBeTheSumOfOccupiedRoomsProfits
 
 	| floor roomsNumber |
@@ -104,15 +100,14 @@ test08TotalProfitShouldBeTheSumOfOccupiedRoomsProfits
 	roomsNumber := 10.
 	floor := self createFloorWith: roomsNumber and: self defaultPriceList.
 	
-	"Tech Debt"
-	((floor rooms) at: 1) receive: self guestTypeVacation.
-	((floor rooms) at: 2) receive: self guestTypeConference.
-	((floor rooms) at: 3) reserve.
+	(floor roomAt: 1) receive: self guestTypeVacation.
+	(floor roomAt: 2) receive: self guestTypeConference.
+	(floor roomAt: 3) reserve.
 		
 	self assert: (100*peso) + (200*peso) + (50*peso) equals: floor totalProfits
 ! !
 
-!FloorTest methodsFor: 'testing' stamp: 'FRT 4/21/2024 20:01:22'!
+!FloorTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:42:37'!
 test09TotalLossesShouldBeTheSumOfAvailableRoomsLosses
 
 	| floor roomsNumber |
@@ -120,25 +115,18 @@ test09TotalLossesShouldBeTheSumOfAvailableRoomsLosses
 	roomsNumber := 10.
 	floor := self createFloorWith: roomsNumber and: self defaultPriceList.
 	
-	"Tech Debt"
-	((floor rooms) at: 1) receive: self guestTypeVacation.
-	((floor rooms) at: 2) receive: self guestTypeConference.
-	((floor rooms) at: 3) reserve.
+	(floor roomAt: 1) receive: self guestTypeVacation.
+	(floor roomAt: 2) receive: self guestTypeConference.
+	(floor roomAt: 3) reserve.
 		
 	self assert: (200*peso) * 7 equals: floor totalLosses
 ! !
 
 
-!FloorTest methodsFor: 'create' stamp: 'FRT 4/21/2024 14:35:45'!
+!FloorTest methodsFor: 'create' stamp: 'HAW 4/30/2024 15:55:40'!
 createFloorWith: aNumberOfRooms and: aPrice
 
-	| floor |
-
-	floor := Floor new.
-	floor setNumberOfRooms: aNumberOfRooms.
-	floor setPrices: aPrice.
-	
-	^ floor.! !
+	^ Floor numberOfRooms: aNumberOfRooms prices: aPrice.! !
 
 !FloorTest methodsFor: 'create' stamp: 'FRT 4/21/2024 17:01:23'!
 defaultPriceList
@@ -148,15 +136,15 @@ defaultPriceList
 		at: self guestTypeConference put: 200*peso;
 		yourself ! !
 
-!FloorTest methodsFor: 'create' stamp: 'FRT 4/21/2024 17:00:09'!
+!FloorTest methodsFor: 'create' stamp: 'HAW 4/30/2024 16:44:45'!
 guestTypeConference
 	
-	^ #conferenceGuest! !
+	^ Room guestTypeConference ! !
 
-!FloorTest methodsFor: 'create' stamp: 'FRT 4/21/2024 17:00:42'!
+!FloorTest methodsFor: 'create' stamp: 'HAW 4/30/2024 16:45:29'!
 guestTypeVacation
 	
-	^ #vacationGuest! !
+	^ Room guestTypeVacation ! !
 
 
 !classDefinition: #HotelTest category: #'ISW1-2024-1C-Parcial'!
@@ -166,11 +154,11 @@ TestCase subclass: #HotelTest
 	poolDictionaries: ''
 	category: 'ISW1-2024-1C-Parcial'!
 
-!HotelTest methodsFor: 'testing' stamp: 'HAW 4/29/2024 11:16:52'!
+!HotelTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 15:59:48'!
 test01CannotCreateHotelWithoutFloors
 
 	self
-		should: [ Hotel new setFloors: OrderedCollection new. ]
+		should: [ Hotel floors: OrderedCollection new. ]
 		raise: Error - MessageNotUnderstood 
 		withMessageText: Hotel noFloorsErrorDescription.! !
 
@@ -254,7 +242,7 @@ test06HotelCannotReceiveWithReservationWithoutPreviousReservation
 
 ! !
 
-!HotelTest methodsFor: 'testing' stamp: 'HAW 4/29/2024 11:18:52'!
+!HotelTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 15:59:55'!
 test07HotelProfitsAreTheSumOfEachFloorProfits
 	
 	| hotel floor1 floor2 floors |
@@ -264,14 +252,14 @@ test07HotelProfitsAreTheSumOfEachFloorProfits
 	floor2 := self createFloorWith: 10 and: self defaultPriceList.
 
 	floors := OrderedCollection with: floor1 with: floor2.
-	hotel := 	Hotel new setFloors: floors.
+	hotel := 	Hotel floors: floors.
 	
 	hotel receive: self guestTypeVacation atFloor: 1 atRoom: 1.
 	hotel receive: self guestTypeConference atFloor: 2 atRoom: 1.
 
 	self assert: floor1 totalProfits + floor2 totalProfits equals:		hotel totalProfits.! !
 
-!HotelTest methodsFor: 'testing' stamp: 'HAW 4/29/2024 11:19:02'!
+!HotelTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:00:00'!
 test08HotelLossesAreTheSumOfEachFloorLosses
 	
 	| hotel floor1 floor2 floors |
@@ -281,7 +269,7 @@ test08HotelLossesAreTheSumOfEachFloorLosses
 	floor2 := self createFloorWith: 10 and: self defaultPriceList.
 
 	floors := OrderedCollection with: floor1 with: floor2.
-	hotel := 	Hotel new setFloors: floors.
+	hotel := 	Hotel floors: floors.
 	
 	hotel receive: self guestTypeVacation atFloor: 1 atRoom: 1.
 	hotel receive: self guestTypeConference atFloor: 2 atRoom: 1.
@@ -291,7 +279,7 @@ test08HotelLossesAreTheSumOfEachFloorLosses
 
 	self assert: floor1 totalLosses + floor2 totalLosses equals:		hotel totalLosses.! !
 
-!HotelTest methodsFor: 'testing' stamp: 'HAW 4/29/2024 11:19:21'!
+!HotelTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:00:06'!
 test09HotelCannotReserveANonexistentRoom
 	
 	| hotel floor1 floors |
@@ -299,7 +287,7 @@ test09HotelCannotReserveANonexistentRoom
 	floor1 := self createFloorWith: 10 and: self defaultPriceList.
 
 	floors := OrderedCollection with: floor1.
-	hotel := 	Hotel new setFloors: floors.
+	hotel := 	Hotel floors: floors.
 	
 	self 
 	should: [ 	hotel reserveRoom: 42 atFloor: 1. ]
@@ -313,7 +301,7 @@ test09HotelCannotReserveANonexistentRoom
 	]
 ! !
 
-!HotelTest methodsFor: 'testing' stamp: 'HAW 4/29/2024 11:19:32'!
+!HotelTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:00:11'!
 test10HotelCannotReserveANonexistentFloor
 	
 	| hotel floor1 floors |
@@ -321,7 +309,7 @@ test10HotelCannotReserveANonexistentFloor
 	floor1 := self createFloorWith: 10 and: self defaultPriceList.
 
 	floors := OrderedCollection with: floor1.
-	hotel := 	Hotel new setFloors: floors.
+	hotel := 	Hotel floors: floors.
 	
 	self 
 	should: [ 	hotel reserveRoom: 1 atFloor: 42. ]
@@ -334,7 +322,7 @@ test10HotelCannotReserveANonexistentFloor
 		self assert: 0 equals: hotel totalRoomsOccupied.
 	]! !
 
-!HotelTest methodsFor: 'testing' stamp: 'HAW 4/29/2024 11:20:37'!
+!HotelTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:00:18'!
 test11HotelCannotReceiveAtNonexistentRoom
 	
 	| hotel floor1 floors |
@@ -342,7 +330,7 @@ test11HotelCannotReceiveAtNonexistentRoom
 	floor1 := self createFloorWith: 10 and: self defaultPriceList.
 
 	floors := OrderedCollection with: floor1.
-	hotel := 	Hotel new setFloors: floors.
+	hotel := 	Hotel floors: floors.
 	
 	self 
 	should: [ 	hotel receive: self guestTypeVacation atFloor: 1 atRoom: 42. ]
@@ -355,7 +343,7 @@ test11HotelCannotReceiveAtNonexistentRoom
 		self assert: 0 equals: hotel totalRoomsOccupied.
 	]! !
 
-!HotelTest methodsFor: 'testing' stamp: 'HAW 4/29/2024 11:20:45'!
+!HotelTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:00:23'!
 test12HotelCannotReceiveAtNonexistentFloor
 	
 	| hotel floor1 floors |
@@ -363,7 +351,7 @@ test12HotelCannotReceiveAtNonexistentFloor
 	floor1 := self createFloorWith: 10 and: self defaultPriceList.
 
 	floors := OrderedCollection with: floor1.
-	hotel := 	Hotel new setFloors: floors.
+	hotel := 	Hotel floors: floors.
 	
 	self 
 	should: [ 	hotel receive: self guestTypeVacation atFloor: 42 atRoom: 1. ]
@@ -376,7 +364,7 @@ test12HotelCannotReceiveAtNonexistentFloor
 		self assert: 0 equals: hotel totalRoomsOccupied.
 	]! !
 
-!HotelTest methodsFor: 'testing' stamp: 'HAW 4/29/2024 11:20:54'!
+!HotelTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:00:29'!
 test13HotelCannotReceiveWithReservationAtNonexistentRoom
 	
 	| hotel floor1 floors |
@@ -384,7 +372,7 @@ test13HotelCannotReceiveWithReservationAtNonexistentRoom
 	floor1 := self createFloorWith: 10 and: self defaultPriceList.
 
 	floors := OrderedCollection with: floor1.
-	hotel := 	Hotel new setFloors: floors.
+	hotel := 	Hotel floors: floors.
 
 	hotel reserveRoom: 1 atFloor: 1. 
 	
@@ -400,23 +388,17 @@ test13HotelCannotReceiveWithReservationAtNonexistentRoom
 	]! !
 
 
-!HotelTest methodsFor: 'create' stamp: 'FRT 4/22/2024 10:27:05'!
+!HotelTest methodsFor: 'create' stamp: 'HAW 4/30/2024 15:56:04'!
 createFloorWith: aNumberOfRooms and: aPrice
 
-	| floor |
+	^ Floor numberOfRooms: aNumberOfRooms prices: aPrice.! !
 
-	floor := Floor new.
-	floor setNumberOfRooms: aNumberOfRooms.
-	floor setPrices: aPrice.
-	
-	^ floor.! !
-
-!HotelTest methodsFor: 'create' stamp: 'FRT 4/22/2024 10:32:32'!
+!HotelTest methodsFor: 'create' stamp: 'HAW 4/30/2024 15:57:29'!
 createHotel
 
-	^ Hotel new 
-		      setFloors: (OrderedCollection with: (self createFloorWith: 10 and: self defaultPriceList)
-								      	 with: (self createFloorWith: 1 and: self defaultPriceList)).
+	^ Hotel floors: (OrderedCollection 
+		with: (self createFloorWith: 10 and: self defaultPriceList)
+		with: (self createFloorWith: 1 and: self defaultPriceList)).
 								! !
 
 !HotelTest methodsFor: 'create' stamp: 'FRT 4/22/2024 10:27:22'!
@@ -427,15 +409,15 @@ defaultPriceList
 		at: self guestTypeConference put: self maxPriceInList;
 		yourself ! !
 
-!HotelTest methodsFor: 'create' stamp: 'FRT 4/22/2024 10:27:36'!
+!HotelTest methodsFor: 'create' stamp: 'HAW 4/30/2024 16:44:40'!
 guestTypeConference
 	
-	^ #conferenceGuest! !
+	^ Room guestTypeConference ! !
 
-!HotelTest methodsFor: 'create' stamp: 'FRT 4/22/2024 10:27:42'!
+!HotelTest methodsFor: 'create' stamp: 'HAW 4/30/2024 16:45:34'!
 guestTypeVacation
 	
-	^ #vacationGuest! !
+	^ Room guestTypeVacation ! !
 
 !HotelTest methodsFor: 'create' stamp: 'FRT 4/22/2024 10:27:48'!
 maxPriceInList
@@ -663,44 +645,40 @@ test12NoProfitOnOccupiedRoomByUnknownGuestType
 	self failWith: 'should not calculate profit on room occupied by unknown guest type'.
 ! !
 
-!RoomTest methodsFor: 'testing' stamp: 'HAW 4/29/2024 18:53:19'!
+!RoomTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:36:59'!
 test13LossesOfAvailableRoomIsTheMaxPriceInList
 
-	self shouldFail: [
-		| room |
-	
-		room := Room new.
+	| room |
 
-		self assert: self maxPriceInList equals: (room lossUsing: self defaultPriceList ifAbsentGuestType: [ self fail ]).
-	]	
+	room := Room new.
+
+	self assert: self maxPriceInList equals: (room lossUsing: self defaultPriceList ifAbsentGuestType: [ self fail ]).
+
 ! !
 
-!RoomTest methodsFor: 'testing' stamp: 'HAW 4/29/2024 11:21:36'!
+!RoomTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:38:52'!
 test14LossesOfReservedRoomIsCeroPesos
 
-	self shouldFail: [
-		| room |
-	
-		room := Room new.
+	| room |
 
-		room reserve.
+	room := Room new.
 
-		self assert: 0*peso equals: (room lossUsing: self defaultPriceList ifAbsentGuestType: [ self fail ]).
-	]	
+	room reserve.
+
+	self assert: 0*peso equals: (room lossUsing: self defaultPriceList ifAbsentGuestType: [ self fail ]).
 ! !
 
-!RoomTest methodsFor: 'testing' stamp: 'HAW 4/29/2024 11:21:50'!
+!RoomTest methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:39:13'!
 test15LossesOfOccupiedRoomIsCeroPesos
 
-	self shouldFail: [
-		| room |
-		
-		room := Room new.
+	| room |
+	
+	room := Room new.
 
-		room receive: self guestTypeVacation.
+	room receive: self guestTypeVacation.
 
-		self assert: 0*peso equals: (room lossUsing: self defaultPriceList ifAbsentGuestType: [ self fail ]).
-	]! !
+	self assert: 0*peso equals: (room lossUsing: self defaultPriceList ifAbsentGuestType: [ self fail ]).
+! !
 
 !RoomTest methodsFor: 'testing' stamp: 'HAW 4/28/2024 15:53:31'!
 test16CannotReserveWhenReserved
@@ -743,15 +721,15 @@ defaultPriceList
 		at: self guestTypeConference put: self maxPriceInList;
 		yourself ! !
 
-!RoomTest methodsFor: 'create' stamp: 'FRT 4/22/2024 09:20:45'!
+!RoomTest methodsFor: 'create' stamp: 'HAW 4/30/2024 16:44:23'!
 guestTypeConference
 	
-	^ #conferenceGuest! !
+	^ Room guestTypeConference ! !
 
-!RoomTest methodsFor: 'create' stamp: 'FRT 4/22/2024 09:02:15'!
+!RoomTest methodsFor: 'create' stamp: 'HAW 4/30/2024 16:45:04'!
 guestTypeVacation
 	
-	^ #vacationGuest! !
+	^Room guestTypeVacation ! !
 
 !RoomTest methodsFor: 'create' stamp: 'FRT 4/22/2024 10:16:13'!
 maxPriceInList
@@ -778,12 +756,6 @@ isAvailable
 
 		
 ! !
-
-
-!Floor methodsFor: 'accessing' stamp: 'FRT 4/20/2024 21:34:09'!
-rooms
-
-	^ rooms! !
 
 
 !Floor methodsFor: 'accounting' stamp: 'FRT 4/21/2024 13:23:04'!
@@ -816,27 +788,6 @@ totalProfits
 ! !
 
 
-!Floor methodsFor: 'setters' stamp: 'FRT 4/20/2024 19:48:41'!
-setNumberOfRooms: aNumberOfRooms
-
-	self class assertIsPositive: aNumberOfRooms ifFalse: [ self class signalNumberOfRoomsMustBePositive ].
-	self class assertIsInteger: aNumberOfRooms ifFalse: [ self class signalNumberOfRoomsMustBeInteger ].
-	
-	self initializeRoomsWith: aNumberOfRooms.
-! !
-
-!Floor methodsFor: 'setters' stamp: 'FRT 4/21/2024 15:00:28'!
-setPrices: aPriceList
-
-	aPriceList isEmpty ifTrue: [ self class signalNoPrices ].
-	
-	aPriceList values do: [ :price | 
-		self class assertIsPositive: price ifFalse: [ self class signalPriceMustBePositive ].
-	].
-	
-	self initializeWith: aPriceList.! !
-
-
 !Floor methodsFor: 'totals' stamp: 'FRT 4/21/2024 14:49:55'!
 totalRooms
 	
@@ -864,24 +815,30 @@ totalRoomsReserved
 	^rooms count: [ :room | room isReserved ]! !
 
 
-!Floor methodsFor: 'initialization' stamp: 'FRT 4/20/2024 19:57:37'!
+!Floor methodsFor: 'initialization' stamp: 'HAW 4/30/2024 15:54:43'!
+initializeNumberOfRooms: aNumberOfRooms prices: aPriceList 
+	
+	self initializeRoomsWith: aNumberOfRooms.
+	prices := aPriceList.! !
+
+!Floor methodsFor: 'initialization' stamp: 'HAW 4/30/2024 15:54:24'!
 initializeRoomsWith: aNumberOfRooms
 
-	| ix |
-	
 	rooms := OrderedCollection new.
 	
-	ix := 1.
-	[ ix <= aNumberOfRooms ] whileTrue: [ 
-		rooms add: Room new.
-		ix := ix + 1.
-	]
+	aNumberOfRooms timesRepeat: [ rooms add: Room new ]
 ! !
 
-!Floor methodsFor: 'initialization' stamp: 'FRT 4/21/2024 00:23:52'!
-initializeWith: aPriceList
 
-	prices := aPriceList! !
+!Floor methodsFor: 'accessing rooms' stamp: 'HAW 4/30/2024 16:35:16'!
+roomAt: aRoomNumber
+ 
+	^rooms at: aRoomNumber ! !
+
+!Floor methodsFor: 'accessing rooms' stamp: 'HAW 4/30/2024 16:30:22'!
+roomsAt: aRoomNumber ifAbsent: absentBlock
+
+	^rooms at: aRoomNumber ifAbsent: absentBlock ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -898,6 +855,18 @@ assertIsInteger: aNumber ifFalse: signalsBlock
 assertIsPositive: aNumber ifFalse: signalsBlock
 
 	aNumber strictlyPositive ifFalse: signalsBlock! !
+
+!Floor class methodsFor: 'assertions' stamp: 'HAW 4/30/2024 16:01:12'!
+assertIsValidNumberOfRooms: aNumberOfRooms
+
+	self assertIsPositive: aNumberOfRooms ifFalse: [ self signalNumberOfRoomsMustBePositive ].
+	self assertIsInteger: aNumberOfRooms ifFalse: [ self signalNumberOfRoomsMustBeInteger ]! !
+
+!Floor class methodsFor: 'assertions' stamp: 'HAW 4/30/2024 16:01:31'!
+assertIsValidPriceList: aPriceList
+
+	aPriceList isEmpty ifTrue: [ self signalNoPrices ].
+	aPriceList values do: [ :price | self assertIsPositive: price ifFalse: [ self signalPriceMustBePositive ]]! !
 
 
 !Floor class methodsFor: 'error messages' stamp: 'FRT 4/20/2024 19:02:53'!
@@ -962,6 +931,15 @@ signalUnknownGuestType
 	self error: self class unknownGuestTypeErrorDescription
 ! !
 
+
+!Floor class methodsFor: 'instance creation' stamp: 'HAW 4/30/2024 16:01:34'!
+numberOfRooms: aNumberOfRooms prices: aPriceList 
+	
+	self assertIsValidNumberOfRooms: aNumberOfRooms.	
+	self assertIsValidPriceList: aPriceList.
+	
+	^self new initializeNumberOfRooms: aNumberOfRooms prices: aPriceList ! !
+
 
 !classDefinition: #Hotel category: #'ISW1-2024-1C-Parcial'!
 Object subclass: #Hotel
@@ -970,70 +948,31 @@ Object subclass: #Hotel
 	poolDictionaries: ''
 	category: 'ISW1-2024-1C-Parcial'!
 
-!Hotel methodsFor: 'accounting' stamp: 'FRT 4/21/2024 00:02:28'!
+!Hotel methodsFor: 'accounting' stamp: 'HAW 4/30/2024 16:41:09'!
 totalLosses
 
-	| acc |
-	
-	acc := 0.
-	floors do: [ :floor | acc := acc + floor totalLosses ]. 
-
-	^ acc.
+	^floors sum: [ :floor | floor totalLosses ]. 
 ! !
 
-!Hotel methodsFor: 'accounting' stamp: 'FRT 4/22/2024 13:55:50'!
+!Hotel methodsFor: 'accounting' stamp: 'HAW 4/30/2024 16:41:32'!
 totalProfits
 
-	| acc |
-	
-	acc := 0.
-	floors do: [ :floor | acc := acc + floor totalProfits ]. 
-
-	^ acc.
+	^floors sum: [ :floor | floor totalProfits ]. 
 ! !
 
 
-!Hotel methodsFor: 'initialization' stamp: 'FRT 4/20/2024 23:37:37'!
-initialize
-
-	availableRoomsCount := 0.
+!Hotel methodsFor: 'initialization' stamp: 'HAW 4/30/2024 15:59:18'!
+initializeFloors: aFloors 
+	
+	floors := aFloors.
+	availableRoomsCount := self totalRooms.	
 ! !
 
 
-!Hotel methodsFor: 'setters' stamp: 'FRT 4/22/2024 11:50:40'!
-setFloors: aFloorsCollection
-
-	self class assertHaveFloors: aFloorsCollection.
-
-	floors := aFloorsCollection.
-	
-	availableRoomsCount := self totalRooms.! !
-
-
-!Hotel methodsFor: 'totals' stamp: 'FRT 4/22/2024 11:43:27'!
+!Hotel methodsFor: 'totals' stamp: 'HAW 4/30/2024 16:33:03'!
 totalRooms
 
-	| ix acc |
-
-	acc := 0.
-
-	ix := 1.	
-	[ ix <= floors size ] whileTrue: [ | floor jx |
-		floor := floors at: ix.
-
-		jx := 1.
-		[ jx <= floor rooms size ] whileTrue: [ 
-			acc := acc + 1.
-			
-			jx := jx + 1.
-		].
-			
-		ix := ix + 1.				
-	].
-
-	^ acc.
-
-! !
+	^floors sum: [ :aFloor | aFloor totalRooms ]! !
 
 !Hotel methodsFor: 'totals' stamp: 'FRT 4/22/2024 11:43:00'!
 totalRoomsAvailable
@@ -1041,122 +980,66 @@ totalRoomsAvailable
 	^ availableRoomsCount.
 ! !
 
-!Hotel methodsFor: 'totals' stamp: 'FRT 4/22/2024 11:42:53'!
+!Hotel methodsFor: 'totals' stamp: 'HAW 4/30/2024 16:33:55'!
 totalRoomsOccupied
 
-	| ix acc |
-
-	acc := 0.
-
-	ix := 1.	
-	[ ix <= floors size ] whileTrue: [ | floor jx |
-		floor := floors at: ix.
-
-		jx := 1.
-		[ jx <= floor rooms size ] whileTrue: [ | room | 
-			room := floor rooms at: jx.
-			room isOccupied ifTrue: [ 			acc := acc + 1. ].
-			
-			jx := jx + 1.
-		].
-			
-		ix := ix + 1.				
-	].
-
-	^ acc.
-
+	^floors sum: [ :aFloor | aFloor totalRoomsOccupied ]
 ! !
 
-!Hotel methodsFor: 'totals' stamp: 'FRT 4/22/2024 11:43:13'!
+!Hotel methodsFor: 'totals' stamp: 'HAW 4/30/2024 16:34:14'!
 totalRoomsReserved
 
-	| ix acc |
-
-	acc := 0.
-
-	ix := 1.	
-	[ ix <= floors size ] whileTrue: [ | floor jx |
-		floor := floors at: ix.
-
-		jx := 1.
-		[jx <= floor rooms size] whileTrue: [ | room | 
-			room := floor rooms at: jx.
-			room isReserved ifTrue: [ 			acc := acc + 1. ].
-			
-			jx := jx + 1.
-		].
-			
-		ix := ix + 1.				
-	].
-
-	^ acc.
-
+	^floors sum: [ :aFloor | aFloor totalRoomsReserved ]
 ! !
 
 
-!Hotel methodsFor: 'testing' stamp: 'FRT 4/22/2024 11:32:03'!
+!Hotel methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:29:29'!
 isEmpty
 
-	| ix acc |
-	
-	acc := true.
-
-	ix := 1.	
-	[ ix <= floors size ] whileTrue: [ | floor jx |
-		floor := floors at: ix.
-
-		jx := 1.
-		[ jx <= floor rooms size ] whileTrue: [ | room |
-			room := floor rooms at: jx.
-			acc := acc and: room isAvailable.
-			
-			jx := jx + 1.
-		].
-			
-		ix := ix + 1.				
-	].
-
-	^ acc.
-! !
+	^floors allSatisfy: [ :aFloor | aFloor isAvailable ]! !
 
 
-!Hotel methodsFor: 'guests' stamp: 'FRT 4/25/2024 21:45:24'!
+!Hotel methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:40:30'!
 receive: aGuestType atFloor: aFloorNumber atRoom: aRoomNumber
 
-	| floor room |
+	|  room |
 	
-	floor := floors at: aFloorNumber ifAbsent:  [ self class signalFloorNumberDoesNotExist ].
-	room := floor rooms at: aRoomNumber ifAbsent: [ self class signalRoomNumberDoesNotExist ].
-
+	room := self roomAt: aRoomNumber inFloor: aFloorNumber.
 	room receive: aGuestType.
 	
 	availableRoomsCount := availableRoomsCount - 1.
 ! !
 
-!Hotel methodsFor: 'guests' stamp: 'FRT 4/25/2024 21:55:45'!
+!Hotel methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:32:06'!
 receiveWithReservation: aGuestType atFloor: aFloorNumber atRoom: aRoomNumber
 
-	| floor room |
+	| room |
 	
-	floor := floors at: aFloorNumber ifAbsent:  [ self class signalFloorNumberDoesNotExist ].
-	room := floor rooms at: aRoomNumber ifAbsent: [ self class signalRoomNumberDoesNotExist ].
-
+	room := self roomAt: aRoomNumber inFloor: aFloorNumber.
 	room receiveWithReservation: aGuestType.
 
 ! !
 
-!Hotel methodsFor: 'guests' stamp: 'FRT 4/25/2024 21:56:34'!
+!Hotel methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:32:26'!
 reserveRoom: aRoomNumber atFloor: aFloorNumber
 
-	| floor room |
+	| room |
 	
-	floor := floors at: aFloorNumber ifAbsent:  [ self class signalFloorNumberDoesNotExist ].
-	room := floor rooms at: aRoomNumber ifAbsent: [ self class signalRoomNumberDoesNotExist ].
-	 
+	room := self roomAt: aRoomNumber inFloor: aFloorNumber.
 	room reserve.
 	
 	availableRoomsCount := availableRoomsCount - 1.
 ! !
+
+!Hotel methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:40:47'!
+roomAt: aRoomNumber inFloor: aFloorNumber
+
+	| floor room |
+	
+	floor := floors at: aFloorNumber ifAbsent:  [ self class signalFloorNumberDoesNotExist ].
+	room := floor roomsAt: aRoomNumber ifAbsent: [ self class signalRoomNumberDoesNotExist ].
+	
+	^ room! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -1201,75 +1084,119 @@ signalRoomNumberDoesNotExist
 
 	self error: self roomNumberDoesNotExistErrorDescription.! !
 
+
+!Hotel class methodsFor: 'instance creation' stamp: 'HAW 4/30/2024 15:59:06'!
+floors: aFloorsCollection 
+
+	self assertHaveFloors: aFloorsCollection .
+
+	^self new initializeFloors: aFloorsCollection ! !
+
 
 !classDefinition: #Room category: #'ISW1-2024-1C-Parcial'!
 Object subclass: #Room
-	instanceVariableNames: 'guest'
+	instanceVariableNames: 'status'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ISW1-2024-1C-Parcial'!
 
-!Room methodsFor: 'guests' stamp: 'FRT 4/21/2024 00:18:42'!
-guestType
-
-	^ guest! !
-
-!Room methodsFor: 'guests' stamp: 'FRT 4/25/2024 21:07:35'!
+!Room methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:10:04'!
 receive: aGuestType
 
-	"Room Occupied"
-	(guest notNil or: [guest = #reserved])
-		ifTrue: [ self error: self class roomIsNotEmptyErrorDescription ]
-		ifFalse: [  guest := aGuestType ] ! !
+	status receive: aGuestType in: self! !
 
-!Room methodsFor: 'guests' stamp: 'FRT 4/25/2024 21:07:41'!
+!Room methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:14:35'!
 receiveWithReservation: aGuestType
 	
-	"Room Reserved"
-	guest = #reserved
-		ifTrue: [  guest := aGuestType ] 
-		ifFalse: [ self error: self class roomIsNotReservedErrorDescription ]
-! !
+	status receiveWithReservation: aGuestType in: self! !
 
-!Room methodsFor: 'guests' stamp: 'FRT 4/25/2024 21:10:12'!
+!Room methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:07:45'!
 reserve
 
-	"Room Occupied"
-	(guest notNil or: [guest = #reserved]) 
-		ifTrue: [ self error: self class roomIsNotEmptyErrorDescription ]
-		ifFalse: [  	guest := #reserved ]! !
+	status reserveIn: self ! !
 
 
-!Room methodsFor: 'testing' stamp: 'FRT 4/20/2024 22:33:39'!
+!Room methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:22:10'!
 isAvailable
 
-	^ guest isNil! !
+	^ status isAvailable ! !
 
-!Room methodsFor: 'testing' stamp: 'FRT 4/25/2024 21:08:13'!
+!Room methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:19:35'!
 isOccupied
 
-	^ guest notNil or: [guest = #reserved]
+	^ status isOccupied 
 ! !
 
-!Room methodsFor: 'testing' stamp: 'FRT 4/25/2024 21:02:45'!
+!Room methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:19:59'!
 isReserved
 
-	^ guest = #reserved! !
+	^ status isReserved ! !
 
 
-!Room methodsFor: 'accounting' stamp: 'HAW 4/28/2024 16:04:40'!
+!Room methodsFor: 'accounting' stamp: 'HAW 4/30/2024 16:38:06'!
+lossUsing: aPriceList ifAbsentGuestType: absentBlock
+
+	^status lossUsing: aPriceList ifAbsentGuestType: absentBlock ! !
+
+!Room methodsFor: 'accounting' stamp: 'HAW 4/30/2024 16:26:06'!
 profitUsing: aPriceList ifAbsentGuestType: unknownGuestTypeBlock
 
-	"Room Available"
-	guest isNil ifTrue: [ ^ 0*peso ].
-
-	"Room Reserved"
-	guest = #reserved ifTrue: [ ^ aPriceList values min / 2 ].
-	
-	"Room Occupied"
-	(guest notNil or: [guest = #reserved]) ifTrue: [ ^ aPriceList at: guest ifAbsent: unknownGuestTypeBlock ].
-	
+	^status profitUsing: aPriceList ifAbsentGuestType: unknownGuestTypeBlock 
 	! !
+
+
+!Room methodsFor: 'guests-private' stamp: 'HAW 4/30/2024 16:50:03'!
+receiveWhenAvailable: aGuestType 
+	
+	status := OccupiedRoom with: aGuestType ! !
+
+!Room methodsFor: 'guests-private' stamp: 'HAW 4/30/2024 16:13:03'!
+receiveWhenOccupied: aGuestType 
+	
+	self error: self class roomIsNotEmptyErrorDescription 
+	! !
+
+!Room methodsFor: 'guests-private' stamp: 'HAW 4/30/2024 16:13:38'!
+receiveWhenReserved: aGuestType 
+	
+	self error: self class roomIsNotEmptyErrorDescription 
+		! !
+
+!Room methodsFor: 'guests-private' stamp: 'HAW 4/30/2024 16:15:57'!
+receiveWithReservationWhenAvailable: aGuestType 
+	
+	self error: self class roomIsNotReservedErrorDescription ! !
+
+!Room methodsFor: 'guests-private' stamp: 'HAW 4/30/2024 16:16:29'!
+receiveWithReservationWhenOccupied: aGuestType 
+	
+	self error: self class roomIsNotReservedErrorDescription! !
+
+!Room methodsFor: 'guests-private' stamp: 'HAW 4/30/2024 16:50:03'!
+receiveWithReservationWhenReserved: aGuestType 
+	
+	status := OccupiedRoom with: aGuestType ! !
+
+!Room methodsFor: 'guests-private' stamp: 'HAW 4/30/2024 16:50:14'!
+reserveWhenAvailable
+	
+	status := ReservedRoom new! !
+
+!Room methodsFor: 'guests-private' stamp: 'HAW 4/30/2024 16:12:08'!
+reserveWhenOccupied
+	
+	self error: self class roomIsNotEmptyErrorDescription! !
+
+!Room methodsFor: 'guests-private' stamp: 'HAW 4/30/2024 16:09:12'!
+reserveWhenReserved
+	
+	self error: self class roomIsNotEmptyErrorDescription! !
+
+
+!Room methodsFor: 'initialization' stamp: 'HAW 4/30/2024 16:49:51'!
+initialize
+
+	status := AvailableRoom new! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -1286,3 +1213,210 @@ roomIsNotEmptyErrorDescription
 roomIsNotReservedErrorDescription
 
 	^ 'Room is not reserved.'! !
+
+
+!Room class methodsFor: 'as yet unclassified' stamp: 'HAW 4/30/2024 16:44:31'!
+guestTypeConference
+	
+	^#conferenceGuest! !
+
+!Room class methodsFor: 'as yet unclassified' stamp: 'HAW 4/30/2024 16:45:19'!
+guestTypeVacation
+	
+	 ^#vacationGuest! !
+
+
+!classDefinition: #RoomStatus category: #'ISW1-2024-1C-Parcial'!
+Object subclass: #RoomStatus
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ISW1-2024-1C-Parcial'!
+
+!RoomStatus methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:22:15'!
+isAvailable
+
+	^false! !
+
+!RoomStatus methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:06:21'!
+isOccupied
+
+	^false! !
+
+!RoomStatus methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:06:25'!
+isReserved
+
+	^false! !
+
+
+!RoomStatus methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:48:11'!
+receive: aGuestType in: aRoom
+
+	self subclassResponsibility! !
+
+!RoomStatus methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:48:15'!
+receiveWithReservation: aGuestType in: aRoom
+
+	self subclassResponsibility! !
+
+!RoomStatus methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:48:18'!
+reserveIn: aRoom
+
+	self subclassResponsibility! !
+
+
+!RoomStatus methodsFor: 'accounting' stamp: 'HAW 4/30/2024 16:48:02'!
+lossUsing: aPriceList ifAbsentGuestType: absentBlock
+
+	self subclassResponsibility! !
+
+!RoomStatus methodsFor: 'accounting' stamp: 'HAW 4/30/2024 16:48:07'!
+profitUsing: aPriceList ifAbsentGuestType: unknownGuestTypeBlock
+
+	self subclassResponsibility! !
+
+
+!classDefinition: #AvailableRoom category: #'ISW1-2024-1C-Parcial'!
+RoomStatus subclass: #AvailableRoom
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ISW1-2024-1C-Parcial'!
+
+!AvailableRoom methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:22:21'!
+isAvailable
+	
+	^true! !
+
+
+!AvailableRoom methodsFor: 'accounting' stamp: 'HAW 4/30/2024 16:38:31'!
+lossUsing: aPriceList ifAbsentGuestType: absentBlock 
+	
+	^aPriceList value max! !
+
+!AvailableRoom methodsFor: 'accounting' stamp: 'HAW 4/30/2024 16:26:23'!
+profitUsing: aPriceList ifAbsentGuestType: unknownGuestTypeBlock 
+	
+	^ 0*peso
+
+	! !
+
+
+!AvailableRoom methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:10:27'!
+receive: aGuestType in: aRoom 
+	
+	aRoom receiveWhenAvailable: aGuestType ! !
+
+!AvailableRoom methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:15:43'!
+receiveWithReservation: aGuestType in: aRoom 
+	
+	aRoom receiveWithReservationWhenAvailable: aGuestType ! !
+
+!AvailableRoom methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:08:06'!
+reserveIn: aRoom 
+	
+	aRoom reserveWhenAvailable! !
+
+
+!classDefinition: #OccupiedRoom category: #'ISW1-2024-1C-Parcial'!
+RoomStatus subclass: #OccupiedRoom
+	instanceVariableNames: 'guestType'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ISW1-2024-1C-Parcial'!
+
+!OccupiedRoom methodsFor: 'initialization' stamp: 'HAW 4/30/2024 16:11:18'!
+initializeWith: aGuestType 
+	
+	guestType := aGuestType.! !
+
+
+!OccupiedRoom methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:06:36'!
+isOccupied
+
+	^true ! !
+
+
+!OccupiedRoom methodsFor: 'accounting' stamp: 'HAW 4/30/2024 16:39:21'!
+lossUsing: aPriceList ifAbsentGuestType: absentBlock 
+	
+	^0*peso! !
+
+!OccupiedRoom methodsFor: 'accounting' stamp: 'HAW 4/30/2024 16:26:50'!
+profitUsing: aPriceList ifAbsentGuestType: unknownGuestTypeBlock 
+	
+	^ aPriceList at: guestType ifAbsent: unknownGuestTypeBlock 
+	
+	! !
+
+
+!OccupiedRoom methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:12:32'!
+receive: aGuestType in: aRoom 
+	
+	aRoom receiveWhenOccupied: aGuestType ! !
+
+!OccupiedRoom methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:16:16'!
+receiveWithReservation: aGuestType in: aRoom 
+	
+	aRoom receiveWithReservationWhenOccupied: aGuestType ! !
+
+!OccupiedRoom methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:11:50'!
+reserveIn: aRoom 
+	
+	aRoom reserveWhenOccupied! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'OccupiedRoom class' category: #'ISW1-2024-1C-Parcial'!
+OccupiedRoom class
+	instanceVariableNames: ''!
+
+!OccupiedRoom class methodsFor: 'instance creation' stamp: 'HAW 4/30/2024 16:11:12'!
+with: aGuestType 
+	
+	^self new initializeWith: aGuestType ! !
+
+
+!classDefinition: #ReservedRoom category: #'ISW1-2024-1C-Parcial'!
+RoomStatus subclass: #ReservedRoom
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ISW1-2024-1C-Parcial'!
+
+!ReservedRoom methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:19:50'!
+isOccupied
+	
+	^true ! !
+
+!ReservedRoom methodsFor: 'testing' stamp: 'HAW 4/30/2024 16:06:46'!
+isReserved
+	
+	^true ! !
+
+
+!ReservedRoom methodsFor: 'accounting' stamp: 'HAW 4/30/2024 16:39:00'!
+lossUsing: aPriceList ifAbsentGuestType: absentBlock 
+	
+	^0*peso! !
+
+!ReservedRoom methodsFor: 'accounting' stamp: 'HAW 4/30/2024 16:26:35'!
+profitUsing: aPriceList ifAbsentGuestType: unknownGuestTypeBlock 
+	
+	^ aPriceList values min / 2 ! !
+
+
+!ReservedRoom methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:13:24'!
+receive: aGuestType in: aRoom 
+	
+	aRoom receiveWhenReserved: aGuestType ! !
+
+!ReservedRoom methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:15:00'!
+receiveWithReservation: aGuestType in: aRoom 
+	
+	aRoom receiveWithReservationWhenReserved: aGuestType ! !
+
+!ReservedRoom methodsFor: 'guests' stamp: 'HAW 4/30/2024 16:08:58'!
+reserveIn: aRoom 
+	
+	aRoom reserveWhenReserved! !
