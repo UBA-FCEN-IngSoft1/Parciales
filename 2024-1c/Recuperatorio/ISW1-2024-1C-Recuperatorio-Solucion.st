@@ -715,7 +715,12 @@ printTimeToCompleteOf: aTask on: stream
 ProjectPrinter class
 	instanceVariableNames: ''!
 
-!ProjectPrinter class methodsFor: 'as yet unclassified' stamp: 'HAW 7/17/2024 19:12:13'!
+!ProjectPrinter class methodsFor: 'instance creation' stamp: 'HAW 7/17/2024 19:12:22'!
+for: aTask 
+	
+	^self new initializeFor: aTask ! !
+
+!ProjectPrinter class methodsFor: 'instance creation' stamp: 'HAW 7/17/2024 19:12:13'!
 valueFor: aTask
 
 	^(self for: aTask) value
@@ -723,12 +728,6 @@ valueFor: aTask
 	 
 	
 	! !
-
-
-!ProjectPrinter class methodsFor: 'instance creation' stamp: 'HAW 7/17/2024 19:12:22'!
-for: aTask 
-	
-	^self new initializeFor: aTask ! !
 
 
 !classDefinition: #Responsable category: #'ISW1-2024-1C-Recuperatorio'!
@@ -986,7 +985,7 @@ Team subclass: #FastTeam
 	poolDictionaries: ''
 	category: 'ISW1-2024-1C-Recuperatorio'!
 
-!FastTeam methodsFor: 'as yet unclassified' stamp: 'HAW 7/17/2024 12:59:02'!
+!FastTeam methodsFor: 'effort' stamp: 'HAW 7/17/2024 12:59:02'!
 timeToComplete: anEffort
 
 	^responsables min: [ :aResponsable | aResponsable timeToComplete: anEffort ]! !
@@ -1106,7 +1105,7 @@ numberOfDevelopers
 Task class
 	instanceVariableNames: ''!
 
-!Task class methodsFor: 'as yet unclassified' stamp: 'HAW 7/17/2024 12:07:46'!
+!Task class methodsFor: 'assertions' stamp: 'HAW 7/17/2024 12:07:46'!
 assertNameIsNotBlank: aName
 
 	| trimmedName |
@@ -1116,7 +1115,7 @@ assertNameIsNotBlank: aName
 	
 	^trimmedName ! !
 
-!Task class methodsFor: 'as yet unclassified' stamp: 'HAW 7/17/2024 12:05:52'!
+!Task class methodsFor: 'assertions' stamp: 'HAW 7/17/2024 12:05:52'!
 nameCannotBeBlankErrorDescription
 	
 	^'Name cannot be blank'! !
@@ -1244,22 +1243,22 @@ named: aName startingOn: aDesiredStartDate developedBy: aResponsable taking: anE
 	^self new initializeNamed: trimmedName startingOn: aDesiredStartDate developedBy: aResponsable taking: anEffort dependingOn: aDependents ! !
 
 
-!ConcreteTask class methodsFor: 'as yet unclassified' stamp: 'HAW 7/17/2024 12:30:48'!
+!ConcreteTask class methodsFor: 'assertions' stamp: 'HAW 7/17/2024 12:30:48'!
 assertDirectDependetsAreUnique: aDependents 
 	
 	aDependents asSet size = aDependents size ifFalse: [ self error: self directDependentsMustBeUniqueErrorDescription ]! !
 
-!ConcreteTask class methodsFor: 'as yet unclassified' stamp: 'HAW 7/17/2024 12:13:10'!
+!ConcreteTask class methodsFor: 'assertions' stamp: 'HAW 7/17/2024 12:13:10'!
 assertEffortIsValid: anEffort 
 	
 	anEffort strictlyPositive ifFalse: [ self error: self effortMustBeStrictlyPositiveErrorDescription ]! !
 
-!ConcreteTask class methodsFor: 'as yet unclassified' stamp: 'HAW 7/17/2024 12:29:34'!
+!ConcreteTask class methodsFor: 'assertions' stamp: 'HAW 7/17/2024 12:29:34'!
 directDependentsMustBeUniqueErrorDescription
 	
 	^'Direct dependents must be unique'! !
 
-!ConcreteTask class methodsFor: 'as yet unclassified' stamp: 'HAW 7/17/2024 12:12:11'!
+!ConcreteTask class methodsFor: 'assertions' stamp: 'HAW 7/17/2024 12:12:11'!
 effortMustBeStrictlyPositiveErrorDescription
 	
 	^'Effort must be strictly positive'! !
@@ -1367,7 +1366,7 @@ timeToComplete
 Project class
 	instanceVariableNames: ''!
 
-!Project class methodsFor: 'as yet unclassified' stamp: 'HAW 7/17/2024 20:52:30'!
+!Project class methodsFor: 'assertions' stamp: 'HAW 7/17/2024 20:52:30'!
 assertSubtasksAreValid: aSubtasks 
 	
 	| potentialRepatedTasks notRepeatedTasks |
@@ -1379,12 +1378,12 @@ assertSubtasksAreValid: aSubtasks
 	notRepeatedTasks size = potentialRepatedTasks size ifFalse: [ self error: self concreteTasksMustBeUniqueErrorDescription ].
 	notRepeatedTasks ifEmpty: [ self error: self projectMustHaveAtLeasOneSubtaskErrorDescription ]! !
 
-!Project class methodsFor: 'as yet unclassified' stamp: 'HAW 7/17/2024 20:52:37'!
+!Project class methodsFor: 'assertions' stamp: 'HAW 7/17/2024 20:52:37'!
 concreteTasksMustBeUniqueErrorDescription
 	
 	^'Concrete task must be unique'! !
 
-!Project class methodsFor: 'as yet unclassified' stamp: 'HAW 7/17/2024 20:52:41'!
+!Project class methodsFor: 'assertions' stamp: 'HAW 7/17/2024 20:52:41'!
 projectMustHaveAtLeasOneSubtaskErrorDescription
 	
 	^'Project must have at least one subtask'! !
