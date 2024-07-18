@@ -415,8 +415,8 @@ test37ComposedTeamsMustBeOfSameType
 		withMessageText: 	Team composedTeamsMustBeOfSameTypeErrorDescription 
 ! !
 
-!ProjectTest methodsFor: 'test del recu' stamp: 'HAW 7/17/2024 19:39:37'!
-test38ConcreteTaskWithOneDeveloperCanBePrinted
+!ProjectTest methodsFor: 'test del recu' stamp: 'HAW 7/17/2024 21:07:48'!
+test38ConcreteTaskWithOneDeveloperAndDayCanBePrinted
 
 	| ssa lines |
 	
@@ -427,8 +427,8 @@ test38ConcreteTaskWithOneDeveloperCanBePrinted
 	self assert: lines size equals: 1.
 	self assert: lines first equals: '2024/07/01 - 2024/07/01 - 1 * day  - 1 dev  |-> SS A'! !
 
-!ProjectTest methodsFor: 'test del recu' stamp: 'HAW 7/17/2024 19:39:32'!
-test39ConcreteTaskWithMoreThanOneDeveloperCanBePrinted
+!ProjectTest methodsFor: 'test del recu' stamp: 'HAW 7/17/2024 21:07:38'!
+test39ConcreteTaskWithMoreThanOneDeveloperAndDayCanBePrinted
 
 	| ssa lines |
 	
