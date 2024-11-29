@@ -504,10 +504,11 @@ test23CannotPlayIfGameIsOver
 ! !
 
 
-!PacmanGameTest methodsFor: 'random simulation' stamp: 'HAW 11/28/2024 20:57:12'!
+!PacmanGameTest methodsFor: 'random simulation' stamp: 'HAW 11/29/2024 16:04:52'!
 nextInteger: aLimit
 
-	aLimit = 5 ifFalse: [ self error: 'limit has to be 5'].
+	self assert: 5 equals: aLimit.
+	self deny: nextIntegers atEnd.
 	
 	^nextIntegers next! !
 
@@ -1094,24 +1095,12 @@ Object subclass: #PacmanGame
 	poolDictionaries: ''
 	category: '2024-2C-Parcial-2'!
 
-!PacmanGame methodsFor: 'string representation' stamp: 'HAW 11/28/2024 19:50:19'!
-characterRepresentationOf: anElement
-	
-	(anElement = #smallPill) ifTrue: [ ^StringPacmanBoard smallPillCharacter ].
-	(anElement = #bigPill) ifTrue: [ ^StringPacmanBoard bigPillCharacter ].
-	(anElement = #blinky) ifTrue: [ ^StringPacmanBoard blinkyCharacter ].
-	(anElement = #clyde) ifTrue: [ ^StringPacmanBoard clydeCharacter ].
-	(anElement = #space) ifTrue: [ ^StringPacmanBoard spaceCharacter ].
-	(anElement = #wall) ifTrue: [ ^StringPacmanBoard wallCharacter ].
-	^anElement characterRepresentation.
-	! !
-
-!PacmanGame methodsFor: 'string representation' stamp: 'HAW 11/28/2024 19:28:59'!
+!PacmanGame methodsFor: 'string representation' stamp: 'HAW 11/29/2024 16:06:41'!
 representationOfRowNumber: y
 	
 	^String streamContents: [ :rowStream |
 		1 to: boardExtent x do: [ :x |
-			rowStream nextPut: (self characterRepresentationOf: (board at: x@y))]]! !
+			rowStream nextPut: (board at: x@y) characterRepresentation ]]! !
 
 !PacmanGame methodsFor: 'string representation' stamp: 'HAW 11/28/2024 19:28:59'!
 stringRepresentationOfBoard
