@@ -11,10 +11,30 @@ initializeAssemble: aFleet
 	fleet := aFleet.! !
 
 
-!FleetRun methodsFor: 'run by sectors' stamp: 'HAW 5/6/2025 13:47:42'!
+!FleetRun methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 11:19:11'!
+assertSectorsNotEmpty: sectors 
+	
+	sectors ifEmpty: [ self error: self class emptyRouteErrorDescription ]! !
+
+!FleetRun methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 08:55:34'!
+hasSurvived: aShip
+
+	^fleet includes: aShip ! !
+
+!FleetRun methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 16:29:18'!
+isNumberOfSurvivors: aFleetSize 
+	
+	^fleet size = aFleetSize ! !
+
+!FleetRun methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 11:18:18'!
 runThrough: sectors 
 	
-	self shouldBeImplemented ! !
+	self assertSectorsNotEmpty: sectors.
+	
+	sectors do: [ :aSector |
+		fleet := fleet reject: [ :aShip | aShip isDepleted ].
+		fleet do: [ :aShip | aShip passBy: aSector ].
+		fleet := fleet reject: [ :aShip | aShip isDestroyed ]]! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -22,7 +42,7 @@ runThrough: sectors
 FleetRun class
 	instanceVariableNames: ''!
 
-!FleetRun class methodsFor: 'message error' stamp: 'HAW 5/6/2025 13:26:28'!
+!FleetRun class methodsFor: 'message error' stamp: 'HAW 5/6/2025 16:29:47'!
 allSpaceshipsShouldBeDifferentErrorDescription
 
 	^ 'All the spaceships in the fleet must be unique'! !
@@ -32,26 +52,101 @@ emptyRouteErrorDescription
 
 	^ 'The route cannot be empty'! !
 
-!FleetRun class methodsFor: 'message error' stamp: 'HAW 5/6/2025 13:26:42'!
+!FleetRun class methodsFor: 'message error' stamp: 'HAW 5/6/2025 16:29:58'!
 fleetWithoutSpaceshipsErrorDescription
 
 	^ 'The fleet cannot be empty'! !
 
 
-!FleetRun class methodsFor: 'instance creation' stamp: 'HAW 5/6/2025 13:47:04'!
+!FleetRun class methodsFor: 'instance creation' stamp: 'HAW 5/6/2025 11:14:52'!
 assemble: aFleet 
+	
+	self assertFleetIsNotEmpty: aFleet.
+	self assertShipsAreUniqueIn: aFleet.
 	
 	^self new initializeAssemble: aFleet ! !
 
+
+!FleetRun class methodsFor: 'assertions' stamp: 'HAW 5/6/2025 16:29:58'!
+assertFleetIsNotEmpty: aFleet 
+	
+	aFleet isEmpty ifTrue: [ self error: self fleetWithoutSpaceshipsErrorDescription ]! !
+
+!FleetRun class methodsFor: 'assertions' stamp: 'HAW 5/6/2025 16:29:47'!
+assertShipsAreUniqueIn: aFleet 
+	
+	aFleet asSet size = aFleet size ifFalse: [ self error: self allSpaceshipsShouldBeDifferentErrorDescription ]! !
+
 
-!classDefinition: #SpaceShip category: #'ISW-Parcial1-1C25'!
-Object subclass: #SpaceShip
-	instanceVariableNames: 'thrusters maneuverability shields fuel maxDamageLevel'
+!classDefinition: #SpaceSector category: #'ISW-Parcial1-1C25'!
+Object subclass: #SpaceSector
+	instanceVariableNames: 'gravity radiation'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ISW-Parcial1-1C25'!
 
-!SpaceShip methodsFor: 'initialization' stamp: 'HAW 5/6/2025 13:48:47'!
+!SpaceSector methodsFor: 'initialization' stamp: 'HAW 5/6/2025 11:22:02'!
+initializeGravity: aGravity andRadiation: aRadiation 
+	
+	gravity := aGravity.
+	radiation := aRadiation.! !
+
+
+!SpaceSector methodsFor: 'gravity' stamp: 'HAW 5/6/2025 11:22:07'!
+gravity
+	
+	^gravity! !
+
+
+!SpaceSector methodsFor: 'radiation' stamp: 'HAW 5/6/2025 11:22:13'!
+radiation
+	
+	^radiation! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'SpaceSector class' category: #'ISW-Parcial1-1C25'!
+SpaceSector class
+	instanceVariableNames: ''!
+
+!SpaceSector class methodsFor: 'instance creation' stamp: 'HAW 5/6/2025 11:22:48'!
+gravity: aGravity andRadiation: aRadiation 
+	
+	^self new initializeGravity: aGravity andRadiation: aRadiation ! !
+
+
+!classDefinition: #AsteroidsSystem category: #'ISW-Parcial1-1C25'!
+SpaceSector subclass: #AsteroidsSystem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ISW-Parcial1-1C25'!
+
+
+!classDefinition: #NebulaCloud category: #'ISW-Parcial1-1C25'!
+SpaceSector subclass: #NebulaCloud
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ISW-Parcial1-1C25'!
+
+
+!classDefinition: #PlanetarySector category: #'ISW-Parcial1-1C25'!
+SpaceSector subclass: #PlanetarySector
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ISW-Parcial1-1C25'!
+
+
+!classDefinition: #SpaceShip category: #'ISW-Parcial1-1C25'!
+Object subclass: #SpaceShip
+	instanceVariableNames: 'thrusters maneuverability shields fuel maxDamageLevel damageLevel'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ISW-Parcial1-1C25'!
+
+!SpaceShip methodsFor: 'initialization' stamp: 'HAW 5/6/2025 11:26:54'!
 initializeWithThrusters: aThrusters maneuverability: aManeuverability shileds: aShields fuel: aFuel damageLevel: aMaxDamageLevel     
 	
 	thrusters := aThrusters.
@@ -59,7 +154,94 @@ initializeWithThrusters: aThrusters maneuverability: aManeuverability shileds: a
 	shields := aShields.
 	fuel := aFuel.
 	maxDamageLevel := aMaxDamageLevel.
-	! !
+	
+	damageLevel := 0.! !
+
+
+!SpaceShip methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 09:23:26'!
+hasDamageLevel: aLevel
+ 
+	^damageLevel = aLevel! !
+
+!SpaceShip methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 11:59:13'!
+hasFuel: aLevel
+
+	^fuel = aLevel ! !
+
+!SpaceShip methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 10:36:27'!
+hasManeuverability: aLevel
+
+	^maneuverability = aLevel ! !
+
+!SpaceShip methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 09:57:50'!
+hasShieldLevelsAt: aLevel
+
+	^shields = aLevel ! !
+
+!SpaceShip methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 09:28:34'!
+isDamaged
+	
+	^damageLevel > 0! !
+
+!SpaceShip methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 09:03:29'!
+isDepleted
+	
+	^fuel <= 0! !
+
+!SpaceShip methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 11:26:54'!
+isDestroyed
+	
+	^damageLevel > maxDamageLevel ! !
+
+!SpaceShip methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 09:57:43'!
+isOnGravitons
+	
+	^thrusters = #gravitons! !
+
+!SpaceShip methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 09:51:18'!
+isOnImpulse
+	
+	^thrusters = #impulse! !
+
+!SpaceShip methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 09:46:12'!
+isOnWarp
+	
+	^thrusters = #warp! !
+
+!SpaceShip methodsFor: 'as yet unclassified' stamp: 'HAW 5/6/2025 16:32:08'!
+passBy: aSector 
+	
+	aSector class = NebulaCloud ifTrue: [ 
+		self isOnWarp ifTrue: [ ^self ].
+		self isOnImpulse ifTrue: [
+			fuel := fuel  - 10.
+			aSector gravity > maneuverability ifTrue: [ damageLevel := damageLevel + 1 ].
+			aSector radiation > shields ifTrue: [ damageLevel := damageLevel + 1 ]].
+		self isOnGravitons ifTrue: [ fuel := fuel - 20  ]].
+	
+	aSector class = PlanetarySector ifTrue: [ 
+		self isOnGravitons ifTrue: [ fuel := fuel - 20  ].
+		self isOnImpulse ifTrue: [ 
+			fuel := fuel  - 10.
+			aSector gravity > maneuverability ifTrue: [ damageLevel := damageLevel + 1 ] .
+			aSector radiation > shields ifTrue: [ self isOnImpulse ifTrue: [ damageLevel := damageLevel + 1 ]]].	
+		self isOnWarp ifTrue: [
+			fuel := fuel  - 10.
+			aSector gravity > maneuverability ifTrue: [ damageLevel := damageLevel + 1 ]]].
+		
+	aSector class = AsteroidsSystem ifTrue: [
+		self isOnGravitons ifTrue: [ 
+				fuel := fuel - 20.
+				aSector radiation > shields ifTrue: [ damageLevel := damageLevel + 1 ] ].
+		self isOnImpulse ifTrue: [ 
+			 fuel := fuel  - 10.
+			shields := shields - 20.
+			damageLevel := damageLevel + 1 ].
+		self isOnWarp ifTrue: [
+			 fuel := fuel  - 10 .
+			shields := 0.
+			damageLevel := damageLevel + 1.
+			aSector radiation > shields ifTrue: [ damageLevel := damageLevel + 1 ]]]! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -130,7 +312,7 @@ test03TheSequenceRouteOfSectorsToGoThroughShouldNotBeEmpty
 			self assert: (heavyCruiserOnImpulse hasFuel: 50) ]
 ! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 16:27:15'!
 test04FuelOfSpaceshipShouldSufficeSingleNormalPlanetarySectorRunAndSurvive
 
 	| planetarySector fleet heavyCruiserOnImpulse |
@@ -152,7 +334,7 @@ test04FuelOfSpaceshipShouldSufficeSingleNormalPlanetarySectorRunAndSurvive
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 16:27:15'!
 test05SpaceshipCanRunOutOfFuelButSurviveAnyway
 
 	| fleet heavyCruiserOnImpulse |
@@ -172,7 +354,7 @@ test05SpaceshipCanRunOutOfFuelButSurviveAnyway
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 16:27:15'!
 test06SpaceshipThatRunsOutOfFuelBeforeFinishingRunDoesntSurvive
 
 	| fleet heavyCruiserOnImpulse |
@@ -193,7 +375,7 @@ test06SpaceshipThatRunsOutOfFuelBeforeFinishingRunDoesntSurvive
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 16:27:15'!
 test07SpaceshipPassingThroughSectorWithHigherGravityThanManeuverabilityGetsDamaged
 
 	| fleet heavyCruiserOnImpulse |
@@ -215,7 +397,7 @@ test07SpaceshipPassingThroughSectorWithHigherGravityThanManeuverabilityGetsDamag
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 16:27:15'!
 test08SpaceshipPassingThroughSectorWithHigherRadiationThanShieldsGetsDamaged
 
 	| fleet heavyCruiserOnImpulse |
@@ -237,7 +419,7 @@ test08SpaceshipPassingThroughSectorWithHigherRadiationThanShieldsGetsDamaged
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 16:27:15'!
 test09SpaceshipPassingThroughSectorWithHigherGravityAndRadiationThanManeuverabilityAndShieldsGetsDoubleDamaged
 
 	| fleet heavyCruiserOnImpulse |
@@ -259,7 +441,7 @@ test09SpaceshipPassingThroughSectorWithHigherGravityAndRadiationThanManeuverabil
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 16:27:15'!
 test10SpaceshipTakingMoreDamageLevelsThanTheirHullCapacityGetsDestroyedAndDoesntSurvive
 
 	| fleet heavyCruiserOnImpulse |
@@ -280,7 +462,7 @@ test10SpaceshipTakingMoreDamageLevelsThanTheirHullCapacityGetsDestroyedAndDoesnt
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 16:27:15'!
 test11IntactHullSpaceshipPassingThroughPlanetarySectorUsingWarpIgnoresRadiationLevelsOfSector
 
 	| fleet smugglerTransportOnWarp |
@@ -314,7 +496,7 @@ test11IntactHullSpaceshipPassingThroughPlanetarySectorUsingWarpIgnoresRadiationL
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 16:27:15'!
 test12SpaceshipPassingThroughAsteroidSystemUsingImpulseThrustersLowersShields
 
 	| fleet smugglerTransportOnImpulse |
@@ -340,7 +522,7 @@ test12SpaceshipPassingThroughAsteroidSystemUsingImpulseThrustersLowersShields
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 16:27:15'!
 test13SpaceshipPassingThroughAsteroidSystemUsingGravitonThrustersIgnoresGravityButConsumesDoubleFuel
 
 	| fleet smugglerTransportOnGravitons |
@@ -373,7 +555,7 @@ test13SpaceshipPassingThroughAsteroidSystemUsingGravitonThrustersIgnoresGravityB
 	self assert: (smugglerTransportOnGravitons hasFuel: (95 - 40))
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 20:08:31'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 20:14:40'!
 test14SpaceshipPassingThroughAsteroidSystemUsingWarpLowersShieldsToZeroAndGetsDamaged
 
 	| fleet smugglerTransportOnWarp |
@@ -398,7 +580,7 @@ test14SpaceshipPassingThroughAsteroidSystemUsingWarpLowersShieldsToZeroAndGetsDa
 	self assert: (smugglerTransportOnWarp hasShieldLevelsAt: 0).
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 20:08:37'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 20:14:35'!
 test15SpaceshipPassingThroughNebulaUsingWarpIgnoresAllSectorChecksAndConsumesNoFuel
 
 	| fleet smugglerTransportOnWarp |
@@ -419,7 +601,7 @@ test15SpaceshipPassingThroughNebulaUsingWarpIgnoresAllSectorChecksAndConsumesNoF
 	self assert: (smugglerTransportOnWarp hasFuel: 95).
 ! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 20:08:42'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 20:14:31'!
 test16SpaceshipPassingThroughNebulaUsingImpulseCosumesFuelsAndIsSubjectToGravityAndRadiation
 
 	| fleet smugglerTransportOnImpulse |
@@ -439,11 +621,11 @@ test16SpaceshipPassingThroughNebulaUsingImpulseCosumesFuelsAndIsSubjectToGravity
 	self assert: (smugglerTransportOnImpulse hasFuel: 95 - 10).
 ! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 20:08:47'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 20:14:27'!
 test17SpaceshipPassingThroughNebulaUsingGravitonsOnlyCosumesFuels
 
 	| fleet smugglerTransportOnGravitons |
-	
+			
 	smugglerTransportOnGravitons := self newSmugglerTransportShipOnGravitons .
 	self deny: smugglerTransportOnGravitons isDamaged.
 	self assert: (smugglerTransportOnGravitons hasFuel: 95).
@@ -458,7 +640,7 @@ test17SpaceshipPassingThroughNebulaUsingGravitonsOnlyCosumesFuels
 	self assert: (smugglerTransportOnGravitons hasFuel: 95 - 20).
 ! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
+!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 16:27:15'!
 test18PassingByPlanetarySectorWithGravitonsCosumesDoubleFuel
 
 	| fleet smugglerTransportOnGravitons |
@@ -504,38 +686,40 @@ newSmugglerTransportShipOnWarp
 	^SpaceShip smugglerTransportWithThrusters: self warpThrusters! !
 
 
-!FleetRunTests methodsFor: 'space sectors' stamp: 'HAW 5/6/2025 13:44:17'!
+!FleetRunTests methodsFor: 'space sectors' stamp: 'HAW 5/6/2025 09:49:05'!
 newAsteroidsSystemWithGravity: gravity andRadiation: radiation
 
-	self shouldBeImplemented ! !
+	^AsteroidsSystem gravity: gravity andRadiation: radiation ! !
 
-!FleetRunTests methodsFor: 'space sectors' stamp: 'HAW 5/6/2025 13:44:21'!
+!FleetRunTests methodsFor: 'space sectors' stamp: 'HAW 5/6/2025 10:12:46'!
 newNebulaCloudWithGravity: gravity andRadiation: radiation
 
-	self shouldBeImplemented ! !
+	^NebulaCloud gravity: gravity andRadiation: radiation ! !
 
-!FleetRunTests methodsFor: 'space sectors' stamp: 'HAW 5/6/2025 13:44:43'!
+!FleetRunTests methodsFor: 'space sectors' stamp: 'HAW 5/6/2025 09:03:05'!
 newPlanetarySectorJourneySequenceOfSize: numberOfSectors withGravity: gravity withRadiation: radiation 
 
-	self shouldBeImplemented ! !
+	^(1 to: numberOfSectors) collect: [ :sectorNumber | self newPlanetarySectorWithGravity: gravity andRadiation: radiation ].
+	! !
 
-!FleetRunTests methodsFor: 'space sectors' stamp: 'HAW 5/6/2025 13:44:27'!
+!FleetRunTests methodsFor: 'space sectors' stamp: 'HAW 5/6/2025 08:51:43'!
 newPlanetarySectorWithGravity: gravity andRadiation: radiation
 
-	self shouldBeImplemented ! !
+	^PlanetarySector gravity: gravity andRadiation: radiation
+! !
 
 
-!FleetRunTests methodsFor: 'thrusters' stamp: 'HAW 5/6/2025 13:44:12'!
+!FleetRunTests methodsFor: 'thrusters' stamp: 'HAW 5/6/2025 20:14:01'!
 gravitonsThrusters
 
-	self shouldBeImplemented ! !
+	^ #gravitons ! !
 
-!FleetRunTests methodsFor: 'thrusters' stamp: 'HAW 5/6/2025 13:44:07'!
+!FleetRunTests methodsFor: 'thrusters' stamp: 'HAW 5/6/2025 20:14:09'!
 impulseThrusters
 
-	self shouldBeImplemented ! !
+	^ #impulse ! !
 
-!FleetRunTests methodsFor: 'thrusters' stamp: 'HAW 5/6/2025 13:44:00'!
+!FleetRunTests methodsFor: 'thrusters' stamp: 'HAW 5/6/2025 20:14:15'!
 warpThrusters
 
-	self shouldBeImplemented ! !
+	^ #warp ! !
