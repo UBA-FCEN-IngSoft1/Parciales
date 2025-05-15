@@ -206,6 +206,16 @@ hasManeuverability: aLevel
 	^maneuverability = aLevel ! !
 
 
+!SpaceShip methodsFor: 'fuel' stamp: 'HAW 5/15/2025 17:01:39'!
+decreaseFuelDoubly
+
+	fuel := fuel - 20! !
+
+!SpaceShip methodsFor: 'fuel' stamp: 'HAW 5/15/2025 13:05:30'!
+decreaseFuelNormally
+
+	fuel := fuel  - 10! !
+
 !SpaceShip methodsFor: 'fuel' stamp: 'HAW 5/6/2025 11:59:13'!
 hasFuel: aLevel
 
@@ -216,6 +226,11 @@ isDepleted
 	
 	^fuel <= 0! !
 
+
+!SpaceShip methodsFor: 'hull' stamp: 'HAW 5/15/2025 13:06:53'!
+decreaseShields
+
+	^ shields := shields - 20! !
 
 !SpaceShip methodsFor: 'hull' stamp: 'HAW 5/6/2025 09:23:26'!
 hasDamageLevel: aLevel
@@ -242,6 +257,21 @@ receiveDamage
 
 	damageLevel := damageLevel + 1! !
 
+!SpaceShip methodsFor: 'hull' stamp: 'HAW 5/15/2025 16:57:42'!
+receiveDamageBasedOnRadiationOf: aSector
+
+	(aSector radiationPassesThrougth: shields ) ifTrue: [ self receiveDamage ]! !
+
+!SpaceShip methodsFor: 'hull' stamp: 'HAW 5/15/2025 16:57:08'!
+reciveDamageBasedOnManeuverabilityOf: aSector
+
+	(aSector affectsManeuverability: maneuverability) ifTrue: [ self receiveDamage ]! !
+
+!SpaceShip methodsFor: 'hull' stamp: 'HAW 5/15/2025 13:07:50'!
+removeShields
+
+	^ shields := 0! !
+
 
 !SpaceShip methodsFor: 'passing by sectors' stamp: 'HAW 5/6/2025 12:15:12'!
 passBy: aSector 
@@ -255,26 +285,29 @@ passByAsteroidsSystem: aSector
 	thrusters passing: self onAsteriodsSystem: aSector 
 	! !
 
-!SpaceShip methodsFor: 'passing by asteroids' stamp: 'HAW 5/6/2025 13:30:47'!
+!SpaceShip methodsFor: 'passing by asteroids' stamp: 'HAW 5/15/2025 17:01:39'!
 passWithGravitonsByAsteriodsSystem: aSector 
 	
-	fuel := fuel - 20.
-	(aSector radiationPassesThrougth: shields ) ifTrue: [ self receiveDamage ] ! !
+	self 
+		decreaseFuelDoubly;
+		receiveDamageBasedOnRadiationOf: aSector ! !
 
-!SpaceShip methodsFor: 'passing by asteroids' stamp: 'HAW 5/6/2025 12:54:19'!
+!SpaceShip methodsFor: 'passing by asteroids' stamp: 'HAW 5/15/2025 16:58:20'!
 passWithImpulseByAsteroidsSystem: aSector 
 	
-	fuel := fuel  - 10.
-	shields := shields - 20.
-	self receiveDamage  ! !
+	self 
+		decreaseFuelNormally;
+		decreaseShields;
+		receiveDamage  ! !
 
-!SpaceShip methodsFor: 'passing by asteroids' stamp: 'HAW 5/6/2025 13:31:09'!
+!SpaceShip methodsFor: 'passing by asteroids' stamp: 'HAW 5/15/2025 16:59:12'!
 passWithWarpByAsteriodsSystem: aSector 
 	
-	fuel := fuel  - 10 .
-	shields := 0.
-	self receiveDamage.
-	(aSector radiationPassesThrougth: shields) ifTrue: [ self receiveDamage ].
+	self 
+		decreaseFuelNormally;
+		removeShields;
+		receiveDamage;
+		receiveDamageBasedOnRadiationOf: aSector.
 ! !
 
 
@@ -284,17 +317,18 @@ passByNebulaCloud: aSector
 	thrusters passing: self onNebulaCloud: aSector
 ! !
 
-!SpaceShip methodsFor: 'passing by nebula' stamp: 'HAW 5/6/2025 13:04:10'!
+!SpaceShip methodsFor: 'passing by nebula' stamp: 'HAW 5/15/2025 17:01:39'!
 passWithGravitonsByNebulaCloud: aSector 
 	
-	 fuel := fuel - 20  ! !
+	 self decreaseFuelDoubly  ! !
 
-!SpaceShip methodsFor: 'passing by nebula' stamp: 'HAW 5/6/2025 13:30:55'!
+!SpaceShip methodsFor: 'passing by nebula' stamp: 'HAW 5/15/2025 16:58:39'!
 passWithImpulseByNebulaCloud: aSector 
 	
-	fuel := fuel  - 10.
-	(aSector affectsManeuverability: maneuverability) ifTrue: [ self receiveDamage ].
-	(aSector radiationPassesThrougth: shields ) ifTrue: [ self receiveDamage ]! !
+	self 
+		decreaseFuelNormally;
+		reciveDamageBasedOnManeuverabilityOf: aSector;
+		receiveDamageBasedOnRadiationOf: aSector! !
 
 !SpaceShip methodsFor: 'passing by nebula' stamp: 'HAW 5/6/2025 13:00:31'!
 passWithWarpByNebulaCloud: aSector 
@@ -307,23 +341,25 @@ passByPlanetarySector: aSector
 	
 	thrusters passing: self onPlanetarySector: aSector ! !
 
-!SpaceShip methodsFor: 'passing by planetary sector' stamp: 'HAW 5/6/2025 13:07:52'!
+!SpaceShip methodsFor: 'passing by planetary sector' stamp: 'HAW 5/15/2025 17:01:39'!
 passWithGravitonsByPlanetarySector: aSector 
 	
-	fuel := fuel - 20! !
+	self decreaseFuelDoubly! !
 
-!SpaceShip methodsFor: 'passing by planetary sector' stamp: 'HAW 5/6/2025 13:31:00'!
+!SpaceShip methodsFor: 'passing by planetary sector' stamp: 'HAW 5/15/2025 16:58:54'!
 passWithImpulseByPlanetarySector: aSector 
 	
-	fuel := fuel  - 10.
-	(aSector affectsManeuverability: maneuverability) ifTrue: [ self receiveDamage ] .
-	(aSector radiationPassesThrougth: shields ) ifTrue: [ self receiveDamage ]! !
+	self 
+		decreaseFuelNormally;
+		reciveDamageBasedOnManeuverabilityOf: aSector;
+		receiveDamageBasedOnRadiationOf: aSector! !
 
-!SpaceShip methodsFor: 'passing by planetary sector' stamp: 'HAW 5/6/2025 13:25:33'!
+!SpaceShip methodsFor: 'passing by planetary sector' stamp: 'HAW 5/15/2025 16:59:26'!
 passWithWarpByPlanetarySector: aSector 
 	
-	fuel := fuel  - 10.
-	(aSector affectsManeuverability: maneuverability) ifTrue: [ self receiveDamage ].
+	self 
+		decreaseFuelNormally;
+		reciveDamageBasedOnManeuverabilityOf: aSector.
 	! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
