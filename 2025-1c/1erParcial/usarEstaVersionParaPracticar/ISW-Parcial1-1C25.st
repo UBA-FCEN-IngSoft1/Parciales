@@ -1,9 +1,9 @@
-!classDefinition: #EscapeDeFlotaTests category: '2025-1C-Recu'!
+!classDefinition: #EscapeDeFlotaTests category: 'ISW-Parcial1-1C25'!
 TestCase subclass: #EscapeDeFlotaTests
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: '2025-1C-Recu'!
+	category: 'ISW-Parcial1-1C25'!
 
 !EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/10/2025 19:58:18'!
 test01LaFlotaDebeTenerAlMenosUnaNave
@@ -490,585 +490,95 @@ test20NaveAtravesandoSectorNebulosaUsandoGravitonesEsAfectadaPorGravedadYRadiaci
 	self assert: (naveContrabandistaConGravitones valorCombustible: 95 - 60)! !
 
 
-!EscapeDeFlotaTests methodsFor: 'naves' stamp: 'NR 7/11/2025 21:56:06'!
+!EscapeDeFlotaTests methodsFor: 'naves' stamp: 'NR 9/28/2025 00:35:36'!
 nuevaNaveContrabandistaConGravitones
 
-	^ NaveEspacial naveContrabandistaConPropulsores: self propulsoresDeGravitones ! !
+	self shouldBeImplemented ! !
 
-!EscapeDeFlotaTests methodsFor: 'naves' stamp: 'NR 7/11/2025 21:56:09'!
+!EscapeDeFlotaTests methodsFor: 'naves' stamp: 'NR 9/28/2025 00:35:43'!
 nuevaNaveContrabandistaConImpulsoEstandar
 
-	^ NaveEspacial naveContrabandistaConPropulsores: self propulsoresDeImpulsoEstandar! !
+	self shouldBeImplemented ! !
 
-!EscapeDeFlotaTests methodsFor: 'naves' stamp: 'NR 7/11/2025 21:56:13'!
+!EscapeDeFlotaTests methodsFor: 'naves' stamp: 'NR 9/28/2025 00:35:47'!
 nuevaNaveContrabandistaConVelocidadLuz
 
-	^ NaveEspacial naveContrabandistaConPropulsores: self propulsoresDeVelocidadLuz! !
+	self shouldBeImplemented ! !
 
-!EscapeDeFlotaTests methodsFor: 'naves' stamp: 'NR 7/11/2025 21:56:16'!
+!EscapeDeFlotaTests methodsFor: 'naves' stamp: 'NR 9/28/2025 00:35:54'!
 nuevoCruceroPesadoConImpulsoEstandar
 
-	^ NaveEspacial cruceroPesadoConPropulsores: self propulsoresDeImpulsoEstandar! !
+	self shouldBeImplemented ! !
 
 
-!EscapeDeFlotaTests methodsFor: 'sectores' stamp: 'NR 7/15/2025 17:22:27'!
+!EscapeDeFlotaTests methodsFor: 'sectores' stamp: 'NR 9/28/2025 00:33:08'!
 nuevoSectorDeAsteroidesConGravedad: gravedad yRadiacion: radiacion
 
-	^ Asteroides gravedad: gravedad yRadiacion: radiacion ! !
+	self shouldBeImplemented  ! !
 
-!EscapeDeFlotaTests methodsFor: 'sectores' stamp: 'NR 7/15/2025 17:22:36'!
+!EscapeDeFlotaTests methodsFor: 'sectores' stamp: 'NR 9/28/2025 00:33:12'!
 nuevoSectorNebulosaConGravedad: gravedad yRadiacion: radiacion
  
-	^ Nebulosa gravedad: gravedad yRadiacion: radiacion! !
+	self shouldBeImplemented ! !
 
-!EscapeDeFlotaTests methodsFor: 'sectores' stamp: 'NR 7/15/2025 17:22:39'!
+!EscapeDeFlotaTests methodsFor: 'sectores' stamp: 'NR 9/28/2025 00:33:16'!
 nuevoSectorPlanetarioConGravedad: gravedad yRadiacion: radiacion
 
-	^ Planetario gravedad: gravedad yRadiacion: radiacion
+	self shouldBeImplemented 
 ! !
 
-!EscapeDeFlotaTests methodsFor: 'sectores' stamp: 'NR 7/15/2025 17:22:43'!
+!EscapeDeFlotaTests methodsFor: 'sectores' stamp: 'NR 9/28/2025 00:33:21'!
 nuevoTrayectoDeSectoresPlanetariosDeLongitud: numeroDeSectores conGravedad: gravedad yRadiacion: radiacion
 
-	^ (1 to: numeroDeSectores) collect: [ :numeroDeSector | self nuevoSectorPlanetarioConGravedad: gravedad yRadiacion: radiacion ]
+	self shouldBeImplemented 
 	! !
 
 
-!EscapeDeFlotaTests methodsFor: 'propulsores' stamp: 'NR 7/15/2025 17:22:59'!
+!EscapeDeFlotaTests methodsFor: 'propulsores' stamp: 'NR 9/28/2025 00:33:03'!
 propulsoresDeGravitones
 
-	^ Gravitones new! !
+	self shouldBeImplemented ! !
 
-!EscapeDeFlotaTests methodsFor: 'propulsores' stamp: 'NR 7/15/2025 17:23:02'!
+!EscapeDeFlotaTests methodsFor: 'propulsores' stamp: 'NR 9/28/2025 00:32:59'!
 propulsoresDeImpulsoEstandar
 
-	^ ImpulsoEstandar new! !
+	self shouldBeImplemented ! !
 
-!EscapeDeFlotaTests methodsFor: 'propulsores' stamp: 'NR 7/15/2025 17:23:06'!
+!EscapeDeFlotaTests methodsFor: 'propulsores' stamp: 'NR 9/28/2025 00:32:53'!
 propulsoresDeVelocidadLuz
 
-	^ VelocidadLuz new! !
+	self shouldBeImplemented ! !
 
 
-!classDefinition: #EscapeDeFlota category: '2025-1C-Recu'!
+!classDefinition: #EscapeDeFlota category: 'ISW-Parcial1-1C25'!
 Object subclass: #EscapeDeFlota
 	instanceVariableNames: 'flota'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: '2025-1C-Recu'!
-
-!EscapeDeFlota methodsFor: 'initialization' stamp: 'NR 7/11/2025 06:42:14'!
-initializeEnrolamiento: unaFlota 
-	
-	flota := unaFlota.! !
-
-
-!EscapeDeFlota methodsFor: 'sobrevivientes' stamp: 'NR 7/11/2025 06:42:03'!
-haSobrevivido: nave
-
-	^ flota includes: nave ! !
-
-!EscapeDeFlota methodsFor: 'sobrevivientes' stamp: 'NR 7/15/2025 17:26:49'!
-numeroDeSobrevivientesEs: tamañoDeFlota 
-	
-	^ flota size = tamañoDeFlota ! !
-
-
-!EscapeDeFlota methodsFor: 'atravesar sectores' stamp: 'NR 7/17/2025 21:04:55'!
-assertSinSectoresRepetidos: sectores
-
-	^ sectores asSet size = sectores size ifFalse: [ self error: self class sectoresRepetidosDescripcionDeError ]! !
-
-!EscapeDeFlota methodsFor: 'atravesar sectores' stamp: 'NR 7/17/2025 21:04:55'!
-atravesar: sectores 
-	
-	self assertSectoresNoVacios: sectores.
-	self assertSinSectoresRepetidos: sectores.
-	
-	sectores do: [ :sector | self atravesarFlotaPorSector: sector]! !
-
-!EscapeDeFlota methodsFor: 'atravesar sectores' stamp: 'NR 7/18/2025 07:28:47'!
-atravesarFlotaPorSector: sector
-
-	flota do: [ :nave | nave atravesar: sector ].
-	
-	flota := flota reject: [ :nave | nave destruida or: [ self combustibleNoAlcanzoParaCruzar: nave ] ].
-	
-	! !
-
-!EscapeDeFlota methodsFor: 'atravesar sectores' stamp: 'NR 7/18/2025 07:42:05'!
-combustibleNoAlcanzoParaCruzar: nave
-
-	^ nave noOperativa
-	
-	! !
-
-
-!EscapeDeFlota methodsFor: 'assertions' stamp: 'NR 7/11/2025 06:41:20'!
-assertSectoresNoVacios: sectores 
-	
-	sectores ifEmpty: [ self error: self class rutaVaciaDescripcionDeError ]! !
+	category: 'ISW-Parcial1-1C25'!
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'EscapeDeFlota class' category: '2025-1C-Recu'!
+!classDefinition: 'EscapeDeFlota class' category: 'ISW-Parcial1-1C25'!
 EscapeDeFlota class
 	instanceVariableNames: ''!
 
-!EscapeDeFlota class methodsFor: 'message errors' stamp: 'NR 7/11/2025 06:39:47'!
+!EscapeDeFlota class methodsFor: 'message error' stamp: 'NR 9/28/2025 00:38:12'!
 flotaSinNavesDescripcionDeError
 
 	^ 'La flota no puede estar vacia'! !
 
-!EscapeDeFlota class methodsFor: 'message errors' stamp: 'NR 7/11/2025 06:39:58'!
+!EscapeDeFlota class methodsFor: 'message error' stamp: 'NR 9/28/2025 00:38:25'!
 rutaVaciaDescripcionDeError
 
 	^ 'La ruta no puede ser vacia'! !
 
-!EscapeDeFlota class methodsFor: 'message errors' stamp: 'NR 7/17/2025 21:01:39'!
+!EscapeDeFlota class methodsFor: 'message error' stamp: 'NR 9/28/2025 00:40:29'!
 sectoresRepetidosDescripcionDeError
 
 	^ 'La ruta no puede tener sectores repetidos'! !
 
-!EscapeDeFlota class methodsFor: 'message errors' stamp: 'NR 7/11/2025 06:40:15'!
+!EscapeDeFlota class methodsFor: 'message error' stamp: 'NR 9/28/2025 00:38:52'!
 todasLasNavesDebenSerDiferentesDescripcionDeError
 
 	^ 'Todas las naves de la flota deben ser unicas'! !
-
-
-!EscapeDeFlota class methodsFor: 'instance creation' stamp: 'NR 7/15/2025 06:36:02'!
-enrolar: flota 
-	
-	self assertFlotaEsNoVacia: flota.
-	self assertNavesSonUnicasEn: flota.
-	
-	^ self new initializeEnrolamiento: flota ! !
-
-
-!EscapeDeFlota class methodsFor: 'assertions' stamp: 'NR 7/11/2025 16:58:11'!
-assertFlotaEsNoVacia: flota 
-	
-	flota isEmpty ifTrue: [ self error: self flotaSinNavesDescripcionDeError ]! !
-
-!EscapeDeFlota class methodsFor: 'assertions' stamp: 'NR 7/11/2025 16:58:16'!
-assertNavesSonUnicasEn: flota 
-	
-	flota asSet size = flota size ifFalse: [ self error: self todasLasNavesDebenSerDiferentesDescripcionDeError ]! !
-
-
-!classDefinition: #NaveEspacial category: '2025-1C-Recu'!
-Object subclass: #NaveEspacial
-	instanceVariableNames: 'propulsores maniobravilidad escudos combustible maxNivelDaño nivelDaño'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: '2025-1C-Recu'!
-
-!NaveEspacial methodsFor: 'initialization' stamp: 'NR 7/15/2025 17:25:36'!
-initializeConPropulsores: unosPropulsores maniobravilidad: valorManiobravilidad escudos: valorEscudos combustible: nivelCombustible nivelesDeDaño: nivelMaximoDaño    
-
-	self assertMaxCombustible: nivelCombustible.
-	
-	propulsores := unosPropulsores.
-	maniobravilidad := valorManiobravilidad.
-	escudos := valorEscudos.
-	combustible := nivelCombustible.
-	maxNivelDaño := nivelMaximoDaño.
-	
-	nivelDaño := 0.! !
-
-
-!NaveEspacial methodsFor: 'combustible' stamp: 'NR 7/15/2025 17:25:16'!
-decrementarCombustibleEn: gastoCombustible
-
-	combustible := combustible - gastoCombustible! !
-
-!NaveEspacial methodsFor: 'combustible' stamp: 'NR 7/11/2025 18:10:46'!
-decrementarCombustibleNormalmente
-
-	self decrementarCombustibleEn: self gastoCombustibleNormal ! !
-
-!NaveEspacial methodsFor: 'combustible' stamp: 'NR 7/11/2025 18:09:02'!
-gastoCombustibleNormal
-
-	^ 10! !
-
-!NaveEspacial methodsFor: 'combustible' stamp: 'NR 7/18/2025 07:42:05'!
-noOperativa
-	
-	^ combustible < 0! !
-
-!NaveEspacial methodsFor: 'combustible' stamp: 'NR 7/11/2025 06:57:37'!
-sinCombustible
-	
-	^ combustible <= 0! !
-
-!NaveEspacial methodsFor: 'combustible' stamp: 'NR 7/15/2025 17:25:44'!
-tieneSuficienteCombustible: gastoCombustible
-
-	^ combustible >= gastoCombustible ! !
-
-!NaveEspacial methodsFor: 'combustible' stamp: 'NR 7/11/2025 06:57:57'!
-valorCombustible: nivelDeCombustible
-
-	^ combustible = nivelDeCombustible ! !
-
-
-!NaveEspacial methodsFor: 'escudos' stamp: 'NR 7/11/2025 18:07:19'!
-decrementarEscudosDeEnergiaEn: valorDeReduccion
-
-	^ escudos := escudos - valorDeReduccion! !
-
-!NaveEspacial methodsFor: 'escudos' stamp: 'NR 7/11/2025 06:55:25'!
-eliminarEscudos
-
-	^ escudos := 0! !
-
-!NaveEspacial methodsFor: 'escudos' stamp: 'NR 7/15/2025 17:25:25'!
-fuerzaDeEscudosEn: nivelDeEscudos
-
-	^ escudos = nivelDeEscudos ! !
-
-
-!NaveEspacial methodsFor: 'casco' stamp: 'NR 7/11/2025 06:44:18'!
-dañada
-	
-	^ nivelDaño > 0! !
-
-!NaveEspacial methodsFor: 'casco' stamp: 'NR 7/11/2025 06:59:10'!
-destruida
-	
-	^ nivelDaño > maxNivelDaño ! !
-
-!NaveEspacial methodsFor: 'casco' stamp: 'NR 7/11/2025 06:59:55'!
-nivelDeDañoEs: nivelDeDaño
- 
-	^ nivelDaño = nivelDeDaño! !
-
-!NaveEspacial methodsFor: 'casco' stamp: 'NR 7/11/2025 16:26:37'!
-recibirNivelDeDaño
-
-	nivelDaño := nivelDaño + 1! !
-
-
-!NaveEspacial methodsFor: 'atravesar sector' stamp: 'NR 7/11/2025 18:57:03'!
-aplicarCondicionesDelSector: unSector
-
-	self aplicarGravedadDelSector: unSector.
-	self aplicarRadiacionDelSector: unSector! !
-
-!NaveEspacial methodsFor: 'atravesar sector' stamp: 'NR 7/16/2025 08:38:04'!
-aplicarGravedadDelSector: unSector
-
-	self aplicarGravedadDelSector: unSector conManiobravilidadEfectiva: maniobravilidad! !
-
-!NaveEspacial methodsFor: 'atravesar sector' stamp: 'NR 7/16/2025 08:38:04'!
-aplicarGravedadDelSector: unSector conManiobravilidadEfectiva: maniobravilidadResultante
-
-	(unSector afectaManiobravilidad: maniobravilidadResultante) ifTrue: [ self recibirNivelDeDaño ]! !
-
-!NaveEspacial methodsFor: 'atravesar sector' stamp: 'NR 7/16/2025 08:38:17'!
-aplicarRadiacionDelSector: unSector
-
-	self aplicarRadiacionDelSector: unSector conEscudosEfectivos: escudos! !
-
-!NaveEspacial methodsFor: 'atravesar sector' stamp: 'NR 7/16/2025 08:38:17'!
-aplicarRadiacionDelSector: unSector conEscudosEfectivos: escudosResultantes
-
-	(unSector radiacionAtraviesaEscudosEn: escudosResultantes) ifTrue: [ self recibirNivelDeDaño ]! !
-
-!NaveEspacial methodsFor: 'atravesar sector' stamp: 'NR 7/11/2025 06:54:05'!
-atravesar: sector 
-	
-	sector ingresadoPor: self! !
-
-
-!NaveEspacial methodsFor: 'atravesar asteroides' stamp: 'NR 7/15/2025 17:28:02'!
-traspasandoConGravitonesSectorDeAsteroides: sector 
-	
-	self decrementarCombustibleEn: self gastoCombustibleNormal * 2;
-		aplicarRadiacionDelSector: sector ! !
-
-!NaveEspacial methodsFor: 'atravesar asteroides' stamp: 'NR 7/15/2025 17:28:17'!
-traspasandoConImpulsoEstandarSectorDeAsteroides: sector 
-	
-	self decrementarCombustibleNormalmente;
-		decrementarEscudosDeEnergiaEn: 20;
-		aplicarCondicionesDelSector: sector! !
-
-!NaveEspacial methodsFor: 'atravesar asteroides' stamp: 'NR 7/11/2025 21:16:09'!
-traspasandoConVelocidadLuzSectorDeAsteroides: sector 
-	
-	self decrementarCombustibleNormalmente;
-		eliminarEscudos;
-		recibirNivelDeDaño;
-		aplicarCondicionesDelSector: sector! !
-
-!NaveEspacial methodsFor: 'atravesar asteroides' stamp: 'NR 7/11/2025 16:51:14'!
-traspasandoSectorDeAsteroides: sector 
-
-	propulsores propulsandoA: self aTravesDeSectorDeAsteroides: sector 
-	! !
-
-
-!NaveEspacial methodsFor: 'atravesar nebulosa' stamp: 'NR 7/15/2025 17:28:06'!
-traspasandoConGravitonesSectorNebulosa: sector 
-	
-	self decrementarCombustibleEn: self gastoCombustibleNormal * 3;
-		aplicarCondicionesDelSector: sector! !
-
-!NaveEspacial methodsFor: 'atravesar nebulosa' stamp: 'NR 7/16/2025 08:38:17'!
-traspasandoConImpulsoEstandarSectorNebulosa: sector 
-	
-	self decrementarCombustibleNormalmente;
-		aplicarGravedadDelSector: sector;
-		aplicarRadiacionDelSector: sector conEscudosEfectivos: 0.7 * escudos! !
-
-!NaveEspacial methodsFor: 'atravesar nebulosa' stamp: 'NR 7/11/2025 21:14:11'!
-traspasandoConVelocidadLuzSectorNebulosa: sector 
-	
-	! !
-
-!NaveEspacial methodsFor: 'atravesar nebulosa' stamp: 'NR 7/11/2025 21:15:12'!
-traspasandoSectorNebulosa: sector 
-	
-	propulsores propulsandoA: self aTravesDeSectorNebulosa: sector
-! !
-
-
-!NaveEspacial methodsFor: 'atravesar planetario' stamp: 'NR 7/16/2025 08:38:04'!
-traspasandoConGravitonesSectorPlanetario: sector 
-
-	self aplicarGravedadDelSector: sector conManiobravilidadEfectiva: 0.8 * maniobravilidad;
-		aplicarRadiacionDelSector: sector;
-		decrementarCombustibleNormalmente! !
-
-!NaveEspacial methodsFor: 'atravesar planetario' stamp: 'NR 7/12/2025 06:08:28'!
-traspasandoConImpulsoEstandarSectorPlanetario: sector 
-	
-	self decrementarCombustibleNormalmente;
-		aplicarCondicionesDelSector: sector! !
-
-!NaveEspacial methodsFor: 'atravesar planetario' stamp: 'NR 7/11/2025 21:16:59'!
-traspasandoConVelocidadLuzSectorPlanetario: sector 
-	
-	self decrementarCombustibleNormalmente;
-		aplicarGravedadDelSector: sector
-	! !
-
-!NaveEspacial methodsFor: 'atravesar planetario' stamp: 'NR 7/11/2025 16:52:40'!
-traspasandoSectorPlanetario: sector 
-	
-	propulsores propulsandoA: self aTravesDeSectorPlanetario: sector ! !
-
-
-!NaveEspacial methodsFor: 'asserts' stamp: 'NR 7/15/2025 17:24:57'!
-assertMaxCombustible: nivelCombustible
-
-	^ nivelCombustible strictlyPositive ifFalse: [ self shouldNotHappenBecause: 'Las naves deben diseñarse con capacidad maxima de combustible mayor a 0' ]! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'NaveEspacial class' category: '2025-1C-Recu'!
-NaveEspacial class
-	instanceVariableNames: ''!
-
-!NaveEspacial class methodsFor: 'instance creation' stamp: 'NR 7/17/2025 23:18:39'!
-cazaLigeroConPropulsores: propulsores 
-	
-	^ self new initializeConPropulsores: propulsores maniobravilidad: 90 escudos: 30 combustible: 30 nivelesDeDaño: 2 
-! !
-
-!NaveEspacial class methodsFor: 'instance creation' stamp: 'NR 7/17/2025 23:18:42'!
-cruceroPesadoConPropulsores: propulsores 
-	
-	^ self new initializeConPropulsores: propulsores maniobravilidad: 50 escudos: 100 combustible: 50 nivelesDeDaño: 5 ! !
-
-!NaveEspacial class methodsFor: 'instance creation' stamp: 'NR 7/17/2025 23:18:46'!
-naveContrabandistaConPropulsores: propulsores 
-	
-	^ self new initializeConPropulsores: propulsores maniobravilidad: 70 escudos: 50 combustible: 95 nivelesDeDaño: 2 
-! !
-
-
-!classDefinition: #Propulsores category: '2025-1C-Recu'!
-Object subclass: #Propulsores
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: '2025-1C-Recu'!
-
-!Propulsores methodsFor: 'propulsando' stamp: 'NR 7/11/2025 16:53:19'!
-propulsandoA: nave aTravesDeSectorDeAsteroides: sector
-
-	self subclassResponsibility! !
-
-!Propulsores methodsFor: 'propulsando' stamp: 'NR 7/11/2025 21:13:07'!
-propulsandoA: nave aTravesDeSectorNebulosa: sector
-
-	self subclassResponsibility! !
-
-!Propulsores methodsFor: 'propulsando' stamp: 'NR 7/11/2025 16:53:35'!
-propulsandoA: nave aTravesDeSectorPlanetario: sector 
-	
-	self subclassResponsibility ! !
-
-
-!classDefinition: #Gravitones category: '2025-1C-Recu'!
-Propulsores subclass: #Gravitones
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: '2025-1C-Recu'!
-
-!Gravitones methodsFor: 'propulsando' stamp: 'NR 7/11/2025 16:55:42'!
-propulsandoA: nave aTravesDeSectorDeAsteroides: sector 
-	
-	^ nave traspasandoConGravitonesSectorDeAsteroides: sector ! !
-
-!Gravitones methodsFor: 'propulsando' stamp: 'NR 7/11/2025 21:13:33'!
-propulsandoA: nave aTravesDeSectorNebulosa: sector 
-	
-	^ nave traspasandoConGravitonesSectorNebulosa: sector ! !
-
-!Gravitones methodsFor: 'propulsando' stamp: 'NR 7/11/2025 16:54:51'!
-propulsandoA: nave aTravesDeSectorPlanetario: sector 
-	
-	^ nave traspasandoConGravitonesSectorPlanetario: sector ! !
-
-
-!classDefinition: #ImpulsoEstandar category: '2025-1C-Recu'!
-Propulsores subclass: #ImpulsoEstandar
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: '2025-1C-Recu'!
-
-!ImpulsoEstandar methodsFor: 'propulsando' stamp: 'NR 7/11/2025 16:56:09'!
-propulsandoA: nave aTravesDeSectorDeAsteroides: sector 
-	
-	^ nave traspasandoConImpulsoEstandarSectorDeAsteroides: sector ! !
-
-!ImpulsoEstandar methodsFor: 'propulsando' stamp: 'NR 7/11/2025 21:14:01'!
-propulsandoA: nave aTravesDeSectorNebulosa: sector 
-	
-	^ nave traspasandoConImpulsoEstandarSectorNebulosa: sector ! !
-
-!ImpulsoEstandar methodsFor: 'propulsando' stamp: 'NR 7/11/2025 16:56:31'!
-propulsandoA: nave aTravesDeSectorPlanetario: sector 
-	
-	^ nave traspasandoConImpulsoEstandarSectorPlanetario: sector ! !
-
-
-!classDefinition: #VelocidadLuz category: '2025-1C-Recu'!
-Propulsores subclass: #VelocidadLuz
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: '2025-1C-Recu'!
-
-!VelocidadLuz methodsFor: 'propulsando' stamp: 'NR 7/11/2025 16:56:45'!
-propulsandoA: nave aTravesDeSectorDeAsteroides: sector 
-	
-	^ nave traspasandoConVelocidadLuzSectorDeAsteroides: sector ! !
-
-!VelocidadLuz methodsFor: 'propulsando' stamp: 'NR 7/11/2025 21:14:11'!
-propulsandoA: nave aTravesDeSectorNebulosa: sector 
-	
-	^ nave traspasandoConVelocidadLuzSectorNebulosa: sector! !
-
-!VelocidadLuz methodsFor: 'propulsando' stamp: 'NR 7/11/2025 16:57:06'!
-propulsandoA: nave aTravesDeSectorPlanetario: sector 
-	
-	^ nave traspasandoConVelocidadLuzSectorPlanetario: sector ! !
-
-
-!classDefinition: #SectorEspacial category: '2025-1C-Recu'!
-Object subclass: #SectorEspacial
-	instanceVariableNames: 'gravedad radiacion'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: '2025-1C-Recu'!
-
-!SectorEspacial methodsFor: 'initialization' stamp: 'NR 7/11/2025 06:51:20'!
-initializeGravedad: valorGravedad yRadiacion: valorRadiacion 
-	
-	gravedad := valorGravedad.
-	radiacion := valorRadiacion.! !
-
-
-!SectorEspacial methodsFor: 'gravedad' stamp: 'NR 7/11/2025 06:48:50'!
-afectaManiobravilidad: maniobravilidad
-	
-	^ gravedad > maniobravilidad! !
-
-!SectorEspacial methodsFor: 'gravedad' stamp: 'NR 7/11/2025 17:01:15'!
-gravedad
-	
-	^ gravedad! !
-
-
-!SectorEspacial methodsFor: 'nave atravesando' stamp: 'NR 7/11/2025 06:54:05'!
-ingresadoPor: nave
-
-	self subclassResponsibility! !
-
-
-!SectorEspacial methodsFor: 'radiacion' stamp: 'NR 7/11/2025 06:50:18'!
-radiacion
-	
-	^ radiacion! !
-
-!SectorEspacial methodsFor: 'radiacion' stamp: 'NR 7/11/2025 06:50:36'!
-radiacionAtraviesaEscudosEn: valorDeEscudos
-
-	^ self radiacion > valorDeEscudos ! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'SectorEspacial class' category: '2025-1C-Recu'!
-SectorEspacial class
-	instanceVariableNames: ''!
-
-!SectorEspacial class methodsFor: 'instance creation' stamp: 'NR 7/11/2025 16:49:48'!
-gravedad: gravedad yRadiacion: radiacion 
-	
-	^self new initializeGravedad: gravedad yRadiacion: radiacion ! !
-
-
-!classDefinition: #Asteroides category: '2025-1C-Recu'!
-SectorEspacial subclass: #Asteroides
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: '2025-1C-Recu'!
-
-!Asteroides methodsFor: 'nave atravesando' stamp: 'NR 7/11/2025 16:50:17'!
-ingresadoPor: nave 
-	
-	^ nave traspasandoSectorDeAsteroides: self! !
-
-
-!classDefinition: #Nebulosa category: '2025-1C-Recu'!
-SectorEspacial subclass: #Nebulosa
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: '2025-1C-Recu'!
-
-!Nebulosa methodsFor: 'nave atravesando' stamp: 'NR 7/11/2025 21:15:12'!
-ingresadoPor: nave 
-	
-	^ nave traspasandoSectorNebulosa: self! !
-
-
-!classDefinition: #Planetario category: '2025-1C-Recu'!
-SectorEspacial subclass: #Planetario
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: '2025-1C-Recu'!
-
-!Planetario methodsFor: 'nave atravesando' stamp: 'NR 7/11/2025 16:50:27'!
-ingresadoPor: nave 
-	
-	^ nave traspasandoSectorPlanetario: self! !

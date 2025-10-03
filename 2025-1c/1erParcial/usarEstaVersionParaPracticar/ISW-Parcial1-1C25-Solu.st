@@ -1,9 +1,9 @@
-!classDefinition: #EscapeDeFlotaTests category: '2025-1C-Recu'!
+!classDefinition: #EscapeDeFlotaTests category: 'ISW-Parcial1-1C25-Solu'!
 TestCase subclass: #EscapeDeFlotaTests
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: '2025-1C-Recu'!
+	category: 'ISW-Parcial1-1C25-Solu'!
 
 !EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/10/2025 19:58:18'!
 test01LaFlotaDebeTenerAlMenosUnaNave
@@ -550,12 +550,12 @@ propulsoresDeVelocidadLuz
 	^ VelocidadLuz new! !
 
 
-!classDefinition: #EscapeDeFlota category: '2025-1C-Recu'!
+!classDefinition: #EscapeDeFlota category: 'ISW-Parcial1-1C25-Solu'!
 Object subclass: #EscapeDeFlota
 	instanceVariableNames: 'flota'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: '2025-1C-Recu'!
+	category: 'ISW-Parcial1-1C25-Solu'!
 
 !EscapeDeFlota methodsFor: 'initialization' stamp: 'NR 7/11/2025 06:42:14'!
 initializeEnrolamiento: unaFlota 
@@ -611,7 +611,7 @@ assertSectoresNoVacios: sectores
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'EscapeDeFlota class' category: '2025-1C-Recu'!
+!classDefinition: 'EscapeDeFlota class' category: 'ISW-Parcial1-1C25-Solu'!
 EscapeDeFlota class
 	instanceVariableNames: ''!
 
@@ -656,12 +656,12 @@ assertNavesSonUnicasEn: flota
 	flota asSet size = flota size ifFalse: [ self error: self todasLasNavesDebenSerDiferentesDescripcionDeError ]! !
 
 
-!classDefinition: #NaveEspacial category: '2025-1C-Recu'!
+!classDefinition: #NaveEspacial category: 'ISW-Parcial1-1C25-Solu'!
 Object subclass: #NaveEspacial
 	instanceVariableNames: 'propulsores maniobravilidad escudos combustible maxNivelDaño nivelDaño'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: '2025-1C-Recu'!
+	category: 'ISW-Parcial1-1C25-Solu'!
 
 !NaveEspacial methodsFor: 'initialization' stamp: 'NR 7/15/2025 17:25:36'!
 initializeConPropulsores: unosPropulsores maniobravilidad: valorManiobravilidad escudos: valorEscudos combustible: nivelCombustible nivelesDeDaño: nivelMaximoDaño    
@@ -868,7 +868,7 @@ assertMaxCombustible: nivelCombustible
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'NaveEspacial class' category: '2025-1C-Recu'!
+!classDefinition: 'NaveEspacial class' category: 'ISW-Parcial1-1C25-Solu'!
 NaveEspacial class
 	instanceVariableNames: ''!
 
@@ -890,12 +890,12 @@ naveContrabandistaConPropulsores: propulsores
 ! !
 
 
-!classDefinition: #Propulsores category: '2025-1C-Recu'!
+!classDefinition: #Propulsores category: 'ISW-Parcial1-1C25-Solu'!
 Object subclass: #Propulsores
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: '2025-1C-Recu'!
+	category: 'ISW-Parcial1-1C25-Solu'!
 
 !Propulsores methodsFor: 'propulsando' stamp: 'NR 7/11/2025 16:53:19'!
 propulsandoA: nave aTravesDeSectorDeAsteroides: sector
@@ -913,12 +913,12 @@ propulsandoA: nave aTravesDeSectorPlanetario: sector
 	self subclassResponsibility ! !
 
 
-!classDefinition: #Gravitones category: '2025-1C-Recu'!
+!classDefinition: #Gravitones category: 'ISW-Parcial1-1C25-Solu'!
 Propulsores subclass: #Gravitones
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: '2025-1C-Recu'!
+	category: 'ISW-Parcial1-1C25-Solu'!
 
 !Gravitones methodsFor: 'propulsando' stamp: 'NR 7/11/2025 16:55:42'!
 propulsandoA: nave aTravesDeSectorDeAsteroides: sector 
@@ -936,12 +936,12 @@ propulsandoA: nave aTravesDeSectorPlanetario: sector
 	^ nave traspasandoConGravitonesSectorPlanetario: sector ! !
 
 
-!classDefinition: #ImpulsoEstandar category: '2025-1C-Recu'!
+!classDefinition: #ImpulsoEstandar category: 'ISW-Parcial1-1C25-Solu'!
 Propulsores subclass: #ImpulsoEstandar
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: '2025-1C-Recu'!
+	category: 'ISW-Parcial1-1C25-Solu'!
 
 !ImpulsoEstandar methodsFor: 'propulsando' stamp: 'NR 7/11/2025 16:56:09'!
 propulsandoA: nave aTravesDeSectorDeAsteroides: sector 
@@ -959,12 +959,12 @@ propulsandoA: nave aTravesDeSectorPlanetario: sector
 	^ nave traspasandoConImpulsoEstandarSectorPlanetario: sector ! !
 
 
-!classDefinition: #VelocidadLuz category: '2025-1C-Recu'!
+!classDefinition: #VelocidadLuz category: 'ISW-Parcial1-1C25-Solu'!
 Propulsores subclass: #VelocidadLuz
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: '2025-1C-Recu'!
+	category: 'ISW-Parcial1-1C25-Solu'!
 
 !VelocidadLuz methodsFor: 'propulsando' stamp: 'NR 7/11/2025 16:56:45'!
 propulsandoA: nave aTravesDeSectorDeAsteroides: sector 
@@ -982,12 +982,12 @@ propulsandoA: nave aTravesDeSectorPlanetario: sector
 	^ nave traspasandoConVelocidadLuzSectorPlanetario: sector ! !
 
 
-!classDefinition: #SectorEspacial category: '2025-1C-Recu'!
+!classDefinition: #SectorEspacial category: 'ISW-Parcial1-1C25-Solu'!
 Object subclass: #SectorEspacial
 	instanceVariableNames: 'gravedad radiacion'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: '2025-1C-Recu'!
+	category: 'ISW-Parcial1-1C25-Solu'!
 
 !SectorEspacial methodsFor: 'initialization' stamp: 'NR 7/11/2025 06:51:20'!
 initializeGravedad: valorGravedad yRadiacion: valorRadiacion 
@@ -1025,7 +1025,7 @@ radiacionAtraviesaEscudosEn: valorDeEscudos
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'SectorEspacial class' category: '2025-1C-Recu'!
+!classDefinition: 'SectorEspacial class' category: 'ISW-Parcial1-1C25-Solu'!
 SectorEspacial class
 	instanceVariableNames: ''!
 
@@ -1035,12 +1035,12 @@ gravedad: gravedad yRadiacion: radiacion
 	^self new initializeGravedad: gravedad yRadiacion: radiacion ! !
 
 
-!classDefinition: #Asteroides category: '2025-1C-Recu'!
+!classDefinition: #Asteroides category: 'ISW-Parcial1-1C25-Solu'!
 SectorEspacial subclass: #Asteroides
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: '2025-1C-Recu'!
+	category: 'ISW-Parcial1-1C25-Solu'!
 
 !Asteroides methodsFor: 'nave atravesando' stamp: 'NR 7/11/2025 16:50:17'!
 ingresadoPor: nave 
@@ -1048,12 +1048,12 @@ ingresadoPor: nave
 	^ nave traspasandoSectorDeAsteroides: self! !
 
 
-!classDefinition: #Nebulosa category: '2025-1C-Recu'!
+!classDefinition: #Nebulosa category: 'ISW-Parcial1-1C25-Solu'!
 SectorEspacial subclass: #Nebulosa
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: '2025-1C-Recu'!
+	category: 'ISW-Parcial1-1C25-Solu'!
 
 !Nebulosa methodsFor: 'nave atravesando' stamp: 'NR 7/11/2025 21:15:12'!
 ingresadoPor: nave 
@@ -1061,12 +1061,12 @@ ingresadoPor: nave
 	^ nave traspasandoSectorNebulosa: self! !
 
 
-!classDefinition: #Planetario category: '2025-1C-Recu'!
+!classDefinition: #Planetario category: 'ISW-Parcial1-1C25-Solu'!
 SectorEspacial subclass: #Planetario
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: '2025-1C-Recu'!
+	category: 'ISW-Parcial1-1C25-Solu'!
 
 !Planetario methodsFor: 'nave atravesando' stamp: 'NR 7/11/2025 16:50:27'!
 ingresadoPor: nave 
