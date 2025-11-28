@@ -1,0 +1,4 @@
+Link a video: https://youtu.be/7jSwQvG6sxI
+Comentarios:
+- A la solución del video le falta verificar que el trasbordo no aplique sobre un descuento 
+- La solución cobrar mal la salida de tren para jubilado en el segundo viaje (caso muy particular)
